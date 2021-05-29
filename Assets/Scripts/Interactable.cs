@@ -2,13 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+
+public interface IInteractable
 {
-
-    public Transform goalPosition;
-
-    public virtual void DoInteraction()
-    {
-
-    }
+    void Interact();
 }
+

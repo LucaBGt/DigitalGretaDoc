@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : Interactable
+public class Door : MonoBehaviour, IInteractable
 {
+    [SerializeField] Transform goalPosition;
+
     Animator animator;
 
     public string url;
+
+    public Vector3 GoalPosition { get => goalPosition.position; } 
 
     private void Start()
     {
@@ -21,6 +25,11 @@ public class Door : Interactable
     public void EndDoor()
     {
         animator.SetBool("OpenDoor", false);
+    }
+
+    public void Interact()
+    {
+        Debug.Log("Opened door");
     }
 }
 
