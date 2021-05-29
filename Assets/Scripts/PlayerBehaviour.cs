@@ -35,7 +35,20 @@ public class PlayerBehaviour : NetworkBehaviour
     public float sensetivity;
 
     [Header("Internal State")]
-    public PlayerState playerState;
+    private PlayerState state;
+    public PlayerState State
+    {
+        get => state;
+
+        set
+        {
+            state = value;
+            OnChangePlayerState?.Invoke(state);
+        }
+    }
+
+    public System.Action<PlayerState> OnChangePlayerState;
+
     public bool walkingToDoor = false;
 
     [Header("Screen Controls")]
@@ -86,7 +99,7 @@ public class PlayerBehaviour : NetworkBehaviour
     {
 
 
-        if (playerState != PlayerState.UI)
+        if (State != PlayerState.UI)
         {
 
             if (!isLocalPlayer)
@@ -115,7 +128,7 @@ public class PlayerBehaviour : NetworkBehaviour
                     if (!IsPointerOverUIObject())
                     {
                         //... then, depending on the current player state...
-                        if (playerState == PlayerState.Looking)
+                        if (State == PlayerState.Looking)
                         {
                             RaycastHit hit;
                             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -134,7 +147,7 @@ public class PlayerBehaviour : NetworkBehaviour
                                 }
                             }
                         }
-                        else if (playerState == PlayerState.Walking)
+                        else if (State == PlayerState.Walking)
                         {
                             //Place the target object, walk with the NavMeshAgent, etc...
                             RaycastHit hit;
@@ -186,7 +199,7 @@ public class PlayerBehaviour : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (playerState != PlayerState.UI && isLocalPlayer)
+        if (State != PlayerState.UI && isLocalPlayer)
             if (isTurning)
             {
                 if (isLeft)
@@ -202,12 +215,12 @@ public class PlayerBehaviour : NetworkBehaviour
 
     private IEnumerator turnToDoor()
     {
-        playerState = PlayerState.UI;
+        State = PlayerState.UI;
         controlUI.interactable = false;
         //LeanTween.rotate(this.gameObject, currentDoor.goalPosition.rotation.eulerAngles, 1);
         yield return new WaitForSeconds(1f);
         controlUI.interactable = true;
-        playerState = PlayerState.Walking;
+        State = PlayerState.Walking;
     }
 
     public void TurnLeft()
@@ -231,11 +244,11 @@ public class PlayerBehaviour : NetworkBehaviour
     {
         if (setLooking)
         {
-            playerState = PlayerState.Looking;
+            State = PlayerState.Looking;
         }
         else
         {
-            playerState = PlayerState.Walking;
+            State = PlayerState.Walking;
         }
     }
 
