@@ -10,8 +10,6 @@ public class Door : MonoBehaviour, IInteractable
 
     public string url;
 
-    public Vector3 GoalPosition { get => goalPosition.position; } 
-
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -30,6 +28,11 @@ public class Door : MonoBehaviour, IInteractable
     public void Interact()
     {
         Debug.Log("Opened door");
+    }
+
+    public Vector3 GetInteractPosition()
+    {
+        return goalPosition.position;
     }
 }
 
