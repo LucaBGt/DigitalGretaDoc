@@ -13,7 +13,7 @@ public class JenkinsBuild
     {
         var args = FindArgs();
 
-        string fullPathAndName = args.targetDir + +".x86_64";
+        string fullPathAndName = args.targetDir + ".x86_64";
         BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.Standalone,
                 BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode);
     }
