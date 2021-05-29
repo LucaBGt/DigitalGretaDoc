@@ -336,6 +336,7 @@ GameObject:
   - component: {fileID: 1287223326476934820}
   - component: {fileID: 6926508730663705350}
   - component: {fileID: 8100194163673542459}
+  - component: {fileID: 3635950754993780854}
   m_Layer: 0
   m_Name: 2dCharacterPlane
   m_TagString: Untagged
@@ -406,3 +407,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3635950754993780854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8811146440929207463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fbefd9f201110d47a163a1428ed9b80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materials:
+  - {fileID: 2100000, guid: 9b04fe99c25ce334e9163ec50089a7f7, type: 2}
+  - {fileID: 2100000, guid: 9b7b8c134f078c844b8f37ef4efdf85b, type: 2}
+  - {fileID: 2100000, guid: 59e9b9f23d7c8634c8ea1b7c9ca639c1, type: 2}
