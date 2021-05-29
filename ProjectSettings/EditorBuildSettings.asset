@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/NetworkTest.unity
-    guid: 9eadefc20c08c4221bb7c1c5ffcfb48d
+    path: Assets/Scenes/MarketScene.unity
+    guid: e903043b8783c467d9db7735d659917e
   m_configObjects: {}
