@@ -33,7 +33,7 @@ public class JenkinsBuild
         var args = FindArgs();
 
         string fullPathAndName = args.targetDir;
-        BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.Standalone, BuildTarget.WebGL, BuildOptions.None);
+        BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.WebGL, BuildTarget.WebGL, BuildOptions.None);
     }
 
     private static Args FindArgs()
