@@ -80,7 +80,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
         else
         {
             //remote player update
-            playerNameText.transform.LookAt(cam.transform);
+            playerNameText.transform.forward = transform.position - cam.transform.position;
         }
     }
 }
