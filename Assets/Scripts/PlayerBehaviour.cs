@@ -64,7 +64,6 @@ public class PlayerBehaviour : NetworkBehaviour
         if (!isLocalPlayer)
         {
             Destroy(_agent);
-            Destroy(UIParent.gameObject);
             Destroy(GameplayParent.gameObject);
         }
     }
