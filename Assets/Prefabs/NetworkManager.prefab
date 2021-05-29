@@ -136,5 +136,5 @@ MonoBehaviour:
   clientUseWss: 1
   sslEnabled: 0
   sslCertJson: ./cert.json
-  sslProtocols: 3072
+  sslProtocols: -1
   _logLevels: 3
