@@ -64,7 +64,7 @@ MonoBehaviour:
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
-  alwaysHostInEditor: 0
+  editorStartsHost: 0
 --- !u!114 &3629165162974774772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,8 +133,8 @@ MonoBehaviour:
   clientMaxMessagesPerTick: 1000
   batchSend: 1
   waitBeforeSend: 0
-  clientUseWss: 0
+  clientUseWss: 1
   sslEnabled: 0
   sslCertJson: ./cert.json
-  sslProtocols: 3072
+  sslProtocols: -1
   _logLevels: 3
