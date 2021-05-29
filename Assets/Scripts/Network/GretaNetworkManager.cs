@@ -6,7 +6,7 @@ using Mirror;
 public class GretaNetworkManager : NetworkManager
 {
     [Header("Greta")]
-    [SerializeField] bool alwaysHostInEditor;
+    [SerializeField] bool editorStartsHost;
 
     public override void Start()
     {
@@ -17,7 +17,7 @@ public class GretaNetworkManager : NetworkManager
 
 
 #if UNITY_EDITOR
-        if (alwaysHostInEditor)
+        if (editorStartsHost)
         {
             StartHost();
         }
@@ -47,7 +47,6 @@ public class GretaNetworkManager : NetworkManager
         //Failed to connect
         Debug.Log("Disconnected / Connection Failed: " + conn);
 
-        //Fallback to local hosting
-        StartHost();
+        //Fallback??? TODO
     }
 }

@@ -6,17 +6,22 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimationHandler : MonoBehaviour
 {
+    [SerializeField] NetworkedPlayerBehaviour networkedPlayer;
+
     Animator animator;
+
     private void OnEnable()
     {
         animator = GetComponent<Animator>();
-        LocalPlayerBehaviour.Instance.ChangePlayerState += ChangePlayerState;
+        networkedPlayer.NetworkedPlayerStateChanged += ChangePlayerState;
     }
 
     private void OnDisable()
     {
-        LocalPlayerBehaviour.Instance.ChangePlayerState -= ChangePlayerState;
+        if (networkedPlayer != null)
+            networkedPlayer.NetworkedPlayerStateChanged -= ChangePlayerState;
     }
+
     private void ChangePlayerState(PlayerState state)
     {
         if (animator == null)

@@ -15,27 +15,31 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
 
     Camera cam;
 
-    void OnNameChanged(string _Old, string _New)
-    {
-        playerNameText.text = playerName;
-    }
+    public event System.Action<PlayerState> NetworkedPlayerStateChanged;
+
 
     private void Start()
     {
         cam = Camera.main;
     }
 
-    public override void OnStartLocalPlayer()
-    {
-        string playerName = "Guest";
-        CmdSetupPlayer(playerName);
 
-        LocalPlayerBehaviour.Instance.ChangePlayerState += OnLocalChangePlayerState;
-    }
 
     private void OnLocalChangePlayerState(PlayerState obj)
     {
+        CMD_ChangePlayerState(obj);
+    }
 
+    [Command]
+    public void CMD_ChangePlayerState(PlayerState obj)
+    {
+        RPC_ChangePlayerState(obj);
+    }
+
+    [ClientRpc]
+    public void RPC_ChangePlayerState(PlayerState newState)
+    {
+        NetworkedPlayerStateChanged?.Invoke(newState);
     }
 
     [Command]
@@ -45,12 +49,31 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
         playerName = _name;
     }
 
+    void OnNameChanged(string _Old, string _New)
+    {
+        playerNameText.text = playerName;
+    }
+
+    public override void OnStartLocalPlayer()
+    {
+        string playerName = "Guest";
+        CmdSetupPlayer(playerName);
+
+        LocalPlayerBehaviour.Instance.ChangePlayerState += OnLocalChangePlayerState;
+    }
+    
+    private void OnDestroy()
+    {
+        if (isLocalPlayer)
+            LocalPlayerBehaviour.Instance.ChangePlayerState -= OnLocalChangePlayerState;
+    }
 
     void Update()
     {
         if (isLocalPlayer)
         {
             //teleport to local player location
+            transform.position = LocalPlayerBehaviour.Instance.transform.position;
         }
         else
         {
@@ -58,6 +81,4 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
             playerNameText.transform.LookAt(cam.transform);
         }
     }
-
-
 }
