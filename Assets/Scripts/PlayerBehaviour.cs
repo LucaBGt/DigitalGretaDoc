@@ -52,33 +52,27 @@ public class PlayerBehaviour : NetworkBehaviour
     Door currentDoor;
     stand_json stand;
 
-    private void OnDrawGizmos()
-    {
-        if (_agent != null)
-            Gizmos.DrawLine(transform.position, _agent.destination);
-    }
-
     void OnNameChanged(string _Old, string _New)
     {
         playerNameText.text = playerName;
     }
 
-
-    public override void OnStartLocalPlayer()
+    private void Start()
     {
-
+        cam = Camera.main;
+        
         if (!isLocalPlayer)
         {
             Destroy(_agent);
             Destroy(UIParent.gameObject);
             Destroy(GameplayParent.gameObject);
         }
+    }
 
+    public override void OnStartLocalPlayer()
+    {
         string playerName = tempName;
-
         CmdSetupPlayer(playerName);
-
-        cam = Camera.main;
     }
 
     [Command]

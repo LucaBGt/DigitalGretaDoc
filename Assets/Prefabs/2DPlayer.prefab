@@ -3105,10 +3105,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8636340599230345680}
+  - component: {fileID: 7339833430233952045}
   - component: {fileID: 8636340599230345687}
   - component: {fileID: 4943176693730593749}
   - component: {fileID: 8672843269027623366}
-  - component: {fileID: 7339833430233952045}
   - component: {fileID: 5742119567979629046}
   m_Layer: 0
   m_Name: 2DPlayer
@@ -3135,6 +3135,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7339833430233952045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8636340599230345686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25d370074ca90470e95224fa6958adb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  _agent: {fileID: 5742119567979629046}
+  _renderer: {fileID: 0}
+  UIParent: {fileID: 3778688048073064819}
+  GameplayParent: {fileID: 3174262249958197592}
+  playerNameText: {fileID: 6002118291047940543}
+  floatingInfo: {fileID: 1066838916195170094}
+  tempName: 
+  playerName: 
+  isTurning: 0
+  isLeft: 0
+  sensetivity: 1
+  playerState: 0
+  walkingToDoor: 0
+  controlUI: {fileID: 0}
+  doorUI: {fileID: 3397104264040707542}
+  image: {fileID: 605871962486518061}
 --- !u!205 &8636340599230345687
 LODGroup:
   m_ObjectHideFlags: 0
@@ -3199,43 +3229,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
+  clientAuthority: 1
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
   compressRotation: 0
-  interpolateScale: 1
-  syncScale: 1
---- !u!114 &7339833430233952045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8636340599230345686}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25d370074ca90470e95224fa6958adb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  _agent: {fileID: 5742119567979629046}
-  _renderer: {fileID: 0}
-  UIParent: {fileID: 9186694048883271999}
-  GameplayParent: {fileID: 3174262249958197592}
-  playerNameText: {fileID: 6002118291047940543}
-  floatingInfo: {fileID: 1066838916195170094}
-  tempName: 
-  playerName: 
-  isTurning: 0
-  isLeft: 0
-  sensetivity: 1
-  playerState: 0
-  walkingToDoor: 0
-  controlUI: {fileID: 0}
-  doorUI: {fileID: 3397104264040707542}
-  image: {fileID: 605871962486518061}
+  interpolateScale: 0
+  syncScale: 0
 --- !u!195 &5742119567979629046
 NavMeshAgent:
   m_ObjectHideFlags: 0
