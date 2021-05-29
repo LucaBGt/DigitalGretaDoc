@@ -61,7 +61,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
 
         LocalPlayerBehaviour.Instance.ChangePlayerState += OnLocalChangePlayerState;
     }
-    
+
     private void OnDestroy()
     {
         if (isLocalPlayer)
@@ -73,12 +73,14 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
         if (isLocalPlayer)
         {
             //teleport to local player location
-            transform.position = LocalPlayerBehaviour.Instance.transform.position;
+            var player = LocalPlayerBehaviour.Instance.transform;
+            transform.position = player.position;
+            transform.rotation = player.rotation;
         }
         else
         {
             //remote player update
-            playerNameText.transform.LookAt(cam.transform);
+            playerNameText.transform.forward = transform.position - cam.transform.position;
         }
     }
 }

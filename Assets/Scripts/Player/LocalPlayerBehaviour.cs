@@ -22,8 +22,7 @@ public class LocalPlayerBehaviour : MonoBehaviour
     [SerializeField] NavMeshAgent agent;
 
     [Header("Inputs")]
-    [SerializeField] bool isTurning;
-    [SerializeField] bool isLeft;
+    float turnInput;
     [SerializeField] float sensetivity;
 
     private PlayerState state;
@@ -40,6 +39,7 @@ public class LocalPlayerBehaviour : MonoBehaviour
         {
             state = value;
             ChangePlayerState?.Invoke(state);
+            Debug.Log($"New State: {value}");
         }
     }
 
@@ -68,6 +68,27 @@ public class LocalPlayerBehaviour : MonoBehaviour
         {
             OnClick();
         }
+
+        if (ReachedDestination())
+        {
+            StopMoving();
+        }
+
+    }
+
+    private bool ReachedDestination()
+    {
+        if (!agent.pathPending)
+        {
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void OnClick()
@@ -81,7 +102,6 @@ public class LocalPlayerBehaviour : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 Transform objectHit = hit.transform;
-
                 if (State == PlayerState.Looking)
                 {
                     ClickOnLooking(hit);
@@ -98,42 +118,38 @@ public class LocalPlayerBehaviour : MonoBehaviour
     {
         if (hit.transform.TryGetComponent(out IInteractable interactable))
         {
-            agent.destination = interactable.GetInteractPosition();
+            GoTo(interactable.GetInteractPosition());
         }
         else
         {
-            agent.destination = hit.point;
+            GoTo(hit.point);
         }
+    }
+
+    private void GoTo(Vector3 point)
+    {
+        agent.isStopped = false;
+        agent.destination = point;
+        State = PlayerState.Walking;
+    }
+
+    private void StopMoving()
+    {
+        if (State != PlayerState.Walking) return;
+
+        State = PlayerState.Looking;
+        agent.isStopped = true;
     }
 
     private void ClickOnLooking(RaycastHit hit)
     {
-        // Do something with the object that was hit by the raycast.
-        if (hit.transform.TryGetComponent(out Door door))
-        {
-            //interact with door 
-            /*
-            door.ShowAnimation();
-            StartCoroutine(ShowDoor());
-            StartCoroutine(loadJSON(currentDoor.url));
-            */
-        }
+        ClickOnWalking(hit);
     }
 
     private void FixedUpdate()
     {
         if (State != PlayerState.UI)
-            if (isTurning)
-            {
-                if (isLeft)
-                {
-                    transform.Rotate(0, -sensetivity, 0);
-                }
-                else
-                {
-                    transform.Rotate(0, sensetivity, 0);
-                }
-            }
+            transform.Rotate(0, turnInput * sensetivity, 0);
     }
 
     private IEnumerator turnToDoor()
@@ -146,22 +162,21 @@ public class LocalPlayerBehaviour : MonoBehaviour
 
     public void TurnLeft()
     {
-        isLeft = true;
-        isTurning = true;
+        StopMoving();
+        turnInput = -1;
     }
 
     public void TurnRight()
     {
-        isLeft = false;
-        isTurning = true;
+        StopMoving();
+        turnInput = 1;
     }
 
     public void StopTurning()
     {
-        isTurning = false;
+        turnInput = 0;
     }
 
-    #region Helper Function
 
     public static bool IsPointerOverUIObject()
     {
@@ -172,5 +187,4 @@ public class LocalPlayerBehaviour : MonoBehaviour
         return results.Count > 0;
     }
 
-    #endregion
 }
