@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IFirstPersonTurnUI
+public interface IPlayerUI
 {
     void StartTurnRight();
     void StartTurnLeft();
@@ -11,7 +11,7 @@ public interface IFirstPersonTurnUI
     void EndTurnLeft();
 }
 
-public class UIHandler : MonoBehaviour, IFirstPersonTurnUI
+public class UIHandler : MonoBehaviour, IPlayerUI
 {
     private PlayerBehaviour GetPlayerController2DTEMP()
     {
@@ -23,6 +23,7 @@ public class UIHandler : MonoBehaviour, IFirstPersonTurnUI
 
         return null;
     }
+
     public void StartTurnLeft()
     {
         Debug.Log("Start Turn Left");
