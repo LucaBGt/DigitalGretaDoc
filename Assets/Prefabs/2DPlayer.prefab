@@ -402,6 +402,7 @@ GameObject:
   - component: {fileID: 8672843269027623366}
   - component: {fileID: 5742119567979629046}
   - component: {fileID: 2368603729529823236}
+  - component: {fileID: 2742805208401927702}
   m_Layer: 0
   m_Name: 2DPlayer
   m_TagString: Untagged
@@ -452,7 +453,6 @@ MonoBehaviour:
   isTurning: 0
   isLeft: 0
   sensetivity: 1
-  playerState: 0
   walkingToDoor: 0
   controlUI: {fileID: 0}
   doorUI: {fileID: 0}
@@ -569,6 +569,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2742805208401927702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8636340599230345686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b226afc0174334abd13b07ac588434, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8636340599718725498
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,14 +890,14 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3481104882993339973, guid: 75d05102c0a634c1485e962f0a649199, type: 3}
   m_PrefabInstance: {fileID: 8636340599189828300}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &1778569346883117515 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -1192102183430810873, guid: 75d05102c0a634c1485e962f0a649199, type: 3}
-  m_PrefabInstance: {fileID: 8636340599189828300}
-  m_PrefabAsset: {fileID: 0}
 --- !u!23 &6639909024129901744 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -6052908167504718212, guid: 75d05102c0a634c1485e962f0a649199, type: 3}
+  m_PrefabInstance: {fileID: 8636340599189828300}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1778569346883117515 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1192102183430810873, guid: 75d05102c0a634c1485e962f0a649199, type: 3}
   m_PrefabInstance: {fileID: 8636340599189828300}
   m_PrefabAsset: {fileID: 0}
 --- !u!23 &1138814490012252395 stripped
