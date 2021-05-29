@@ -8,106 +8,66 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
+
 public enum PlayerState
 {
     Walking, Looking, UI
 }
 
-public class PlayerBehaviour : NetworkBehaviour
+[DefaultExecutionOrder(-100)]
+public class LocalPlayerBehaviour : MonoBehaviour
 {
-    public NavMeshAgent _agent;
-    public SkinnedMeshRenderer _renderer;
-    public Transform UIParent;
-    public Transform GameplayParent;
+    private static LocalPlayerBehaviour instance;
 
-    [Header("Player Name")]
-    public TextMeshPro playerNameText;
-    public GameObject floatingInfo;
-
-    public string tempName;
-
-    [SyncVar(hook = nameof(OnNameChanged))]
-    public string playerName;
+    [SerializeField] NavMeshAgent agent;
 
     [Header("Inputs")]
-    public bool isTurning;
-    public bool isLeft;
-    public float sensetivity;
+    [SerializeField] bool isTurning;
+    [SerializeField] bool isLeft;
+    [SerializeField] float sensetivity;
 
-    [Header("Internal State")]
     private PlayerState state;
+    //Local References
+    Camera camera;
+
+    public event System.Action<PlayerState> ChangePlayerState;
+
+    public static LocalPlayerBehaviour Instance => instance;
     public PlayerState State
     {
         get => state;
-
         set
         {
             state = value;
-            OnChangePlayerState?.Invoke(state);
+            ChangePlayerState?.Invoke(state);
         }
     }
 
-    public System.Action<PlayerState> OnChangePlayerState;
-
-    [Header("Screen Controls")]
-    public CanvasGroup controlUI;
-
-    //Local References
-    Camera cam;
-
-    void OnNameChanged(string _Old, string _New)
+    private void Awake()
     {
-        playerNameText.text = playerName;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogError("Spawned Second Instance of LocalPlayer");
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
-        cam = Camera.main;
-
-        if (!isLocalPlayer)
-        {
-            Destroy(_agent);
-            Destroy(GameplayParent.gameObject);
-        }
+        camera = Camera.main;
     }
-
-    public override void OnStartLocalPlayer()
-    {
-        string playerName = tempName;
-        CmdSetupPlayer(playerName);
-    }
-
-    [Command]
-    public void CmdSetupPlayer(string _name)
-    {
-        // player info sent to server, then server updates sync vars which handles it on all clients
-        playerName = _name;
-    }
-
 
     void Update()
-    {
-        if (isLocalPlayer)
-        {
-            if (State == PlayerState.UI)
-                return;
-            LocalPlayerUpdate();
-        }
-        else
-        {
-            //remote player update
-            floatingInfo.transform.LookAt(cam.transform);
-        }
-    }
-
-    private void LocalPlayerUpdate()
     {
         //If the mouse button is clicked/The Screen is tapped...
         if (Input.GetMouseButtonDown(0))
         {
             OnClick();
         }
-
     }
 
     private void OnClick()
@@ -116,7 +76,7 @@ public class PlayerBehaviour : NetworkBehaviour
         if (!IsPointerOverUIObject())
         {
             RaycastHit hit;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit))
             {
@@ -138,11 +98,11 @@ public class PlayerBehaviour : NetworkBehaviour
     {
         if (hit.transform.TryGetComponent(out IInteractable interactable))
         {
-            _agent.destination = interactable.GetInteractPosition();
+            agent.destination = interactable.GetInteractPosition();
         }
         else
         {
-            _agent.destination = hit.point;
+            agent.destination = hit.point;
         }
     }
 
@@ -162,7 +122,7 @@ public class PlayerBehaviour : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (State != PlayerState.UI && isLocalPlayer)
+        if (State != PlayerState.UI)
             if (isTurning)
             {
                 if (isLeft)
@@ -179,10 +139,8 @@ public class PlayerBehaviour : NetworkBehaviour
     private IEnumerator turnToDoor()
     {
         State = PlayerState.UI;
-        controlUI.interactable = false;
         //LeanTween.rotate(this.gameObject, currentDoor.goalPosition.rotation.eulerAngles, 1);
         yield return new WaitForSeconds(1f);
-        controlUI.interactable = true;
         State = PlayerState.Walking;
     }
 

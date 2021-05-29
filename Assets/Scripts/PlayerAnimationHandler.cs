@@ -10,12 +10,12 @@ public class PlayerAnimationHandler : MonoBehaviour
     private void OnEnable()
     {
         animator = GetComponent<Animator>();
-        GetComponent<PlayerBehaviour>().OnChangePlayerState += ChangePlayerState;
+        LocalPlayerBehaviour.Instance.ChangePlayerState += ChangePlayerState;
     }
 
     private void OnDisable()
     {
-        GetComponent<PlayerBehaviour>().OnChangePlayerState -= ChangePlayerState;
+        LocalPlayerBehaviour.Instance.ChangePlayerState -= ChangePlayerState;
     }
     private void ChangePlayerState(PlayerState state)
     {

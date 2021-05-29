@@ -13,38 +13,32 @@ public interface IPlayerUI
 
 public class UIHandler : MonoBehaviour, IPlayerUI
 {
-    private PlayerBehaviour GetPlayerController2DTEMP()
-    {
-        foreach (PlayerBehaviour item in FindObjectsOfType<PlayerBehaviour>())
-        {
-            if (item.isLocalPlayer)
-                return item;
-        }
 
-        return null;
+    private LocalPlayerBehaviour GetLocalPlayer()
+    {
+        return LocalPlayerBehaviour.Instance;
     }
 
     public void StartTurnLeft()
     {
         Debug.Log("Start Turn Left");
-        GetPlayerController2DTEMP().TurnLeft();
+        GetLocalPlayer().TurnLeft();
     }
 
     public void StartTurnRight()
     {
         Debug.Log("Start Turn Right");
-        GetPlayerController2DTEMP().TurnRight();
+        GetLocalPlayer().TurnRight();
     }
     public void EndTurnLeft()
     {
         Debug.Log("End Turn Left");
-        GetPlayerController2DTEMP().StopTurning();
+        GetLocalPlayer().StopTurning();
     }
 
     public void EndTurnRight()
     {
         Debug.Log("End Turn Right");
-        GetPlayerController2DTEMP().StopTurning();
+        GetLocalPlayer().StopTurning();
     }
-
 }
