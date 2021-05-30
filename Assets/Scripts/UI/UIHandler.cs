@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface IPerspectiveToggleUI
+{
+    void ToggleSwitchPerspective();
+}
+
 public interface IPlayerUI
 {
     void StartTurnRight();
@@ -11,7 +16,7 @@ public interface IPlayerUI
     void EndTurnLeft();
 }
 
-public class UIHandler : MonoBehaviour, IPlayerUI
+public class UIHandler : MonoBehaviour, IPlayerUI, IPerspectiveToggleUI
 {
 
     private LocalPlayerBehaviour GetLocalPlayer()
@@ -40,5 +45,10 @@ public class UIHandler : MonoBehaviour, IPlayerUI
     {
         Debug.Log("End Turn Right");
         GetLocalPlayer().StopTurning();
+    }
+
+    public void ToggleSwitchPerspective()
+    {
+        LocalPlayerBehaviour.Instance.TogglePerspective();
     }
 }

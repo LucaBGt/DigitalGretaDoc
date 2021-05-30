@@ -14,12 +14,21 @@ public enum PlayerState
     Walking, Looking, UI
 }
 
+public enum PerspectiveMode
+{
+    FirstPerson,
+    ThirdPerson,
+}
+
 [DefaultExecutionOrder(-100)]
 public class LocalPlayerBehaviour : MonoBehaviour
 {
     private static LocalPlayerBehaviour instance;
 
     [SerializeField] NavMeshAgent agent;
+
+    private PerspectiveMode perspective;
+    [SerializeField] GameObject firstPersonCam, thirdPersonCam;
 
     [Header("Inputs")]
     float turnInput;
@@ -144,6 +153,14 @@ public class LocalPlayerBehaviour : MonoBehaviour
     private void ClickOnLooking(RaycastHit hit)
     {
         ClickOnWalking(hit);
+    }
+
+    public void TogglePerspective()
+    {
+        perspective = perspective == PerspectiveMode.FirstPerson ? PerspectiveMode.ThirdPerson : PerspectiveMode.FirstPerson;
+
+        firstPersonCam.SetActive(perspective == PerspectiveMode.FirstPerson);
+        thirdPersonCam.SetActive(perspective == PerspectiveMode.ThirdPerson);
     }
 
     private void FixedUpdate()
