@@ -7,6 +7,8 @@ using System;
 public class GretaNetworkProfiler : MonoBehaviour
 {
     [SerializeField] bool runDiagnostic;
+    [SerializeField] bool logExtensively;
+
     [SerializeField] int secondsTracked;
     [SerializeField] Rect outRect, inRect;
 
@@ -74,7 +76,8 @@ public class GretaNetworkProfiler : MonoBehaviour
     {
         if (!runDiagnostic) return;
 
-        Debug.Log($"Recv {obj.bytes}b: {obj.message}");
+        if (logExtensively)
+            Debug.Log($"Recv {obj.bytes}b: {obj.message}");
         inSeconds[GetCurrentIndex()].Bytes += obj.bytes;
 
         int bytes = GetBytesRecievedThisSecond();
@@ -86,7 +89,8 @@ public class GretaNetworkProfiler : MonoBehaviour
     {
         if (!runDiagnostic) return;
 
-        Debug.Log($"Sent {obj.bytes}b: {obj.message}");
+        if (logExtensively)
+            Debug.Log($"Sent {obj.bytes}b: {obj.message}");
         outSeconds[GetCurrentIndex()].Bytes += obj.bytes;
 
         int bytes = GetBytesSentThisSecond();
@@ -130,7 +134,7 @@ public class GretaNetworkProfiler : MonoBehaviour
 
         for (int i = 0; i < secondsTracked; i++)
         {
-            ProfiledSecond ps = outSeconds[i];
+            ProfiledSecond ps = arr[i];
             float h = height * ((float)ps.Bytes / max);
             float y = rect.y - h;
             Rect r = new Rect(rect.x + width * i, y, width, h);
