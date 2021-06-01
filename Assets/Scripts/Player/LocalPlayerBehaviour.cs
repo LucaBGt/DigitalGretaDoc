@@ -47,7 +47,6 @@ public class LocalPlayerBehaviour : MonoBehaviour
         {
             state = value;
             ChangePlayerState?.Invoke(state);
-            Debug.Log($"New State: {value}");
         }
     }
 

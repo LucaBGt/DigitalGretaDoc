@@ -26,24 +26,20 @@ public class UIHandler : MonoBehaviour, IPlayerUI, IPerspectiveToggleUI
 
     public void StartTurnLeft()
     {
-        Debug.Log("Start Turn Left");
         GetLocalPlayer().TurnLeft();
     }
 
     public void StartTurnRight()
     {
-        Debug.Log("Start Turn Right");
         GetLocalPlayer().TurnRight();
     }
     public void EndTurnLeft()
     {
-        Debug.Log("End Turn Left");
         GetLocalPlayer().StopTurning();
     }
 
     public void EndTurnRight()
     {
-        Debug.Log("End Turn Right");
         GetLocalPlayer().StopTurning();
     }
 
