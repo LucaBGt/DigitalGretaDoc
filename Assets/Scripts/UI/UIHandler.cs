@@ -49,6 +49,6 @@ public class UIHandler : MonoBehaviour, IPlayerUI, IPerspectiveToggleUI
 
     public void ToggleSwitchPerspective()
     {
-        LocalPlayerBehaviour.Instance.TogglePerspective();
+        GetLocalPlayer().TogglePerspective();
     }
 }

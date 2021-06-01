@@ -27,16 +27,15 @@ public class LocalPlayerBehaviour : MonoBehaviour
 
     [SerializeField] NavMeshAgent agent;
 
-    private PerspectiveMode perspective;
     [SerializeField] GameObject firstPersonCam, thirdPersonCam;
 
     [Header("Inputs")]
-    float turnInput;
     [SerializeField] float sensetivity;
 
-    private PlayerState state;
-    //Local References
+    PlayerState state;
+    PerspectiveMode perspective;
     Camera camera;
+    float turnInput;
 
     public event System.Action<PlayerState> ChangePlayerState;
 
