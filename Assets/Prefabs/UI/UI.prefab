@@ -1136,6 +1136,7 @@ MonoBehaviour:
   stopButtonObject: {fileID: 4641074738885244214}
   mainMenu: {fileID: 6010716681150848579}
   characterSelection: {fileID: 2020021779423528288}
+  emojiUI: {fileID: 9108305316825796706}
   skipMainMenuInEditor: 0
 --- !u!223 &1367760969766636691
 Canvas:
@@ -1961,7 +1962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 987964637885706190, guid: 000a408aecaa9664ea3dcc3ec3326606, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1069135250843854337, guid: 000a408aecaa9664ea3dcc3ec3326606, type: 3}
       propertyPath: m_Pivot.x
@@ -2049,6 +2050,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 000a408aecaa9664ea3dcc3ec3326606, type: 3}
+--- !u!1 &9108305316825796706 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 987964637885706190, guid: 000a408aecaa9664ea3dcc3ec3326606, type: 3}
+  m_PrefabInstance: {fileID: 8345952923291172780}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &9008486987195373997 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1069135250843854337, guid: 000a408aecaa9664ea3dcc3ec3326606, type: 3}

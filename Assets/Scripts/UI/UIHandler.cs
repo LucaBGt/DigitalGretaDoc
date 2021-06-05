@@ -28,7 +28,7 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 {
     [SerializeField] GameObject doorUI;
     [SerializeField] GameObject stopButtonObject;
-    [SerializeField] GameObject mainMenu, characterSelection;
+    [SerializeField] GameObject mainMenu, characterSelection, emojiUI;
     [SerializeField] bool skipMainMenuInEditor;
 
     Door currentDoor = null;
@@ -40,12 +40,35 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
     {
         GetLocalPlayer().ChangePlayerState += OnPlayerStateChanged;
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         if (skipMainMenuInEditor)
             return;
-        #endif
+#endif
 
         EnterMainMenu();
+
+        GretaNetworkManager.Instance.ConnectionStateChanged += OnConnectionStateChanged;
+    }
+
+    private void OnDestroy()
+    {
+        if (GretaNetworkManager.Instance)
+            GretaNetworkManager.Instance.ConnectionStateChanged -= OnConnectionStateChanged;
+    }
+
+    private void OnConnectionStateChanged(GretaConnectionState obj)
+    {
+        Debug.Log(obj);
+        switch (obj)
+        {
+            case GretaConnectionState.Connected:
+                emojiUI.SetActive(true);
+                break;
+
+            case GretaConnectionState.Disconnected:
+                emojiUI.SetActive(false);
+                break;
+        }
     }
 
     private void OnPlayerStateChanged(PlayerState obj)

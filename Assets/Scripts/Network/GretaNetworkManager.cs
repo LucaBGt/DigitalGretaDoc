@@ -3,9 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+public enum GretaConnectionState
+{
+    Disconnected,
+    Connected
+}
+
 public class GretaNetworkManager : NetworkManager
 {
     private static GretaNetworkManager instance;
+
+
+    public bool IsConnected => NetworkClient.isConnected;
+
+    public event System.Action<GretaConnectionState> ConnectionStateChanged;
 
     public static GretaNetworkManager Instance => instance;
 
@@ -37,11 +48,20 @@ public class GretaNetworkManager : NetworkManager
         StartClient();
     }
 
+
+    public override void OnServerDisconnect(NetworkConnection conn)
+    {
+        base.OnServerDisconnect(conn);
+
+        //in case of testing with local host
+        ConnectionStateChanged?.Invoke(GretaConnectionState.Disconnected);
+    }
+
     public override void OnClientConnect(NetworkConnection conn)
     {
         //Connected 
-        Debug.Log("Connected " + conn);
         base.OnClientConnect(conn);
+        ConnectionStateChanged?.Invoke(GretaConnectionState.Connected);
     }
 
     public override void OnClientDisconnect(NetworkConnection conn)
@@ -49,7 +69,8 @@ public class GretaNetworkManager : NetworkManager
         base.OnClientDisconnect(conn);
 
         //Failed to connect
-        Debug.Log("Disconnected / Connection Failed: " + conn);
+        Debug.Log("Disconnected / Connection Failed");
+        ConnectionStateChanged?.Invoke(GretaConnectionState.Disconnected);
 
         //Fallback??? TODO
     }
