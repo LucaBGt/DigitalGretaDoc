@@ -1476,10 +1476,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3777504284529167521, guid: 08ce69894fefd144f9c992f9a5827116, type: 3}
-      propertyPath: m_text
-      value: "Username\u200B"
-      objectReference: {fileID: 0}
     - target: {fileID: 8484742604702497288, guid: 08ce69894fefd144f9c992f9a5827116, type: 3}
       propertyPath: uiHandler
       value: 
