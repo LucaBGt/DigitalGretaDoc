@@ -17,24 +17,16 @@ public class Door : MonoBehaviour, IInteractable
         animator = GetComponent<Animator>();
     }
 
-    public void ShowAnimation()
-    {
-        animator.SetBool("OpenDoor", true);
-    }
-
-    public void EndDoor()
-    {
-        animator.SetBool("OpenDoor", false);
-    }
-
     public void EnterInteraction()
     {
-        animator.SetBool(ANIM_OpenDoor,true);
+        animator.SetBool(ANIM_OpenDoor, true);
+        UIHandler.Instance.OpenDoor(this);
     }
 
     public void ExitInteraction()
     {
         animator.SetBool(ANIM_OpenDoor, false);
+        UIHandler.Instance.CloseDoor(this);
     }
 
     public Vector3 GetInteractPosition()

@@ -31,7 +31,6 @@ public class DoorInteractionBehaviour : MonoBehaviour
     //Hides the Door UI
     public void EndDoor()
     {
-        currentDoor.EndDoor();
         doorUI.interactable = false;
         doorUI.blocksRaycasts = false;
 

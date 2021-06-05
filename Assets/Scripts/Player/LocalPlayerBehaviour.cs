@@ -24,10 +24,8 @@ public enum PerspectiveMode
 }
 
 [DefaultExecutionOrder(-100)]
-public class LocalPlayerBehaviour : MonoBehaviour
+public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
 {
-    private static LocalPlayerBehaviour instance;
-
     [SerializeField] NavMeshAgent agent;
 
     [SerializeField] GameObject firstPersonCam, thirdPersonCam;
@@ -44,7 +42,6 @@ public class LocalPlayerBehaviour : MonoBehaviour
 
     public event System.Action<PlayerState> ChangePlayerState;
 
-    public static LocalPlayerBehaviour Instance => instance;
     public PlayerState State
     {
         get => state;
@@ -52,19 +49,6 @@ public class LocalPlayerBehaviour : MonoBehaviour
         {
             state = value;
             ChangePlayerState?.Invoke(state);
-        }
-    }
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Debug.LogError("Spawned Second Instance of LocalPlayer");
-            Destroy(gameObject);
         }
     }
 

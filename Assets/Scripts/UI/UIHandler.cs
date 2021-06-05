@@ -16,8 +16,20 @@ public interface IPlayerUI
     void EndTurnLeft();
 }
 
-public class UIHandler : MonoBehaviour, IPlayerUI, IPerspectiveToggleUI
+public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveToggleUI
 {
+    [SerializeField] GameObject doorUI;
+
+
+    public void OpenDoor(Door d)
+    {
+        doorUI.SetActive(true);
+    }
+
+    public void CloseDoor(Door d)
+    {
+        doorUI.SetActive(false);
+    }
 
     private LocalPlayerBehaviour GetLocalPlayer()
     {
