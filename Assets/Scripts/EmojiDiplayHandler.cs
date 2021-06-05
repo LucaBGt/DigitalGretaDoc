@@ -8,22 +8,16 @@ public class EmojiDiplayHandler : NetworkBehaviour
     [SerializeField] EmojiObject prefab;
     [SerializeField] Vector3 offset;
     [SerializeField] List<Sprite> emojis;
+    [SerializeField] Transform parent;
 
     private static EmojiDiplayHandler instance;
 
     public static EmojiDiplayHandler Instance => instance;
 
-    protected virtual void Awake()
+    public override void OnStartLocalPlayer()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Debug.LogError($"Spawned Second Instance of {GetType()}, destroying");
-            Destroy(gameObject);
-        }
+        instance = this;
+        Debug.Log("Setup local Emoji Display Handler");
     }
 
     public void SpawnEmoji(Vector3 playerPosition, Sprite emojiSprite)
@@ -35,6 +29,7 @@ public class EmojiDiplayHandler : NetworkBehaviour
     [Command]
     private void CMD_SpawnEmoji(Vector3 playerPosition, int emojiSpriteIndex)
     {
+        Debug.Log(nameof(CMD_SpawnEmoji));
         RPC_SpawnEmoji(playerPosition, emojiSpriteIndex);
     }
 
@@ -42,7 +37,7 @@ public class EmojiDiplayHandler : NetworkBehaviour
     private void RPC_SpawnEmoji(Vector3 playerPosition, int emojiSpriteIndex)
     {
         Sprite emojiSprite = emojis[emojiSpriteIndex];
-        EmojiObject emojiObject = Instantiate(prefab, playerPosition + offset, Quaternion.identity, transform);
+        EmojiObject emojiObject = Instantiate(prefab, playerPosition + offset, Quaternion.identity, parent);
         emojiObject.SetSprite(emojiSprite);
     }
 }
