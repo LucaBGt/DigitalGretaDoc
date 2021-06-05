@@ -510,6 +510,10 @@ MonoBehaviour:
   thirdPersonCam: {fileID: 3065789691701747288}
   orthoPersonCam: {fileID: 4255428608194010283}
   targetPreviewPrefab: {fileID: 8195937884479528720, guid: 291f4e080cf2f40e3989820c317f9556, type: 3}
+  raycastLayer:
+    serializedVersion: 2
+    m_Bits: 51
+  raycastMaxDistance: 50
   sensetivity: 90
 --- !u!114 &1816938680578654190
 MonoBehaviour:

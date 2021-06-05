@@ -33,6 +33,9 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
 
     [SerializeField] GameObject targetPreviewPrefab;
 
+    [SerializeField] LayerMask raycastLayer;
+    [SerializeField] float raycastMaxDistance;
+
     [Header("Inputs")]
     [SerializeField] float sensetivity;
 
@@ -148,7 +151,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
             RaycastHit hit;
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, raycastMaxDistance, raycastLayer.value, QueryTriggerInteraction.Ignore))
             {
                 Transform objectHit = hit.transform;
                 ApplyClickOn(hit);
