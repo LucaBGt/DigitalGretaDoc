@@ -20,15 +20,26 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 {
     [SerializeField] GameObject doorUI;
 
+    Door currentDoor = null;
 
     public void OpenDoor(Door d)
     {
         doorUI.SetActive(true);
+        currentDoor = d;
     }
 
     public void CloseDoor(Door d)
     {
         doorUI.SetActive(false);
+        currentDoor = null;
+    }
+
+    public void ForceCloseDoor()
+    {
+        if(currentDoor != null)
+        {
+            currentDoor.CancelInteraction();
+        }
     }
 
     private LocalPlayerBehaviour GetLocalPlayer()

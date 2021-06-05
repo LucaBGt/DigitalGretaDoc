@@ -70,9 +70,9 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
             Debug.Log("Reached Destination");
 
             if (currentInteractable != null)
-            {
                 state = PlayerState.RotatingToTarget;
-            }
+            else
+                state = PlayerState.Looking;
         }
 
         if (state == PlayerState.RotatingToTarget)
@@ -102,8 +102,18 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
         {
             //target reached
             currentInteractable.EnterInteraction();
+            if (currentInteractable is ICancallableInteractable cancallableInteractable)
+            {
+                cancallableInteractable.Cancel += OnInteractableCancelInteraction;
+            }
+
             state = PlayerState.InInteraction;
         }
+    }
+
+    private void OnInteractableCancelInteraction()
+    {
+        QuitInteraction();
     }
 
     private bool ReachedDestination()
@@ -132,14 +142,16 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
             if (Physics.Raycast(ray, out hit))
             {
                 Transform objectHit = hit.transform;
-                ClickOnWalking(hit);
+                ApplyClickOn(hit);
             }
         }
     }
 
-    private void ClickOnWalking(RaycastHit hit)
+    private void ApplyClickOn(RaycastHit hit)
     {
-        if (hit.transform.TryGetComponent(out IInteractable interactable))
+        QuitInteraction();
+
+        if (hit.transform.TryGetComponent(out ICancallableInteractable interactable))
         {
             GoTo(interactable.GetInteractPosition());
             currentInteractable = interactable;
@@ -160,7 +172,6 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
 
     private void StopMoving()
     {
-        State = PlayerState.Looking;
         agent.isStopped = true;
     }
 
@@ -201,6 +212,11 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
         if (state == PlayerState.InInteraction && currentInteractable != null)
         {
             currentInteractable.ExitInteraction();
+            if (currentInteractable is ICancallableInteractable cancallableInteractable)
+            {
+                cancallableInteractable.Cancel -= OnInteractableCancelInteraction;
+            }
+            state = PlayerState.Looking;
         }
         currentInteractable = null;
     }
@@ -236,14 +252,4 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
         return NormalizedAngleRange(offset);
     }
 
-    private static float AngleDirectionTowards(float start, float target)
-    {
-        float offset = target - start;
-        if (offset > 180)
-            return -1;
-        else if (offset < -180)
-            return 1;
-
-        return Mathf.Sign(offset);
-    }
 }

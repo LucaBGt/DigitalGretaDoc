@@ -14,3 +14,8 @@ public interface IInteractable
     float GetInteractYRotation();
 }
 
+public interface ICancallableInteractable : IInteractable
+{
+    event System.Action Cancel;
+}
+

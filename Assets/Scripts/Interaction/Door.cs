@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour, IInteractable
+public class Door : MonoBehaviour, ICancallableInteractable
 {
     private static readonly int ANIM_OpenDoor = Animator.StringToHash("OpenDoor");
 
@@ -11,6 +12,8 @@ public class Door : MonoBehaviour, IInteractable
     Animator animator;
 
     public string url;
+
+    public event Action Cancel;
 
     private void Start()
     {
@@ -32,6 +35,11 @@ public class Door : MonoBehaviour, IInteractable
     public Vector3 GetInteractPosition()
     {
         return goalPosition.position;
+    }
+
+    public void CancelInteraction()
+    {
+        Cancel?.Invoke();
     }
 
     public float GetInteractYRotation()
