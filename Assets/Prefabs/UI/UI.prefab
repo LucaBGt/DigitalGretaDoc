@@ -1636,7 +1636,7 @@ PrefabInstance:
       objectReference: {fileID: 1695169179790732247}
     - target: {fileID: 2176995533139212548, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ForceCloseDoor
+      value: CloseDoorFromMinimap
       objectReference: {fileID: 0}
     - target: {fileID: 2176995533139212548, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

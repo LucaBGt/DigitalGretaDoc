@@ -22,7 +22,8 @@ public enum UIState
     InGame,
     InMainMenu,
     InCharacterSelection,
-    InMinimap
+    InMinimap,
+    VisitCard
 }
 
 public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveToggleUI
@@ -102,6 +103,7 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
         characterSelection.SetActive(uiState == UIState.InCharacterSelection);
         minimapUI.SetActive(uiState == UIState.InMinimap);
         ingameUI.SetActive(uiState == UIState.InGame);
+        doorUI.SetActive(uiState == UIState.VisitCard);
         emojiUI.SetActive(uiState == UIState.InGame && GretaNetworkManager.Instance.IsConnected);
     }
 
@@ -119,13 +121,15 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 
     public void OpenDoor(Door d)
     {
-        doorUI.SetActive(true);
+        uiState = UIState.VisitCard;
+        UpdateVisuals();
         currentDoor = d;
     }
 
     public void CloseDoor(Door d)
     {
-        doorUI.SetActive(false);
+        uiState = UIState.InGame;
+        UpdateVisuals();
         currentDoor = null;
     }
 
@@ -137,10 +141,10 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
         }
     }
 
-    public void ForceCloseDoor()
+    public void CloseDoorFromMinimap()
     {
-        doorUI.SetActive(false);
-        Debug.Log(nameof(ForceCloseDoor));
+        uiState = UIState.InMinimap;
+        UpdateVisuals();
 
         if (currentDoor != null)
         {

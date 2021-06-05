@@ -21,6 +21,7 @@ public enum PerspectiveMode
 {
     FirstPerson,
     ThirdPerson,
+    OrthoCam
 }
 
 [DefaultExecutionOrder(-100)]
@@ -28,7 +29,8 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
 {
     [SerializeField] NavMeshAgent agent;
 
-    [SerializeField] GameObject firstPersonCam, thirdPersonCam;
+    [SerializeField] GameObject firstPersonCam, thirdPersonCam, orthoPersonCam;
+
     [SerializeField] GameObject targetPreviewPrefab;
 
     [Header("Inputs")]
@@ -59,6 +61,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
         camera = Camera.main;
         targetPreview = Instantiate(targetPreviewPrefab);
         targetPreview.SetActive(false);
+        orthoPersonCam.transform.parent = null;
     }
 
     void Update()
@@ -190,10 +193,11 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
 
     public void TogglePerspective()
     {
-        perspective = (PerspectiveMode)((((int)perspective) + 1) % 2);
+        perspective = (PerspectiveMode)((((int)perspective) + 1) % 3);
 
         firstPersonCam.SetActive(perspective == PerspectiveMode.FirstPerson);
         thirdPersonCam.SetActive(perspective == PerspectiveMode.ThirdPerson);
+        orthoPersonCam.SetActive(perspective == PerspectiveMode.OrthoCam);
     }
 
     private void FixedUpdate()
