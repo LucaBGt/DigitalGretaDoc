@@ -22,7 +22,8 @@ public class EmojiUI : MonoBehaviour
 
     public void SendEmoji(Sprite sprite)
     {
-        Debug.Log($"Display Emoji{sprite.name}");
+        Vector3 playerPosition = LocalPlayerBehaviour.Instance.transform.position;
+        EmojiDiplayHandler.Instance.SpawnEmoji(playerPosition ,sprite);
     }
 
     private void Update()
