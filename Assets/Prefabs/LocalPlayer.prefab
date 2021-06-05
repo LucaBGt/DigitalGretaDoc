@@ -372,7 +372,7 @@ MonoBehaviour:
   agent: {fileID: 7294639704141535350}
   firstPersonCam: {fileID: 6300005762899159948}
   thirdPersonCam: {fileID: 3065789691701747288}
-  sensetivity: 1
+  sensetivity: 60
 --- !u!195 &7294639704141535350
 NavMeshAgent:
   m_ObjectHideFlags: 0

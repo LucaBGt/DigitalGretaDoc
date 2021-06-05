@@ -5,7 +5,12 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void Interact();
+    string name { get; }
+    void EnterInteraction();
+    void ExitInteraction();
+
     Vector3 GetInteractPosition();
+
+    float GetInteractYRotation();
 }
 

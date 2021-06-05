@@ -7,11 +7,14 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-
+using System;
 
 public enum PlayerState
 {
-    Walking, Looking, UI
+    Walking,
+    Looking,
+    RotatingToTarget,
+    InInteraction
 }
 
 public enum PerspectiveMode
@@ -34,6 +37,8 @@ public class LocalPlayerBehaviour : MonoBehaviour
 
     PlayerState state;
     PerspectiveMode perspective;
+    IInteractable currentInteractable = null;
+
     Camera camera;
     float turnInput;
 
@@ -70,7 +75,6 @@ public class LocalPlayerBehaviour : MonoBehaviour
 
     void Update()
     {
-        //If the mouse button is clicked/The Screen is tapped...
         if (Input.GetMouseButtonDown(0))
         {
             OnClick();
@@ -79,13 +83,48 @@ public class LocalPlayerBehaviour : MonoBehaviour
         if (ReachedDestination())
         {
             StopMoving();
+            Debug.Log("Reached Destination");
+
+            if (currentInteractable != null)
+            {
+                state = PlayerState.RotatingToTarget;
+            }
         }
 
+        if (state == PlayerState.RotatingToTarget)
+            UpdateRotatingToTarget();
+
+
+    }
+
+    private void UpdateRotatingToTarget()
+    {
+        if (currentInteractable == null)
+        {
+            Debug.Log("Interactable null but state requires interactable.");
+            return;
+        }
+
+        float target = NormalizedAngleRange(currentInteractable.GetInteractYRotation());
+        float current = NormalizedAngleRange(transform.eulerAngles.y);
+
+        float dir = OffsetBetweenAngles(current, target);
+
+        dir = Mathf.Clamp(dir, -1, 1);
+        float movement = dir * Time.deltaTime * sensetivity;
+        transform.Rotate(0, movement, 0);
+
+        if (Mathf.Abs(dir) < 0.01f)
+        {
+            //target reached
+            currentInteractable.EnterInteraction();
+            state = PlayerState.InInteraction;
+        }
     }
 
     private bool ReachedDestination()
     {
-        if (!agent.pathPending)
+        if (!agent.pathPending && !agent.isStopped)
         {
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
@@ -109,14 +148,7 @@ public class LocalPlayerBehaviour : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 Transform objectHit = hit.transform;
-                if (State == PlayerState.Looking)
-                {
-                    ClickOnLooking(hit);
-                }
-                else if (State == PlayerState.Walking)
-                {
-                    ClickOnWalking(hit);
-                }
+                ClickOnWalking(hit);
             }
         }
     }
@@ -126,10 +158,12 @@ public class LocalPlayerBehaviour : MonoBehaviour
         if (hit.transform.TryGetComponent(out IInteractable interactable))
         {
             GoTo(interactable.GetInteractPosition());
+            currentInteractable = interactable;
         }
         else
         {
             GoTo(hit.point);
+            currentInteractable = null;
         }
     }
 
@@ -142,20 +176,13 @@ public class LocalPlayerBehaviour : MonoBehaviour
 
     private void StopMoving()
     {
-        if (State != PlayerState.Walking) return;
-
         State = PlayerState.Looking;
         agent.isStopped = true;
     }
 
-    private void ClickOnLooking(RaycastHit hit)
-    {
-        ClickOnWalking(hit);
-    }
-
     public void TogglePerspective()
     {
-        perspective = perspective == PerspectiveMode.FirstPerson ? PerspectiveMode.ThirdPerson : PerspectiveMode.FirstPerson;
+        perspective = (PerspectiveMode)((((int)perspective) + 1) % 2);
 
         firstPersonCam.SetActive(perspective == PerspectiveMode.FirstPerson);
         thirdPersonCam.SetActive(perspective == PerspectiveMode.ThirdPerson);
@@ -163,26 +190,19 @@ public class LocalPlayerBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (State != PlayerState.UI)
-            transform.Rotate(0, turnInput * sensetivity, 0);
-    }
-
-    private IEnumerator turnToDoor()
-    {
-        State = PlayerState.UI;
-        //LeanTween.rotate(this.gameObject, currentDoor.goalPosition.rotation.eulerAngles, 1);
-        yield return new WaitForSeconds(1f);
-        State = PlayerState.Walking;
+        transform.Rotate(0, turnInput * sensetivity * Time.fixedDeltaTime, 0);
     }
 
     public void TurnLeft()
     {
+        QuitInteraction();
         StopMoving();
         turnInput = -1;
     }
 
     public void TurnRight()
     {
+        QuitInteraction();
         StopMoving();
         turnInput = 1;
     }
@@ -190,6 +210,15 @@ public class LocalPlayerBehaviour : MonoBehaviour
     public void StopTurning()
     {
         turnInput = 0;
+    }
+
+    private void QuitInteraction()
+    {
+        if (state == PlayerState.InInteraction && currentInteractable != null)
+        {
+            currentInteractable.ExitInteraction();
+        }
+        currentInteractable = null;
     }
 
 
@@ -202,4 +231,35 @@ public class LocalPlayerBehaviour : MonoBehaviour
         return results.Count > 0;
     }
 
+
+    /// <summary>
+    /// Returns range -180 to +180
+    /// </summary>
+    private static float NormalizedAngleRange(float f)
+    {
+        f = f % 360;
+        if (f > 180)
+            return f - 360;
+        else if (f < -180)
+            return f + 360;
+
+        return f;
+    }
+
+    private static float OffsetBetweenAngles(float start, float target)
+    {
+        float offset = target - start;
+        return NormalizedAngleRange(offset);
+    }
+
+    private static float AngleDirectionTowards(float start, float target)
+    {
+        float offset = target - start;
+        if (offset > 180)
+            return -1;
+        else if (offset < -180)
+            return 1;
+
+        return Mathf.Sign(offset);
+    }
 }
