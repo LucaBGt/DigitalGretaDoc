@@ -28,13 +28,11 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
     public void EnterInteraction()
     {
-        animator.SetBool(ANIM_OpenDoor, true);
         UIHandler.Instance.OpenDoor(this);
     }
 
     public void ExitInteraction()
     {
-        animator.SetBool(ANIM_OpenDoor, false);
         UIHandler.Instance.CloseDoor(this);
     }
 
@@ -61,5 +59,13 @@ public class Door : MonoBehaviour, ICancallableInteractable
         return rot.y;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        animator.SetBool(ANIM_OpenDoor, true);
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        animator.SetBool(ANIM_OpenDoor, false);
+    }
 }
