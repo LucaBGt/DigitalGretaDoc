@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Settings : SingletonBehaviour<Settings>
 {
+    const string DEFAULT_USERNAME = "Greta";
+
     private GretaSettings generalSettings;
 
-    private string username = "Greta";
+    private string username;
     private int userSkin;
 
     public int UserSkinID => userSkin;
@@ -40,6 +42,9 @@ public class Settings : SingletonBehaviour<Settings>
 
         username = PlayerPrefs.GetString(nameof(username));
         userSkin = PlayerPrefs.GetInt(nameof(userSkin));
+
+        if (string.IsNullOrEmpty(username))
+            username = DEFAULT_USERNAME;
     }
 
 

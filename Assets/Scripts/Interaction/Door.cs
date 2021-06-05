@@ -8,12 +8,18 @@ public class Door : MonoBehaviour, ICancallableInteractable
     private static readonly int ANIM_OpenDoor = Animator.StringToHash("OpenDoor");
 
     [SerializeField] Transform goalPosition;
+
+    [SerializeField] string companyName;
     [SerializeField] string url;
+    [SerializeField] Sprite logo;
 
     Animator animator;
 
 
     public event Action Cancel;
+
+    public string CompanyName => companyName;
+    public Sprite Logo => logo;
 
     private void Start()
     {

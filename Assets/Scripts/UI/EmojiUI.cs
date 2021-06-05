@@ -9,6 +9,7 @@ public class EmojiUI : MonoBehaviour
     [SerializeField] Vector2 emojisSizeTarget;
     [SerializeField] AnimationCurve scaleUpCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     [SerializeField] float animationSpeed = 4f;
+    [SerializeField] float useCooldown;
 
     float emojisScaleFactorCurrent = 0;
     float emojisScaleFactorTarget = 0;
@@ -23,7 +24,26 @@ public class EmojiUI : MonoBehaviour
     public void SendEmoji(Sprite sprite)
     {
         Vector3 playerPosition = LocalPlayerBehaviour.Instance.transform.position;
-        EmojiDiplayHandler.Instance.SpawnEmoji(playerPosition ,sprite);
+        EmojiDiplayHandler.Instance.SpawnEmoji(playerPosition, sprite);
+        StartCoroutine(DisableRoutine());
+    }
+
+    private IEnumerator DisableRoutine()
+    {
+        SetEmojisInteractable(false);
+        yield return new WaitForSeconds(useCooldown);
+        SetEmojisInteractable(true);
+    }
+
+
+    private void SetEmojisInteractable(bool interactable)
+    {
+        for (int i = 0; i < emojis.childCount; i++)
+        {
+            var e = emojis.GetChild(i).GetComponent<Button>();
+            if(e!= null)
+                e.interactable = interactable;
+        }
     }
 
     private void Update()

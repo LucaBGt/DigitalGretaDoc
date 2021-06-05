@@ -13,9 +13,6 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
     [SerializeField] TextMeshPro playerNameText;
     [SerializeField] Renderer playerSkin;
 
-    [SyncVar(hook = nameof(OnNameChanged))]
-    [SerializeField] string playerName;
-
     Camera cam;
 
     public event System.Action<PlayerState> NetworkedPlayerStateChanged;
@@ -45,10 +42,17 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
     }
 
     [Command]
-    public void CMD_SetupRemotePlayer(string _name, int skinId)
+    private void CMD_SetupRemotePlayer(string _name, int skinId)
     {
         // player info sent to server, then server updates sync vars which handles it on all clients
-        playerName = _name;
+        RPC_SetupRemotePlayer(_name, skinId);
+    }
+
+
+    [ClientRpc]
+    private void RPC_SetupRemotePlayer(string _name, int skinId)
+    {
+        playerNameText.text = _name;
 
         if (skinId < Settings.Instance.SkinsCount)
         {
@@ -61,11 +65,6 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
         }
     }
 
-    void OnNameChanged(string _Old, string _New)
-    {
-        playerNameText.text = playerName;
-
-    }
 
     public override void OnStartLocalPlayer()
     {

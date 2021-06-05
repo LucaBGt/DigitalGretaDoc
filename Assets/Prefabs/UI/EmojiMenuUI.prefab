@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 1069135250843854337}
   - component: {fileID: 1746132997901436812}
   m_Layer: 0
-  m_Name: EmojiUI
+  m_Name: EmojiMenuUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -209,6 +209,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   animationSpeed: 4
+  useCooldown: 0.5
 --- !u!1 &2431537802291192512
 GameObject:
   m_ObjectHideFlags: 0

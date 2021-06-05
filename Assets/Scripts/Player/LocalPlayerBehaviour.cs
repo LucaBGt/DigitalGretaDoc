@@ -206,6 +206,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
         QuitInteraction();
         StopMoving();
         turnInput = -1;
+        State = PlayerState.Looking;
     }
 
     public void TurnRight()
@@ -213,6 +214,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
         QuitInteraction();
         StopMoving();
         turnInput = 1;
+        State = PlayerState.Looking;
     }
 
     public void StopTurning()
