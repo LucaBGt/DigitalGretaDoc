@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Settings : SingletonBehaviour<Settings>
 {
-    [SerializeField] Texture2D[] skins;
+    private GretaSettings generalSettings;
 
     private string username = "Greta";
     private int userSkin;
@@ -12,11 +12,13 @@ public class Settings : SingletonBehaviour<Settings>
     public int UserSkinID => userSkin;
     public string Username => username;
 
-    public Texture2D[] Skins => skins;
+    public int SkinsCount => generalSettings.Skins.Length;
+    public Texture2D[] Skins => generalSettings.Skins;
+    public Material[] SkinsMaterials => generalSettings.SkinsMaterials;
 
     public int ChangeSkinID(int id)
     {
-        userSkin = (id + skins.Length) % skins.Length;
+        userSkin = (id + SkinsCount) % SkinsCount;
         return userSkin;
     }
 
@@ -29,6 +31,13 @@ public class Settings : SingletonBehaviour<Settings>
     protected override void Awake()
     {
         base.Awake();
+        generalSettings = Resources.Load<GretaSettings>("Settings");
+        if(generalSettings == null)
+        {
+            Debug.LogError("Failed to load Greta Settings!");
+            generalSettings = ScriptableObject.CreateInstance<GretaSettings>();
+        }
+
         username = PlayerPrefs.GetString(nameof(username));
         userSkin = PlayerPrefs.GetInt(nameof(userSkin));
     }

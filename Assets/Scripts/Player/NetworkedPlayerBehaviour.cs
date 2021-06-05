@@ -11,6 +11,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
 
     [Header("Player Name")]
     [SerializeField] TextMeshPro playerNameText;
+    [SerializeField] Renderer playerSkin;
 
     [SyncVar(hook = nameof(OnNameChanged))]
     [SerializeField] string playerName;
@@ -44,21 +45,31 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
     }
 
     [Command]
-    public void CmdSetupPlayer(string _name)
+    public void CMD_SetupRemotePlayer(string _name, int skinId)
     {
         // player info sent to server, then server updates sync vars which handles it on all clients
         playerName = _name;
+
+        if (skinId < Settings.Instance.SkinsCount)
+        {
+            playerSkin.sharedMaterial = Settings.Instance.SkinsMaterials[skinId];
+        }
+        else
+        {
+            Debug.LogWarning("Passed skinID not present in this version. Selecting default");
+            playerSkin.sharedMaterial = Settings.Instance.SkinsMaterials[0];
+        }
     }
 
     void OnNameChanged(string _Old, string _New)
     {
         playerNameText.text = playerName;
+
     }
 
     public override void OnStartLocalPlayer()
     {
-        string playerName = "Guest";
-        CmdSetupPlayer(playerName);
+        CMD_SetupRemotePlayer(Settings.Instance.Username, Settings.Instance.UserSkinID);
 
         LocalPlayerBehaviour.Instance.ChangePlayerState += OnLocalChangePlayerState;
     }
@@ -86,7 +97,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
         else
         {
             //remote player update
-            playerNameText.transform.forward = transform.position - cam.transform.position;
         }
+        playerNameText.transform.forward = transform.position - cam.transform.position;
     }
 }
