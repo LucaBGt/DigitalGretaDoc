@@ -28,24 +28,24 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 {
     [SerializeField] GameObject doorUI;
     [SerializeField] GameObject stopButtonObject;
-    [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject mainMenu, characterSelection;
     [SerializeField] bool skipMainMenuInEditor;
 
     Door currentDoor = null;
     UIState uiState;
+
     public bool InLockedUIMode => uiState != UIState.InGame;
 
     private void Start()
     {
         GetLocalPlayer().ChangePlayerState += OnPlayerStateChanged;
 
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         if (skipMainMenuInEditor)
             return;
-#endif
+        #endif
 
-        mainMenu.SetActive(true);
-        uiState = UIState.InMainMenu;
+        EnterMainMenu();
     }
 
     private void OnPlayerStateChanged(PlayerState obj)
@@ -54,17 +54,27 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
         stopButtonObject.SetActive(obj != PlayerState.Looking && obj != PlayerState.InInteraction);
     }
 
+    public void EnterMainMenu()
+    {
+        mainMenu.SetActive(true);
+        characterSelection.SetActive(false);
+        uiState = UIState.InMainMenu;
+    }
+
     public void EnterCharacterSelection()
     {
+        mainMenu.SetActive(false);
+        characterSelection.SetActive(true);
         uiState = UIState.InCharacterSelection;
     }
 
     public void StartGame()
     {
-        if (uiState != UIState.InCharacterSelection) return;
+        mainMenu.SetActive(false);
+        characterSelection.SetActive(false);
+        uiState = UIState.InGame;
 
         GretaNetworkManager.Instance?.GretaJoin();
-        uiState = UIState.InGame;
     }
 
     public void OpenDoor(Door d)

@@ -399,6 +399,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc32ebb8cc560fe479b77ed31212e991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skins:
+  - {fileID: 2800000, guid: 1fa6ad83d3eb2c340aca5cca836fe93e, type: 3}
+  - {fileID: 2800000, guid: 7361b01f18b1da24a99373410f1e0acd, type: 3}
+  - {fileID: 2800000, guid: 100705ef54a406b4484f1b026f7ab046, type: 3}
 --- !u!195 &7294639704141535350
 NavMeshAgent:
   m_ObjectHideFlags: 0
