@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 2742805208401927702}
   - component: {fileID: 4935715775532945284}
   - component: {fileID: 1666875828993850395}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: NetworkedPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
