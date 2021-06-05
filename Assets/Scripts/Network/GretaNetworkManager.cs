@@ -5,32 +5,36 @@ using Mirror;
 
 public class GretaNetworkManager : NetworkManager
 {
-    [Header("Greta")]
-    [SerializeField] bool editorStartsHost;
+    private static GretaNetworkManager instance;
 
-    public override void Start()
+    public static GretaNetworkManager Instance => instance;
+
+    public override void Awake()
     {
-
-#if UNITY_SERVER
-               StartServer();
-#else
-
-
-#if UNITY_EDITOR
-        if (editorStartsHost)
+        if (instance == null)
         {
-            StartHost();
+            instance = this;
+            base.Awake();
         }
         else
         {
-            StartClient();
+            Debug.LogError($"Spawned Second Instance of {GetType()}, destroying");
+            Destroy(gameObject);
         }
+    }
 
-#else
+
+    public override void Start()
+    {
+        //override default bool
+        #if UNITY_SERVER
+               StartServer();
+        #endif
+    }
+
+    public void GretaJoin()
+    {
         StartClient();
-#endif
-#endif
-
     }
 
     public override void OnClientConnect(NetworkConnection conn)

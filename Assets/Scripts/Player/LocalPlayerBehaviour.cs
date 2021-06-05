@@ -59,7 +59,9 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        bool locked = UIHandler.Instance ? UIHandler.Instance.InLockedUIMode : false;
+
+        if (!locked && Input.GetMouseButtonDown(0))
         {
             OnClick();
         }
