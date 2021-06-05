@@ -6,6 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimationHandler : MonoBehaviour
 {
+    private static readonly int ANIM_Walk = Animator.StringToHash("Walk");
+    private static readonly int ANIM_Idle = Animator.StringToHash("Idle");
+
     [SerializeField] NetworkedPlayerBehaviour networkedPlayer;
 
     Animator animator;
@@ -30,11 +33,11 @@ public class PlayerAnimationHandler : MonoBehaviour
         switch (state)
         {
             case PlayerState.Walking:
-                animator.SetTrigger("Walk");
+                animator.SetTrigger(ANIM_Walk);
                 break;
 
             default:
-                animator.SetTrigger("Idle");
+                animator.SetTrigger(ANIM_Idle);
                 break;
         }
     }

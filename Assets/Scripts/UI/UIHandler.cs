@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,8 +20,20 @@ public interface IPlayerUI
 public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveToggleUI
 {
     [SerializeField] GameObject doorUI;
+    [SerializeField] GameObject stopButtonObject;
 
     Door currentDoor = null;
+
+    private void Start()
+    {
+        GetLocalPlayer().ChangePlayerState += OnPlayerStateChanged;
+    }
+
+    private void OnPlayerStateChanged(PlayerState obj)
+    {
+        //stop not in looking or interaction
+        stopButtonObject.SetActive(obj != PlayerState.Looking && obj != PlayerState.InInteraction);
+    }
 
     public void OpenDoor(Door d)
     {
@@ -36,7 +49,7 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 
     public void ForceCloseDoor()
     {
-        if(currentDoor != null)
+        if (currentDoor != null)
         {
             currentDoor.CancelInteraction();
         }
@@ -64,6 +77,11 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
     public void EndTurnRight()
     {
         GetLocalPlayer().StopTurning();
+    }
+
+    public void Stop()
+    {
+        GetLocalPlayer().Stop();
     }
 
     public void ToggleSwitchPerspective()

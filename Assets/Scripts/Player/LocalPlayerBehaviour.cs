@@ -33,7 +33,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
     [Header("Inputs")]
     [SerializeField] float sensetivity;
 
-    PlayerState state;
+    PlayerState internal_State;
     PerspectiveMode perspective;
     IInteractable currentInteractable = null;
 
@@ -44,11 +44,11 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
 
     public PlayerState State
     {
-        get => state;
+        get => internal_State;
         set
         {
-            state = value;
-            ChangePlayerState?.Invoke(state);
+            internal_State = value;
+            ChangePlayerState?.Invoke(internal_State);
         }
     }
 
@@ -70,12 +70,12 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
             Debug.Log("Reached Destination");
 
             if (currentInteractable != null)
-                state = PlayerState.RotatingToTarget;
+                State = PlayerState.RotatingToTarget;
             else
-                state = PlayerState.Looking;
+                State = PlayerState.Looking;
         }
 
-        if (state == PlayerState.RotatingToTarget)
+        if (State == PlayerState.RotatingToTarget)
             UpdateRotatingToTarget();
 
 
@@ -107,7 +107,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
                 cancallableInteractable.Cancel += OnInteractableCancelInteraction;
             }
 
-            state = PlayerState.InInteraction;
+            State = PlayerState.InInteraction;
         }
     }
 
@@ -207,16 +207,22 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
         turnInput = 0;
     }
 
+    public void Stop()
+    {
+        StopMoving();
+        State = PlayerState.Looking;
+    }
+
     private void QuitInteraction()
     {
-        if (state == PlayerState.InInteraction && currentInteractable != null)
+        if (State == PlayerState.InInteraction && currentInteractable != null)
         {
             currentInteractable.ExitInteraction();
             if (currentInteractable is ICancallableInteractable cancallableInteractable)
             {
                 cancallableInteractable.Cancel -= OnInteractableCancelInteraction;
             }
-            state = PlayerState.Looking;
+            State = PlayerState.Looking;
         }
         currentInteractable = null;
     }
