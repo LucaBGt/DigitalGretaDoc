@@ -29,6 +29,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
     [SerializeField] NavMeshAgent agent;
 
     [SerializeField] GameObject firstPersonCam, thirdPersonCam;
+    [SerializeField] GameObject targetPreviewPrefab;
 
     [Header("Inputs")]
     [SerializeField] float sensetivity;
@@ -36,6 +37,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
     PlayerState internal_State;
     PerspectiveMode perspective;
     IInteractable currentInteractable = null;
+    GameObject targetPreview;
 
     Camera camera;
     float turnInput;
@@ -55,6 +57,8 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
     private void Start()
     {
         camera = Camera.main;
+        targetPreview = Instantiate(targetPreviewPrefab);
+        targetPreview.SetActive(false);
     }
 
     void Update()
@@ -170,11 +174,18 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
         agent.isStopped = false;
         agent.destination = point;
         State = PlayerState.Walking;
+
+        if (targetPreview)
+        {
+            targetPreview.SetActive(true);
+            targetPreview.transform.position = point;
+        }
     }
 
     private void StopMoving()
     {
         agent.isStopped = true;
+        targetPreview?.SetActive(false);
     }
 
     public void TogglePerspective()
