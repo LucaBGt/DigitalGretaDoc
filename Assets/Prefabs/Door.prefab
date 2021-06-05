@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 7219716374159777110}
   - component: {fileID: 7219716374159777111}
   - component: {fileID: 700063762169436709}
+  - component: {fileID: 2781353632834589559}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -149,7 +150,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goalPosition: {fileID: 8443432455894550162}
+  companyName: 
   url: http://www.zorc-media.com/Greta/ZorcMedia/stand_info.json
+  logo: {fileID: 0}
 --- !u!65 &700063762169436709
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -163,6 +166,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 2.5, z: 1.3}
   m_Center: {x: 0, y: 1.25, z: 0}
+--- !u!135 &2781353632834589559
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7561820969410519053}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7860189900039690493
 GameObject:
   m_ObjectHideFlags: 0
