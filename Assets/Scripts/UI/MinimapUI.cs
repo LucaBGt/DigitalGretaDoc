@@ -6,6 +6,9 @@ public class MinimapUI : MonoBehaviour
 {
 
     [SerializeField] MinimapDoorIndicator doorIndicatorPrefab;
+    [SerializeField] RectTransform mapTopLeft, mapBotRight;
+    [SerializeField] Transform realTopLeft, realBotRight;
+    [SerializeField] Transform playerIndicator;
 
     MinimapDoorIndicator[] indicators;
 
@@ -23,7 +26,33 @@ public class MinimapUI : MonoBehaviour
         {
             MinimapDoorIndicator indicator = Instantiate(doorIndicatorPrefab, transform);
             indicator.Setup(doors[i]);
+            RectTransform rectTransform = indicator.GetComponent<RectTransform>();
+            rectTransform.position = WorldToMinimap(doors[i].transform.position);
         }
     }
 
+    private void Update()
+    {
+        playerIndicator.position = WorldToMinimap(LocalPlayerBehaviour.Instance.transform.position);
+    }
+
+    private Vector2 WorldToMinimap(Vector3 p)
+    {
+        //Change reference frame to realTopLeft with y0
+        p = p - realTopLeft.position;
+        p.y = 0;
+
+        float realWidth = realBotRight.position.x - realTopLeft.position.x;
+        float realHeight = realTopLeft.position.z - realBotRight.position.z;
+
+        float xAmount = p.x / realWidth;
+        float yAmount = p.z / realHeight;
+
+        float mapRight = mapBotRight.position.x - mapTopLeft.position.x;
+        float mapUp = mapTopLeft.position.y - mapBotRight.position.y;
+
+        Vector2 finalPos = mapTopLeft.position + new Vector3(mapRight * xAmount, mapUp * yAmount);
+
+        return finalPos;
+    }
 }

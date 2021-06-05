@@ -139,9 +139,16 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 
     public void ForceCloseDoor()
     {
+        doorUI.SetActive(false);
+        Debug.Log(nameof(ForceCloseDoor));
+
         if (currentDoor != null)
         {
             currentDoor.CancelInteraction();
+        }
+        else
+        {
+            Debug.Log("Trying to close door, but door is null");
         }
     }
 
