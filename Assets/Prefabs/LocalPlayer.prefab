@@ -332,6 +332,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6724346483682271312}
   - component: {fileID: 5717193174213885613}
+  - component: {fileID: 1816938680578654190}
   - component: {fileID: 7294639704141535350}
   - component: {fileID: 744545231900619140}
   m_Layer: 0
@@ -373,6 +374,18 @@ MonoBehaviour:
   firstPersonCam: {fileID: 6300005762899159948}
   thirdPersonCam: {fileID: 3065789691701747288}
   sensetivity: 90
+--- !u!114 &1816938680578654190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6724346483682271318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176247534a90bf9459c18b0b6fb727d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &7294639704141535350
 NavMeshAgent:
   m_ObjectHideFlags: 0

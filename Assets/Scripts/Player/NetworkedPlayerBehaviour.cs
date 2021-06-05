@@ -7,8 +7,10 @@ using System;
 
 public class NetworkedPlayerBehaviour : NetworkBehaviour
 {
+    [SerializeField] GameObject onDestroyEffect;
+
     [Header("Player Name")]
-    public TextMeshPro playerNameText;
+    [SerializeField] TextMeshPro playerNameText;
 
     [SyncVar(hook = nameof(OnNameChanged))]
     [SerializeField] string playerName;
@@ -22,7 +24,6 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
     {
         cam = Camera.main;
     }
-
 
 
     private void OnLocalChangePlayerState(PlayerState obj)
@@ -66,6 +67,11 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
     {
         if (isLocalPlayer)
             LocalPlayerBehaviour.Instance.ChangePlayerState -= OnLocalChangePlayerState;
+
+        if (onDestroyEffect != null && !GameInstance.ApplicationQuitting)
+        {
+            Instantiate(onDestroyEffect, transform.position, transform.rotation);
+        }
     }
 
     void Update()

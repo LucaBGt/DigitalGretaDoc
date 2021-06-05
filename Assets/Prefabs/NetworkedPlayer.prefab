@@ -220,6 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  onDestroyEffect: {fileID: 7708341094208632034, guid: 717e317b53adba64db59c6c4c2bd3cb9, type: 3}
   playerNameText: {fileID: 8519576302460504559}
   playerName: Guest
 --- !u!205 &8636340599230345687
