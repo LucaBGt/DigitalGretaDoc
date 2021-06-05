@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class MinimapUI : MonoBehaviour
 {
-    
-    [SerializeField] GameObject doorIndicatorPrefab;
+
+    [SerializeField] MinimapDoorIndicator doorIndicatorPrefab;
+
+    MinimapDoorIndicator[] indicators;
+
 
     private void Start()
     {
@@ -14,7 +17,13 @@ public class MinimapUI : MonoBehaviour
 
     private void PopulateMinimap()
     {
+        Door[] doors = FindObjectsOfType<Door>();
 
+        for (int i = 0; i < doors.Length; i++)
+        {
+            MinimapDoorIndicator indicator = Instantiate(doorIndicatorPrefab, transform);
+            indicator.Setup(doors[i]);
+        }
     }
 
 }

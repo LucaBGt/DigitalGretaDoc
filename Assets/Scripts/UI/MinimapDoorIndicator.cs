@@ -11,7 +11,11 @@ public class MinimapDoorIndicator : MonoBehaviour
 
     public void Setup(Door d)
     {
+        if (d.Logo == null)
+            logo.color = Color.clear;
+        else
         logo.sprite = d.Logo;
+
         companyName.text = d.CompanyName;
     }
 }
