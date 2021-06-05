@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1074386552302789635}
   - component: {fileID: 2915587483363021883}
   - component: {fileID: 1326993053128088717}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Manhole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
