@@ -8,10 +8,10 @@ public class Door : MonoBehaviour, ICancallableInteractable
     private static readonly int ANIM_OpenDoor = Animator.StringToHash("OpenDoor");
 
     [SerializeField] Transform goalPosition;
+    [SerializeField] string url;
 
     Animator animator;
 
-    public string url;
 
     public event Action Cancel;
 
@@ -37,6 +37,12 @@ public class Door : MonoBehaviour, ICancallableInteractable
         return goalPosition.position;
     }
 
+    public void OpenURL()
+    {
+        if (!string.IsNullOrEmpty(url))
+            Application.OpenURL(url);
+    }
+
     public void CancelInteraction()
     {
         Cancel?.Invoke();
@@ -50,10 +56,4 @@ public class Door : MonoBehaviour, ICancallableInteractable
     }
 
 
-}
-
-public class stand_json
-{
-    public string zoom_url;
-    public string image_url;
 }

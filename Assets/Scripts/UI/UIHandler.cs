@@ -112,6 +112,14 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
         currentDoor = null;
     }
 
+    public void OpenCurrentDoorLink()
+    {
+        if(currentDoor != null)
+        {
+            currentDoor.OpenURL();
+        }
+    }
+
     public void ForceCloseDoor()
     {
         if (currentDoor != null)
