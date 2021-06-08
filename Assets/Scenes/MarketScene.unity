@@ -287,6 +287,10 @@ PrefabInstance:
       propertyPath: logo
       value: 
       objectReference: {fileID: 21300000, guid: bd598746d71034154be1e271b70976c1, type: 3}
+    - target: {fileID: 7219716374159777111, guid: 2c5294c3bffcc47079711a6b38c01823, type: 3}
+      propertyPath: companyName
+      value: "Hier k\xF6nnte ihr Name stehen."
+      objectReference: {fileID: 0}
     - target: {fileID: 7561820969410519053, guid: 2c5294c3bffcc47079711a6b38c01823, type: 3}
       propertyPath: m_Name
       value: Door (2)
@@ -15207,6 +15211,10 @@ PrefabInstance:
       propertyPath: logo
       value: 
       objectReference: {fileID: 21300000, guid: bd598746d71034154be1e271b70976c1, type: 3}
+    - target: {fileID: 7219716374159777111, guid: 2c5294c3bffcc47079711a6b38c01823, type: 3}
+      propertyPath: companyName
+      value: "Hier k\xF6nnte ihr Name stehen."
+      objectReference: {fileID: 0}
     - target: {fileID: 7561820969410519053, guid: 2c5294c3bffcc47079711a6b38c01823, type: 3}
       propertyPath: m_Name
       value: Door (3)
@@ -26650,6 +26658,10 @@ PrefabInstance:
       propertyPath: logo
       value: 
       objectReference: {fileID: 21300000, guid: bd598746d71034154be1e271b70976c1, type: 3}
+    - target: {fileID: 7219716374159777111, guid: 2c5294c3bffcc47079711a6b38c01823, type: 3}
+      propertyPath: companyName
+      value: "Hier k\xF6nnte ihr Name stehen."
+      objectReference: {fileID: 0}
     - target: {fileID: 7561820969410519053, guid: 2c5294c3bffcc47079711a6b38c01823, type: 3}
       propertyPath: m_Name
       value: Door (4)
@@ -32804,6 +32816,10 @@ PrefabInstance:
       propertyPath: logo
       value: 
       objectReference: {fileID: 21300000, guid: bd598746d71034154be1e271b70976c1, type: 3}
+    - target: {fileID: 7219716374159777111, guid: 2c5294c3bffcc47079711a6b38c01823, type: 3}
+      propertyPath: companyName
+      value: "Hier k\xF6nnte ihr Name stehen."
+      objectReference: {fileID: 0}
     - target: {fileID: 7561820969410519053, guid: 2c5294c3bffcc47079711a6b38c01823, type: 3}
       propertyPath: m_Name
       value: Door (1)
@@ -40016,6 +40032,10 @@ PrefabInstance:
       propertyPath: logo
       value: 
       objectReference: {fileID: 21300000, guid: bd598746d71034154be1e271b70976c1, type: 3}
+    - target: {fileID: 7219716374159777111, guid: 2c5294c3bffcc47079711a6b38c01823, type: 3}
+      propertyPath: companyName
+      value: "Hier k\xF6nnte ihr Name stehen."
+      objectReference: {fileID: 0}
     - target: {fileID: 7561820969410519053, guid: 2c5294c3bffcc47079711a6b38c01823, type: 3}
       propertyPath: m_Name
       value: Door
