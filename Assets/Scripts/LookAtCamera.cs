@@ -11,7 +11,6 @@ public class LookAtCamera : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log("update");
         transform.rotation = Quaternion.LookRotation(Vector3.down, cam.transform.position - transform.position);
     }
 }
