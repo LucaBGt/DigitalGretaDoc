@@ -28,7 +28,7 @@ public enum UIState
 
 public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveToggleUI
 {
-    [SerializeField] GameObject doorUI;
+    [SerializeField] ScalingUIElement doorUI;
     [SerializeField] GameObject stopButtonObject;
     [SerializeField] GameObject mainMenu, characterSelection, emojiUI, minimapUI, ingameUI;
     [SerializeField] bool skipMainMenuInEditor;
@@ -103,7 +103,7 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
         characterSelection.SetActive(uiState == UIState.InCharacterSelection);
         minimapUI.SetActive(uiState == UIState.InMinimap);
         ingameUI.SetActive(uiState == UIState.InGame);
-        doorUI.SetActive(uiState == UIState.VisitCard);
+        doorUI.SetActiveTransition(uiState == UIState.VisitCard);
         emojiUI.SetActive(uiState == UIState.InGame && GretaNetworkManager.Instance.IsConnected);
     }
 

@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ public class Door : MonoBehaviour, ICancallableInteractable
     [SerializeField] string companyName;
     [SerializeField] string url;
     [SerializeField] Sprite logo;
+    [SerializeField] CinemachineVirtualCamera vcam;
 
     Animator animator;
 
@@ -29,11 +31,13 @@ public class Door : MonoBehaviour, ICancallableInteractable
     public void EnterInteraction()
     {
         UIHandler.Instance.OpenDoor(this);
+        vcam.Priority = 20;
     }
 
     public void ExitInteraction()
     {
         UIHandler.Instance.CloseDoor(this);
+        vcam.Priority = 5;
     }
 
     public Vector3 GetInteractPosition()
