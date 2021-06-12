@@ -1614,6 +1614,7 @@ GameObject:
   - component: {fileID: 8597118080500280265}
   - component: {fileID: 3615043770065269139}
   - component: {fileID: 6751167789774741449}
+  - component: {fileID: 5908674663120805537}
   m_Layer: 0
   m_Name: InteractButton
   m_TagString: Untagged
@@ -1735,6 +1736,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5908674663120805537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6978195269970107122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5697ea1049940284890b453961e44c26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 79a879343578cd54da538def07cb7370, type: 3}
 --- !u!1 &7384943055258578329
 GameObject:
   m_ObjectHideFlags: 0

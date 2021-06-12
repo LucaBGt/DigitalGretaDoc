@@ -265,6 +265,8 @@ MonoBehaviour:
   url: http://www.zorc-media.com/Greta/ZorcMedia/stand_info.json
   logo: {fileID: 0}
   vcam: {fileID: 5814002809725278496}
+  openDoor: {fileID: 8300000, guid: fb30aa767542a064ba1e04f771a722f7, type: 3}
+  closeDoor: {fileID: 8300000, guid: 2e9332a77559cd048887b4631a484378, type: 3}
 --- !u!65 &700063762169436709
 BoxCollider:
   m_ObjectHideFlags: 0

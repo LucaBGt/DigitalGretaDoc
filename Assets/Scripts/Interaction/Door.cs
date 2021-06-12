@@ -15,6 +15,8 @@ public class Door : MonoBehaviour, ICancallableInteractable
     [SerializeField] Sprite logo;
     [SerializeField] CinemachineVirtualCamera vcam;
 
+    [SerializeField] AudioClip openDoor, closeDoor;
+
     Animator animator;
 
 
@@ -66,10 +68,12 @@ public class Door : MonoBehaviour, ICancallableInteractable
     private void OnTriggerEnter(Collider other)
     {
         animator.SetBool(ANIM_OpenDoor, true);
+        SoundPlayer.Instance.Play(openDoor, source3D: transform, volume: 0.25f, randomPitchRange: 0.1f);
     }
 
     private void OnTriggerExit(Collider other)
     {
         animator.SetBool(ANIM_OpenDoor, false);
+        SoundPlayer.Instance.Play(closeDoor, source3D: transform, volume: 0.25f, randomPitchRange: 0.1f);
     }
 }
