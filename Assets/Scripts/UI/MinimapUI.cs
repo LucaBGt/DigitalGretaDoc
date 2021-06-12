@@ -45,13 +45,13 @@ public class MinimapUI : MonoBehaviour
         float realWidth = realBotRight.position.x - realTopLeft.position.x;
         float realHeight = realTopLeft.position.z - realBotRight.position.z;
 
-        float xAmount = p.x / realWidth;
-        float yAmount = p.z / realHeight;
+        float xAmount = p.x / realHeight;
+        float yAmount = p.z / realWidth;
 
         float mapRight = mapBotRight.position.x - mapTopLeft.position.x;
         float mapUp = mapTopLeft.position.y - mapBotRight.position.y;
 
-        Vector2 finalPos = mapTopLeft.position + new Vector3(mapRight * xAmount, mapUp * yAmount);
+        Vector2 finalPos = mapTopLeft.position + new Vector3(mapUp * yAmount, mapRight * xAmount);
 
         return finalPos;
     }

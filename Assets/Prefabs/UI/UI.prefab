@@ -1626,29 +1626,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7789238414068041657}
     m_Modifications:
-    - target: {fileID: 1754442377077836984, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 3.5297852
-      objectReference: {fileID: 0}
     - target: {fileID: 2176995533139212548, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1695169179790732247}
-    - target: {fileID: 2176995533139212548, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: CloseDoorFromMinimap
-      objectReference: {fileID: 0}
-    - target: {fileID: 2176995533139212548, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIHandler, Assembly-CSharp
+    - target: {fileID: 3577597413119473397, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3594100724041272575, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
       propertyPath: m_Name
       value: DoorUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 3594100724041272575, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5230641632647833301, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
       propertyPath: m_Pivot.x
@@ -1734,54 +1722,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6062086359253145926, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6751167789774741449, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6751167789774741449, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6751167789774741449, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
+    - target: {fileID: 5383120131191143508, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1695169179790732247}
     - target: {fileID: 6751167789774741449, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6751167789774741449, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenCurrentDoorLink
-      objectReference: {fileID: 0}
-    - target: {fileID: 6751167789774741449, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIHandler, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6751167789774741449, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 7961329711655714104, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1695169179790732247}
-    - target: {fileID: 7961329711655714104, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ForceCloseDoor
-      objectReference: {fileID: 0}
-    - target: {fileID: 7961329711655714104, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIHandler, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 9030220796672993398, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
 --- !u!1 &2458819289882530454 stripped
