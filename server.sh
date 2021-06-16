@@ -9,6 +9,8 @@ echo "Build Done, killing server"
 
 pkill Server.x86_64
 
+sleep 3
+
 echo "Copying server"
 
 cp -r ${WORKSPACE}/Build_Server/. /root/GretaServer/
