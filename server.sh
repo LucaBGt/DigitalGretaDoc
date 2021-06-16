@@ -1,4 +1,3 @@
-#!/bin/bash
 
 cd ${WORKSPACE}
 
@@ -6,7 +5,7 @@ ${JENKINS_HOME}/2020.3.11f1/Editor/Unity -batchmode -manualLicenseFile ${JENKINS
 
 ${JENKINS_HOME}/2020.3.11f1/Editor/Unity -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildLinuxServer "${WORKSPACE}\\Build_Server"
 
-echo "Build Done, stopping server"
+echo "Build Done, killing server"
 
 kill $(ps aux | grep '/root/GretaServer/' | awk '{print $2}')
 
