@@ -11,7 +11,7 @@ kill $(ps aux | grep '/root/GretaServer/' | awk '{print $2}')
 
 echo "Copying server"
 
-cp -a "${WORKSPACE}\\Build_Server\\." /root/GretaServer/
+cp -r ${WORKSPACE}/Build_Server/ /root/GretaServer/
 
 echo "Restarting Server"
 
