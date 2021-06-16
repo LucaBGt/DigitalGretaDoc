@@ -7,7 +7,7 @@ cd ${WORKSPACE}
 
 echo "Build Done, killing server"
 
-kill $(ps aux | grep '/root/GretaServer/' | awk '{print $2}')
+pkill Server.x86_64
 
 echo "Copying server"
 
