@@ -15,6 +15,6 @@ cp -r ${WORKSPACE}/Build_Server/. /root/GretaServer/
 
 echo "Restarting Server"
 
-/root/GretaServer/Server.x86_64 -batchmode -nographics >> /root/GretaServer/log.txt &
+daemonize -E BUILD_ID=dontKillMe /root/GretaServer/run.sh
 
 echo "Done"
