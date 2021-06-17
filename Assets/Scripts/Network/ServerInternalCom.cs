@@ -1,4 +1,4 @@
-#define TEST_INTERNAL_COM
+//#define TEST_INTERNAL_COM
 
 using System.Collections;
 using System.Collections.Concurrent;
@@ -18,6 +18,7 @@ public class ServerInternalCom : MonoBehaviour
     Thread listenerThread;
 
     int connectionIDCounter;
+    bool setup = false;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class ServerInternalCom : MonoBehaviour
 
     private void Setup()
     {
+        setup = true;
         Debug.Log("Setup Internal Com");
         listenerThread = new Thread(() => { ListenerThreadBehaviour(port); });
         listenerThread.IsBackground = true;
@@ -120,11 +122,13 @@ public class ServerInternalCom : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (!setup) return;
+
         Application.logMessageReceived -= OnLogMessageRecieved;
         Debug.Log("Shutting Down Internal Com");
         SendLog("Shutting Down");
-        listenerThread.Abort();
-        tcpListener.Stop();
+        listenerThread?.Abort();
+        tcpListener?.Stop();
 
         foreach (var idClientPair in clients)
         {
