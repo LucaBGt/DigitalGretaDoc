@@ -1,4 +1,5 @@
 
+echo "Starting server.sh"
 set -e
 cd ${WORKSPACE}
 
