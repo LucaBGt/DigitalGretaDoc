@@ -14,7 +14,7 @@ public class JenkinsBuild
         var args = FindArgs();
 
         string fullPathAndName = args.targetDir + "Server.x86_64";
-        BuildProject(new string[] { "/Scenes/ServerScene" }, fullPathAndName, BuildTargetGroup.Standalone,
+        BuildProject(new string[] { "Assets/Scenes/ServerScene.unity" }, fullPathAndName, BuildTargetGroup.Standalone,
                 BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode);
     }
 
@@ -97,6 +97,7 @@ public class JenkinsBuild
         else
         {
             System.Console.WriteLine("[JenkinsBuildCodeLog] Unable to change Build Target to: " + buildTarget.ToString() + " Exiting...");
+            Application.Quit(1);
             return;
         }
 
@@ -110,7 +111,9 @@ public class JenkinsBuild
         else
         {
             System.Console.WriteLine("[JenkinsBuildCodeLog] Build Failed: Time:" + buildSummary.totalTime + " Total Errors:" + buildSummary.totalErrors);
+            Application.Quit(1);
         }
+
     }
 
     private class Args
