@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class ServerInternalComConnection : IDisposable
@@ -32,10 +33,10 @@ public class ServerInternalComConnection : IDisposable
     public void Update()
     {
         if (!client.Connected) return;
-        
+
         HandleSegments();
 
-        if(Time.time - lastPacketStamp > STAY_ALIVE_RESEND_TIME)
+        if (Time.time - lastPacketStamp > STAY_ALIVE_RESEND_TIME)
         {
             Send(InternalComPacket.MakeStayAlive());
         }
@@ -64,7 +65,10 @@ public class ServerInternalComConnection : IDisposable
         lastPacketStamp = Time.time;
         //catch closed exceptions
         //use cancellationtoken?
-        client.GetStream().WriteAsync(data, 0, data.Length);
+        Task.Run(() =>
+        {
+            client.GetStream().Write(data, 0, data.Length);
+        });
     }
 
     private void RecieveThreadBehaviour()
