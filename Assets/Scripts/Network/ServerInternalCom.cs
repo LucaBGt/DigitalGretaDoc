@@ -120,8 +120,9 @@ public class ServerInternalCom : MonoBehaviour
 
     private void OnDestroy()
     {
-        SendLog("Shutting Down");
         Application.logMessageReceived -= OnLogMessageRecieved;
+        Debug.Log("Shutting Down Internal Com");
+        SendLog("Shutting Down");
         listenerThread.Abort();
         tcpListener.Stop();
 
