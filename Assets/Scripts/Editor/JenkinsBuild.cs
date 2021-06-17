@@ -97,7 +97,7 @@ public class JenkinsBuild
         else
         {
             System.Console.WriteLine("[JenkinsBuildCodeLog] Unable to change Build Target to: " + buildTarget.ToString() + " Exiting...");
-            Application.Quit(1);
+            EditorApplication.Exit(1);
             return;
         }
 
@@ -111,7 +111,7 @@ public class JenkinsBuild
         else
         {
             System.Console.WriteLine("[JenkinsBuildCodeLog] Build Failed: Time:" + buildSummary.totalTime + " Total Errors:" + buildSummary.totalErrors);
-            Application.Quit(1);
+            EditorApplication.Exit(1);
         }
 
     }
