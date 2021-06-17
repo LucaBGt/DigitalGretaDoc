@@ -97,8 +97,7 @@ public class JenkinsBuild
         else
         {
             System.Console.WriteLine("[JenkinsBuildCodeLog] Unable to change Build Target to: " + buildTarget.ToString() + " Exiting...");
-            EditorApplication.Exit(1);
-            return;
+            throw new System.Exception("Change Build Target Failed");
         }
 
         // https://docs.unity3d.com/ScriptReference/BuildPipeline.BuildPlayer.html
@@ -111,7 +110,7 @@ public class JenkinsBuild
         else
         {
             System.Console.WriteLine("[JenkinsBuildCodeLog] Build Failed: Time:" + buildSummary.totalTime + " Total Errors:" + buildSummary.totalErrors);
-            EditorApplication.Exit(1);
+            throw new System.Exception("Build Failed");
         }
 
     }
