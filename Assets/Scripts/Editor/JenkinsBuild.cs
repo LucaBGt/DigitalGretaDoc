@@ -14,7 +14,7 @@ public class JenkinsBuild
         var args = FindArgs();
 
         string fullPathAndName = args.targetDir + "Server.x86_64";
-        BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.Standalone,
+        BuildProject(new string[] { "ServerScene" }, fullPathAndName, BuildTargetGroup.Standalone,
                 BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode);
     }
 

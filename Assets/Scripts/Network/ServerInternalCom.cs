@@ -1,4 +1,4 @@
-//#define TEST_INTERNAL_COM
+#define TEST_INTERNAL_COM
 
 using System.Collections;
 using System.Collections.Concurrent;
