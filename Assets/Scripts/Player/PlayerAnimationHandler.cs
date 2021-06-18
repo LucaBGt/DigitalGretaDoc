@@ -9,20 +9,21 @@ public class PlayerAnimationHandler : MonoBehaviour
     private static readonly int ANIM_Walk = Animator.StringToHash("Walk");
     private static readonly int ANIM_Idle = Animator.StringToHash("Idle");
 
-    [SerializeField] NetworkedPlayerBehaviour networkedPlayer;
+    [SerializeField] IPlayerBehaviour player;
 
     Animator animator;
 
     private void OnEnable()
     {
         animator = GetComponent<Animator>();
-        networkedPlayer.NetworkedPlayerStateChanged += ChangePlayerState;
+        player = GetComponent<IPlayerBehaviour>();
+        player.PlayerStateChanged += ChangePlayerState;
     }
 
     private void OnDisable()
     {
-        if (networkedPlayer != null)
-            networkedPlayer.NetworkedPlayerStateChanged -= ChangePlayerState;
+        if (player != null)
+            player.PlayerStateChanged -= ChangePlayerState;
     }
 
     private void ChangePlayerState(PlayerState state)

@@ -25,7 +25,7 @@ public enum PerspectiveMode
 }
 
 [DefaultExecutionOrder(-100)]
-public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
+public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IPlayerBehaviour
 {
     [SerializeField] NavMeshAgent agent;
 
@@ -39,6 +39,10 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
     [Header("Inputs")]
     [SerializeField] float sensetivity;
 
+    [Header("Player Name")]
+    [SerializeField] TextMeshPro playerNameText;
+    [SerializeField] Renderer playerSkin;
+
     PlayerState internal_State;
     PerspectiveMode perspective;
     IInteractable currentInteractable = null;
@@ -47,7 +51,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
     Camera camera;
     float turnInput;
 
-    public event System.Action<PlayerState> ChangePlayerState;
+    public event Action<PlayerState> PlayerStateChanged;
 
     public PlayerState State
     {
@@ -55,7 +59,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
         set
         {
             internal_State = value;
-            ChangePlayerState?.Invoke(internal_State);
+            PlayerStateChanged?.Invoke(internal_State);
         }
     }
 
@@ -65,6 +69,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
         targetPreview = Instantiate(targetPreviewPrefab);
         targetPreview.SetActive(false);
         orthoPersonCam.transform.parent = null;
+        SetupLocalPlayerVisuals(playerNameText, playerSkin, Settings.Instance.Username, Settings.Instance.UserSkinID);
     }
 
     void Update()
@@ -278,6 +283,21 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>
     {
         float offset = target - start;
         return NormalizedAngleRange(offset);
+    }
+
+    public static void SetupLocalPlayerVisuals(TextMeshPro _playerNameText, Renderer _playerSkin, string _name, int _skinId)
+    {
+        _playerNameText.text = _name;
+
+        if (_skinId < Settings.Instance.SkinsCount)
+        {
+            _playerSkin.sharedMaterial = Settings.Instance.SkinsMaterials[_skinId];
+        }
+        else
+        {
+            Debug.LogWarning("Passed skinID not present in this version. Selecting default");
+            _playerSkin.sharedMaterial = Settings.Instance.SkinsMaterials[0];
+        }
     }
 
 }

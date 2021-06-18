@@ -40,7 +40,7 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 
     private void Start()
     {
-        GetLocalPlayer().ChangePlayerState += OnPlayerStateChanged;
+        GetLocalPlayer().PlayerStateChanged += OnPlayerStateChanged;
 
 #if UNITY_EDITOR
         if (skipMainMenuInEditor)

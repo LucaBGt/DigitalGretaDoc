@@ -39,7 +39,8 @@ public class GretaNetworkManager : NetworkManager
     {
         //override default bool
         #if UNITY_SERVER
-               StartServer();
+        Application.targetFrameRate = 50;
+        StartServer();
         #endif
     }
 

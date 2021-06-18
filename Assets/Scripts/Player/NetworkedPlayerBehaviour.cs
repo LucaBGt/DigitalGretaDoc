@@ -5,9 +5,15 @@ using Mirror;
 using TMPro;
 using System;
 
-public class NetworkedPlayerBehaviour : NetworkBehaviour
+public interface IPlayerBehaviour
+{
+    event System.Action<PlayerState> PlayerStateChanged;
+}
+
+public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
 {
     [SerializeField] GameObject onDestroyEffect;
+    [SerializeField] GameObject playerVisualsObject;
 
     [Header("Player Name")]
     [SerializeField] TextMeshPro playerNameText;
@@ -15,7 +21,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
 
     Camera cam;
 
-    public event System.Action<PlayerState> NetworkedPlayerStateChanged;
+    public event System.Action<PlayerState> PlayerStateChanged;
 
 
     private void Start()
@@ -38,7 +44,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
     [ClientRpc]
     public void RPC_ChangePlayerState(PlayerState newState)
     {
-        NetworkedPlayerStateChanged?.Invoke(newState);
+        PlayerStateChanged?.Invoke(newState);
     }
 
     [Command]
@@ -52,17 +58,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
     [ClientRpc]
     private void RPC_SetupRemotePlayer(string _name, int skinId)
     {
-        playerNameText.text = _name;
-
-        if (skinId < Settings.Instance.SkinsCount)
-        {
-            playerSkin.sharedMaterial = Settings.Instance.SkinsMaterials[skinId];
-        }
-        else
-        {
-            Debug.LogWarning("Passed skinID not present in this version. Selecting default");
-            playerSkin.sharedMaterial = Settings.Instance.SkinsMaterials[0];
-        }
+        LocalPlayerBehaviour.SetupLocalPlayerVisuals(playerNameText, playerSkin, _name, skinId);
     }
 
 
@@ -70,13 +66,17 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
     {
         CMD_SetupRemotePlayer(Settings.Instance.Username, Settings.Instance.UserSkinID);
 
-        LocalPlayerBehaviour.Instance.ChangePlayerState += OnLocalChangePlayerState;
+        LocalPlayerBehaviour.Instance.PlayerStateChanged += OnLocalChangePlayerState;
+
+        Destroy(playerVisualsObject);
+        Destroy(GetComponent<PlayerAnimationHandler>());
+        Destroy(GetComponent<Animator>());
     }
 
     private void OnDestroy()
     {
         if (isLocalPlayer)
-            LocalPlayerBehaviour.Instance.ChangePlayerState -= OnLocalChangePlayerState;
+            LocalPlayerBehaviour.Instance.PlayerStateChanged -= OnLocalChangePlayerState;
 
         if (onDestroyEffect != null && !GameInstance.ApplicationQuitting)
         {
@@ -96,7 +96,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
         else
         {
             //remote player update
+            playerNameText.transform.forward = transform.position - cam.transform.position;
         }
-        playerNameText.transform.forward = transform.position - cam.transform.position;
     }
 }
