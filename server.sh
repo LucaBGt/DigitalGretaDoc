@@ -3,14 +3,17 @@ echo "Starting server.sh"
 set -e
 cd ${WORKSPACE}
 
-${JENKINS_HOME}/2020.3.11f1/Editor/Unity -batchmode -manualLicenseFile ${JENKINS_HOME}/2020.3.11f1/Unity_lic.ulf || echo "Unity Licensing Failed (Caused when Already Setup)"
+UNITY_PATH=/root/Unity/Hub/Editor/2020.3.12f1/Editor/Unity
+UNITY_LICENSE=/root/Unity/Unity_lic.ulf
 
-${JENKINS_HOME}/2020.3.11f1/Editor/Unity -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildLinuxServer "${WORKSPACE}/Build_Server"
+UNITY_PATH -batchmode -manualLicenseFile UNITY_LICENSE || echo "Unity Licensing Failed (Caused when Already Setup)"
+
+UNITY_PATH -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildLinuxServer "${WORKSPACE}/Build_Server"
 echo "Server Build Done"
 
 sleep 3 
 
-${JENKINS_HOME}/2020.3.11f1/Editor/Unity -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildWebGL "${WORKSPACE}/Build_WebGL"
+UNITY_PATH -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildWebGL "${WORKSPACE}/Build_WebGL"
 echo "WebGL Build Done"
 
 echo "Copying WebGL build to local site location"
