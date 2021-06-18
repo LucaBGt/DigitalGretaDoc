@@ -69,7 +69,18 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
         targetPreview = Instantiate(targetPreviewPrefab);
         targetPreview.SetActive(false);
         orthoPersonCam.transform.parent = null;
+        UIHandler.Instance.ReturnedToGame += OnReturnedToGame;
+    }
+
+    private void OnReturnedToGame()
+    {
         SetupLocalPlayerVisuals(playerNameText, playerSkin, Settings.Instance.Username, Settings.Instance.UserSkinID);
+    }
+
+    private void OnDestroy()
+    {
+        if (UIHandler.Instance)
+            UIHandler.Instance.ReturnedToGame -= OnReturnedToGame;
     }
 
     void Update()

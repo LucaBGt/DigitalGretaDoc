@@ -36,6 +36,8 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
     Door currentDoor = null;
     UIState uiState;
 
+    public event System.Action ReturnedToGame;
+
     public bool InLockedUIMode => uiState != UIState.InGame;
 
     private void Start()
@@ -116,6 +118,7 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
     public void ReturnToGame()
     {
         uiState = UIState.InGame;
+        ReturnedToGame?.Invoke();
         UpdateVisuals();
     }
 
