@@ -23,6 +23,10 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
 
     public event System.Action<PlayerState> PlayerStateChanged;
 
+    [SyncVar(hook = nameof(SyncVarHook_SkinChanged))]
+    private int sv_skinID;
+    [SyncVar(hook = nameof(SyncVarHook_UsernameChanged))]
+    private string sv_username;
 
     private void Start()
     {
@@ -51,14 +55,22 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
     private void CMD_SetupRemotePlayer(string _name, int skinId)
     {
         // player info sent to server, then server updates sync vars which handles it on all clients
-        RPC_SetupRemotePlayer(_name, skinId);
+        sv_skinID = skinId;
+        sv_username = _name;
     }
 
-
-    [ClientRpc]
-    private void RPC_SetupRemotePlayer(string _name, int skinId)
+    private void SyncVarHook_SkinChanged(int _oldID, int _newID)
     {
-        LocalPlayerBehaviour.SetupLocalPlayerVisuals(playerNameText, playerSkin, _name, skinId);
+        Debug.Log(nameof(SyncVarHook_SkinChanged));
+        if (!isLocalPlayer)
+            LocalPlayerBehaviour.SetupLocalPlayerVisuals(playerNameText, playerSkin, sv_username, _newID);
+    }
+
+    private void SyncVarHook_UsernameChanged(string _oldname, string _newname)
+    {
+        Debug.Log(nameof(SyncVarHook_UsernameChanged));
+        if (!isLocalPlayer)
+            LocalPlayerBehaviour.SetupLocalPlayerVisuals(playerNameText, playerSkin, _newname, sv_skinID);
     }
 
 
