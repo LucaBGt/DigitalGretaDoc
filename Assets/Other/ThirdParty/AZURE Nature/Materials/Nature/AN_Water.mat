@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AN_Water
-  m_Shader: {fileID: 4800000, guid: faaeb4a0622f3594095e9e1327bca9e2, type: 3}
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _WAVESNORMALINTENSITY_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,6 +19,42 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Texture0:
         m_Texture: {fileID: 2800000, guid: 9789d23040cb1fb45ad60392430c3c15, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -51,12 +87,16 @@ Material:
     - _1: 0.8
     - _2: 0.7
     - _AlphaCutoff: 0.5
+    - _BumpScale: 1
     - _ChromaticAberration: 0
     - _CoastOpacity: 0
     - _CoastalWavesDensity: 0.5
+    - _Cutoff: 0.5
     - _DepthDistance: 1.5
     - _DepthFade: 1
     - _DepthIntensity: 0.411
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
     - _EdgeFoamTile: 4.24
     - _Float0: 0.438
     - _Float1: 0
@@ -66,13 +106,23 @@ Material:
     - _FoamDensity: 0.409
     - _FoamDistance: 0.645
     - _FoamOpacity: 1
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _Mode: 0
     - _Normal: 0.15
+    - _OcclusionStrength: 1
     - _Opacity: 0.599
+    - _Parallax: 0.02
     - _Power: 0.2
     - _RefractionIntensity: 0.15
     - _RefractionScale: 1
     - _Scale: 50
     - _Smoothness: 0.6
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
     - _TessEdgeLength: 16
     - _TessMax: 25
     - _TessMaxDisp: 25
@@ -90,11 +140,14 @@ Material:
     - _TransmissionShadow: 0.5
     - _UDepthDistance: 0.3
     - _UDistancePower: 0.1
+    - _UVSec: 0
     - _WavesNormalIntensity: 1.46
     - _WavesSpeed: 0.24
     - _WavesTile: 0.16
+    - _ZWrite: 1
     - __dirty: 0
     m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color0: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 0}
     - _Color1: {r: 0.049276415, g: 0.319, b: 0.30343902, a: 0}
     - _Color2: {r: 0.09011214, g: 0.6285934, b: 0.7075472, a: 0}

@@ -1388,7 +1388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8842801826608519603, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
@@ -5496,7 +5496,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a42a7398515ec4f129f4fdeaa0679c8f, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a42a7398515ec4f129f4fdeaa0679c8f, type: 3}
       propertyPath: m_LocalScale.x
@@ -18671,6 +18671,10 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 8846d577336d749e986866b918715334, type: 2}
+  m_PreviousLayer: 0
+  m_PreviousPriority: 0
+  m_InternalProfile: {fileID: 0}
+  m_TempColliders: []
 --- !u!4 &838448662
 Transform:
   m_ObjectHideFlags: 0
@@ -18876,7 +18880,6 @@ MonoBehaviour:
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
-    serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_RenderPostProcessing: 0
@@ -29926,7 +29929,6 @@ MonoBehaviour:
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
-    serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_RenderPostProcessing: 1
@@ -34222,7 +34224,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e5a5edb1e95824baba5cfcf5b357d63a, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e5a5edb1e95824baba5cfcf5b357d63a, type: 3}
       propertyPath: m_LocalScale.x
@@ -41282,7 +41284,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5227557442652683334, guid: 9dd0c049369e31b489a8a2fbfda656fd, type: 3}
       propertyPath: m_RootOrder
-      value: 27
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 5227557442652683334, guid: 9dd0c049369e31b489a8a2fbfda656fd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -41327,6 +41329,10 @@ PrefabInstance:
     - target: {fileID: 5227557442652683335, guid: 9dd0c049369e31b489a8a2fbfda656fd, type: 3}
       propertyPath: m_Name
       value: StartMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5227557442652683335, guid: 9dd0c049369e31b489a8a2fbfda656fd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5227557443178698957, guid: 9dd0c049369e31b489a8a2fbfda656fd, type: 3}
       propertyPath: m_Camera
@@ -41688,6 +41694,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2142018170}
     m_Modifications:
+    - target: {fileID: 46375291838637826, guid: ee2e85436d15e482b9d3c98cfc30dc1b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f3ee93bd9d96049928a10a2607588fd8, type: 2}
     - target: {fileID: 184363834261205381, guid: ee2e85436d15e482b9d3c98cfc30dc1b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
