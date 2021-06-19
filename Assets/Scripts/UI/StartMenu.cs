@@ -1,9 +1,9 @@
 using Cinemachine;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
-
-public class StartMenu : MonoBehaviour
+public class StartMenu : SingletonBehaviour<StartMenu>
 {
     [SerializeField] StartMenuStage[] startMenuStages;
     StartMenuStage current;
@@ -36,11 +36,16 @@ public class StartMenu : MonoBehaviour
             }
         }
 
+        if (stage >= startMenuStages.Length)
+            return;
+
         current = startMenuStages[stage];
 
         if (current != null)
         {
             current.Enter();
+
+            Debug.Log($"Enter stage {stage}");
 
             if (current.FadeCoroutine != null)
                 StopCoroutine(current.FadeCoroutine);
@@ -48,6 +53,21 @@ public class StartMenu : MonoBehaviour
             if (current.canvasGroup != null)
                 current.FadeCoroutine = StartCoroutine(current.FadeRoutine(AnimationDirection.Up));
         }
+    }
+
+    public void EnterCharacterSelection()
+    {
+        UIHandler.Instance.EnterCharacterSelection();
+    }
+
+    public void EnterMapMode()
+    {
+        UIHandler.Instance.EnterMinimap();
+    }
+
+    public void ExitStartMenu()
+    {
+        JumpToMenuStage(4);
     }
 }
 
@@ -58,15 +78,17 @@ public class StartMenuStage
     public CanvasGroup canvasGroup;
     public Coroutine FadeCoroutine;
     public bool DoFadeOut;
+    public UnityEvent EventFunction;
 
     public void Enter()
     {
         virtualCamera.Priority = 20;
+        EventFunction?.Invoke();
     }
 
     public void Exit()
     {
-        virtualCamera.Priority = 0;
+        virtualCamera.Priority = 1;
     }
 
     public bool ShouldFadeOut()

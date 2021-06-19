@@ -11,9 +11,11 @@ public class ScalingUIElement : MonoBehaviour
 
     [SerializeField] Transform scaling;
     [SerializeField] Graphic fading;
+    [SerializeField] CanvasGroup fadingGroup;
 
     public void SetActiveTransition(bool active)
     {
+        gameObject.SetActive(true);
         StopAllCoroutines();
         StartCoroutine(TransitionRoutine(active));
     }
@@ -38,14 +40,25 @@ public class ScalingUIElement : MonoBehaviour
 
     private void SetActiveAll(bool active)
     {
-        scaling.gameObject.SetActive(active);
-        fading.gameObject.SetActive(active);
+        if (fadingGroup != null)
+            fadingGroup.gameObject.SetActive(active);
+        if (fading != null)
+            fading.gameObject.SetActive(active);
+        if (scaling != null)
+            scaling.gameObject.SetActive(active);
     }
 
     private void UpdateVisuals()
     {
         float value = easeInAndOut.Evaluate(current);
-        fading.color = new Color(1, 1, 1, value);
-        scaling.localScale = new Vector3(value, value, value);
+
+        if (fading != null)
+            fading.color = new Color(1, 1, 1, value);
+
+        if (fadingGroup != null)
+            fadingGroup.alpha = value;
+
+        if (scaling != null)
+            scaling.localScale = new Vector3(value, value, value);
     }
 }

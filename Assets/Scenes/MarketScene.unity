@@ -1290,14 +1290,6 @@ PrefabInstance:
       propertyPath: realBotRight
       value: 
       objectReference: {fileID: 891460218}
-    - target: {fileID: 2458819289882530454, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6113133434081716861, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7789238414068041657, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1385,10 +1377,6 @@ PrefabInstance:
     - target: {fileID: 8842801826608519603, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
       propertyPath: m_Name
       value: UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 8842801826608519603, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
@@ -18920,9 +18908,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -18947,8 +18935,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847951692}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.8, y: 21.88, z: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -25, y: 24.25, z: -1.2099991}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -18974,7 +18962,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 2
+    m_Time: 1
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -41282,19 +41270,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5227557442652683334, guid: 9dd0c049369e31b489a8a2fbfda656fd, type: 3}
       propertyPath: m_RootOrder
-      value: 27
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 5227557442652683334, guid: 9dd0c049369e31b489a8a2fbfda656fd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 250
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 5227557442652683334, guid: 9dd0c049369e31b489a8a2fbfda656fd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 5227557442652683334, guid: 9dd0c049369e31b489a8a2fbfda656fd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1.21
       objectReference: {fileID: 0}
     - target: {fileID: 5227557442652683334, guid: 9dd0c049369e31b489a8a2fbfda656fd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -41327,6 +41315,10 @@ PrefabInstance:
     - target: {fileID: 5227557442652683335, guid: 9dd0c049369e31b489a8a2fbfda656fd, type: 3}
       propertyPath: m_Name
       value: StartMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5227557442732982399, guid: 9dd0c049369e31b489a8a2fbfda656fd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5227557443178698957, guid: 9dd0c049369e31b489a8a2fbfda656fd, type: 3}
       propertyPath: m_Camera
