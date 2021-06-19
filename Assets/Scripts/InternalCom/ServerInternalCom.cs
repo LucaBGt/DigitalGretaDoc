@@ -17,8 +17,6 @@ public class ServerInternalCom : MonoBehaviour
 
     TcpListener tcpListener;
     Thread listenerThread;
-    ProfilerRecorder recorder;
-    ProfilerMarker profMarker = new ProfilerMarker("ServerInternalCom FixedUpdate");
 
     int connectionIDCounter;
     bool setup = false;
@@ -41,7 +39,6 @@ public class ServerInternalCom : MonoBehaviour
         listenerThread.Priority = System.Threading.ThreadPriority.BelowNormal;
         listenerThread.Start();
         Application.logMessageReceived += OnLogMessageRecieved;
-        recorder = ProfilerRecorder.StartNew(profMarker, 30, ProfilerRecorderOptions.Default);
     }
 
     private void OnLogMessageRecieved(string condition, string stackTrace, LogType type)
@@ -61,30 +58,25 @@ public class ServerInternalCom : MonoBehaviour
 
     private void FixedUpdate()
     {
-        using (profMarker.Auto())
+        //Debug.Log($"Connections: {clients.Count}");
+        List<int> toRemove = new List<int>();
+
+        foreach (var item in clients)
         {
-            //Debug.Log($"Connections: {clients.Count}");
-            List<int> toRemove = new List<int>();
-
-            foreach (var item in clients)
+            if (item.Value.Connected)
             {
-                if (item.Value.Connected)
-                {
-                    item.Value.Update();
-                }
-                else
-                {
-                    toRemove.Add(item.Key);
-                }
+                item.Value.Update();
             }
-
-            foreach (var val in toRemove)
+            else
             {
-                clients.TryRemove(val, out ServerInternalComConnection c);
+                toRemove.Add(item.Key);
             }
         }
 
-        Debug.Log($"ServerInternalCom FixedUpdate: {recorder.CurrentValue * (1e-6f)}");
+        foreach (var val in toRemove)
+        {
+            clients.TryRemove(val, out ServerInternalComConnection c);
+        }
     }
 
     [NaughtyAttributes.Button]
@@ -138,8 +130,6 @@ public class ServerInternalCom : MonoBehaviour
         SendLog("Shutting Down");
         listenerThread?.Abort();
         tcpListener?.Stop();
-
-        recorder.Dispose();
 
         foreach (var idClientPair in clients)
         {
