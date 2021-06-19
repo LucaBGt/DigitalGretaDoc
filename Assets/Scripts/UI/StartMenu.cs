@@ -68,6 +68,14 @@ public class StartMenu : SingletonBehaviour<StartMenu>
     public void ExitStartMenu()
     {
         JumpToMenuStage(4);
+        foreach (StartMenuStage stage in startMenuStages)
+        {
+            if (stage.canvasGroup != null)
+            {
+                stage.canvasGroup.alpha = 0;
+                stage.canvasGroup.interactable = false;
+            }
+        }
     }
 }
 
