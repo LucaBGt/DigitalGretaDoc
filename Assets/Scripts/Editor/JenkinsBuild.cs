@@ -15,7 +15,7 @@ public class JenkinsBuild
 
         string fullPathAndName = args.targetDir + "Server.x86_64";
         BuildProject(new string[] { "Assets/Scenes/ServerScene.unity" }, fullPathAndName, BuildTargetGroup.Standalone,
-                BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode);
+                BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode | BuildOptions.ConnectWithProfiler | BuildOptions.Development);
     }
 
     public static void BuildAndroid()
