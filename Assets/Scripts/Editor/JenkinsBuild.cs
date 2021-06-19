@@ -18,15 +18,12 @@ public class JenkinsBuild
                 BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode);
     }
 
-    public static void BuildWindows64()
+    public static void BuildAndroid()
     {
         var args = FindArgs();
 
         string fullPathAndName = args.targetDir;
-
-        System.Console.WriteLine("[JenkinsBuildCodeLog] Full path name is " + fullPathAndName);
-
-        BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64, BuildOptions.None);
+        BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.Android, BuildTarget.Android, BuildOptions.None);
     }
     public static void BuildWebGL()
     {
@@ -60,8 +57,6 @@ public class JenkinsBuild
             if (realPos == 0)
             {
                 returnValue.targetDir = args[i];
-                if (!returnValue.targetDir.EndsWith(System.IO.Path.DirectorySeparatorChar + ""))
-                    returnValue.targetDir += System.IO.Path.DirectorySeparatorChar;
 
                 allArgsFound = true;
             }
