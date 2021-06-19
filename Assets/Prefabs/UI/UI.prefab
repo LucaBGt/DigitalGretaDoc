@@ -1543,6 +1543,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3303875406221129379, guid: 08ce69894fefd144f9c992f9a5827116, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737844504094130855, guid: 08ce69894fefd144f9c992f9a5827116, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6810438997563388937, guid: 08ce69894fefd144f9c992f9a5827116, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8484742604702497288, guid: 08ce69894fefd144f9c992f9a5827116, type: 3}
       propertyPath: uiHandler
       value: 
@@ -1791,7 +1803,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3594100724041272575, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3742199303923792608, guid: d98b73f216220e34b8bcf5af3861b399, type: 3}
       propertyPath: m_IsActive
