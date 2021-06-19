@@ -18,15 +18,12 @@ public class JenkinsBuild
                 BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode);
     }
 
-    public static void BuildWindows64()
+    public static void BuildAndroid()
     {
         var args = FindArgs();
 
         string fullPathAndName = args.targetDir;
-
-        System.Console.WriteLine("[JenkinsBuildCodeLog] Full path name is " + fullPathAndName);
-
-        BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64, BuildOptions.None);
+        BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.Android, BuildTarget.Android, BuildOptions.None);
     }
     public static void BuildWebGL()
     {
