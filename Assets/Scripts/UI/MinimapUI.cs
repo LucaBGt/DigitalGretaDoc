@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,11 @@ public class MinimapUI : MonoBehaviour
     [SerializeField] Transform realTopLeft, realBotRight;
     [SerializeField] Transform playerIndicator;
 
+    [SerializeField] RectTransform mapRect;
+
     MinimapDoorIndicator[] indicators;
+    float zoomFactor = 0.6f;
+    public System.Action<float> ChangeZoomEvent;
 
 
     private void Start()
@@ -54,5 +59,27 @@ public class MinimapUI : MonoBehaviour
         Vector2 finalPos = mapTopLeft.position + new Vector3(mapUp * yAmount, mapRight * xAmount);
 
         return finalPos;
+    }
+
+    public void ZoomIn()
+    {
+        StartCoroutine(ChangeZoom(0.1f));
+    }
+
+
+    public void ZoomOut()
+    {
+        StartCoroutine(ChangeZoom(-0.1f));
+    }
+    private IEnumerator ChangeZoom(float change)
+    {
+        float zoomFactorBefore = zoomFactor;
+        while (change < 0 ? (zoomFactor > (zoomFactorBefore + change)) : (zoomFactor < zoomFactorBefore + change))
+        {
+            zoomFactor += change * Time.deltaTime * 2;
+            mapRect.localScale = Vector3.one * zoomFactor;
+            ChangeZoomEvent?.Invoke(zoomFactor);
+            yield return null;
+        }
     }
 }
