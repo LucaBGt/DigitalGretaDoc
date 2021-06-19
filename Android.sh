@@ -8,7 +8,7 @@ UNITY_LICENSE=/root/Unity/Unity_lic.ulf
 
 $UNITY_PATH -batchmode -manualLicenseFile $UNITY_LICENSE || echo "Unity Licensing Failed (Caused when Already Setup)"
 
-$UNITY_PATH -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildAndroid "${WORKSPACE}/Build_Android"
+$UNITY_PATH -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildAndroid "${WORKSPACE}/Build_Android/Gretaland.apk"
 echo "Android Build Done"
 
 
