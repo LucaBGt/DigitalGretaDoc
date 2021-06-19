@@ -11,14 +11,6 @@ $UNITY_PATH -batchmode -manualLicenseFile $UNITY_LICENSE || echo "Unity Licensin
 $UNITY_PATH -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildLinuxServer "${WORKSPACE}/Build_Server"
 echo "Server Build Done"
 
-#WEBGL STUFF 
-# sleep 3 
-# $UNITY_PATH -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildWebGL "${WORKSPACE}/Build_WebGL"
-# echo "WebGL Build Done"
-
-#echo "Copying WebGL build to local site location"
-#cp -r ${WORKSPACE}/Build_WebGL/. /var/www/html/Gretaland/
-
 #replace and restart server
 echo "killing server"
 
