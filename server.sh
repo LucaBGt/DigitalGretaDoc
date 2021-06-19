@@ -8,7 +8,7 @@ UNITY_LICENSE=/root/Unity/Unity_lic.ulf
 
 $UNITY_PATH -batchmode -manualLicenseFile $UNITY_LICENSE || echo "Unity Licensing Failed (Caused when Already Setup)"
 
-$UNITY_PATH -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildLinuxServer "${WORKSPACE}/Build_Server"
+$UNITY_PATH -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildLinuxServer "${WORKSPACE}/Build_Server/"
 echo "Server Build Done"
 
 #replace and restart server

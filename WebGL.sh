@@ -9,7 +9,7 @@ UNITY_LICENSE=/root/Unity/Unity_lic.ulf
 $UNITY_PATH -batchmode -manualLicenseFile $UNITY_LICENSE || echo "Unity Licensing Failed (Caused when Already Setup)"
 
 #WEBGL STUFF 
-$UNITY_PATH -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildWebGL "${WORKSPACE}/Build_WebGL"
+$UNITY_PATH -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildWebGL "${WORKSPACE}/Build_WebGL/"
 echo "WebGL Build Done"
 
 echo "Copying WebGL build to local site location"

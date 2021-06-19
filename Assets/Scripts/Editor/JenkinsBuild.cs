@@ -57,8 +57,6 @@ public class JenkinsBuild
             if (realPos == 0)
             {
                 returnValue.targetDir = args[i];
-                if (!returnValue.targetDir.EndsWith(System.IO.Path.DirectorySeparatorChar + ""))
-                    returnValue.targetDir += System.IO.Path.DirectorySeparatorChar;
 
                 allArgsFound = true;
             }
