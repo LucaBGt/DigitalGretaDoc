@@ -1,0 +1,16 @@
+{
+  "Hash": "000",
+  "Vendors": [
+    {
+      "Name": "NAME",
+      "Description": "DESC",
+      "LinkWebsite": "",
+      "LinkFacebook": "",
+      "LinkInstagram": "",
+      "LinkZoom": "",
+      "LogoID": "",
+      "MainImageID": "",
+      "SubImagesID": []
+    }
+  ]
+}
