@@ -13,12 +13,14 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
     [SerializeField] CinemachineVirtualCamera vcam;
 
+
     [SerializeField] AudioClip openDoor, closeDoor;
     [SerializeField] Shader changeHueShader;
 
     Animator animator;
 
     RuntimeVendorData data;
+    public RuntimeVendorData Data => data;
 
     public event Action Cancel;
 

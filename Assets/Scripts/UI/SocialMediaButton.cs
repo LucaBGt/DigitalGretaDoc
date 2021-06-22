@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum SocialMediaType
 {
@@ -15,10 +16,35 @@ public enum SocialMediaType
 public class SocialMediaButton : CustomButtonBehaviour
 {
     [SerializeField] SocialMediaTypeSpritePair[] typeSpritePairs;
+
+    private string url;
+
+    public void Init(SocialMediaType type, string url)
+    {
+        GetComponent<Image>().sprite = GetSpriteBySocialMediaType(type);
+        this.url = url;
+        onClick.AddListener(OpenUrl);
+    }
+
+    private void OnDestroy()
+    {
+        onClick.RemoveAllListeners();
+    }
+
+    private void OpenUrl()
+    {
+        Application.OpenURL(url);
+    }
+
     private Sprite GetSpriteBySocialMediaType(SocialMediaType type)
     {
-        Sprite sprite = null;
-        return sprite;
+        foreach (SocialMediaTypeSpritePair pair in typeSpritePairs)
+        {
+            if (pair.Type == type)
+                return pair.Sprite;
+        }
+
+        return null;
     }
 }
 
