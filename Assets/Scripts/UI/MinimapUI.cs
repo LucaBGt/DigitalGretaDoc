@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class MinimapUI : MonoBehaviour
 {
-
-    [SerializeField] MinimapDoorIndicator doorIndicatorPrefab;
+    [SerializeField] UIMapPinBehaviour doorIndicatorPrefab;
     [SerializeField] RectTransform mapTopLeft, mapBotRight;
     [SerializeField] Transform realTopLeft, realBotRight;
     [SerializeField] Transform playerIndicator;
+    [SerializeField] RectTransform doorIndicatorParent;
 
     [SerializeField] RectTransform mapRect;
 
-    MinimapDoorIndicator[] indicators;
+    UIMapPinBehaviour[] indicators;
     float zoomFactor = 0.6f;
     public System.Action<float> ChangeZoomEvent;
 
@@ -26,13 +26,27 @@ public class MinimapUI : MonoBehaviour
     private void PopulateMinimap()
     {
         Door[] doors = FindObjectsOfType<Door>();
+        List<UIMapPinBehaviour> pins = new List<UIMapPinBehaviour>();
 
         for (int i = 0; i < doors.Length; i++)
         {
-            MinimapDoorIndicator indicator = Instantiate(doorIndicatorPrefab, transform);
-            indicator.Setup(doors[i]);
+            UIMapPinBehaviour indicator = Instantiate(doorIndicatorPrefab, doorIndicatorParent);
+            indicator.Init(this, doors[i]);
+            pins.Add(indicator);
             RectTransform rectTransform = indicator.GetComponent<RectTransform>();
             rectTransform.position = WorldToMinimap(doors[i].transform.position);
+        }
+
+        indicators = pins.ToArray();
+    }
+
+    internal void Select(UIMapPinBehaviour activePin)
+    {
+        foreach (UIMapPinBehaviour pin in indicators)
+        {
+            bool active = pin == activePin;
+            if (pin.Active != active)
+                pin.SetActive(active);
         }
     }
 

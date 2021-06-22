@@ -2,36 +2,55 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
+    [SerializeField] RawImage logo;
+    [SerializeField] Sprite defaultSprite, hoverSprite;
+
     float scaleMultiplier = 1;
     float parentScale = 0.6f;
-    bool active;
 
-    private void OnEnable()
+    bool active;
+    public bool Active => active;
+
+    Image image;
+    MinimapUI minimapUI;
+
+    public UnityEvent onClick;
+
+    public void Init(MinimapUI minimapUI, Door d)
     {
-        GetComponentInParent<MinimapUI>().ChangeZoomEvent += OnZoomIn;
+        if (d.Logo == null)
+            logo.color = Color.clear;
+        else
+            logo.texture = d.Logo;
+
+        image = GetComponent<Image>();
+        this.minimapUI = minimapUI;
+        minimapUI.ChangeZoomEvent += OnZoomIn;
         UpdateScale();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        //Reference is dirty! Lucas fix me.
-        var minimapUI = GetComponentInParent<MinimapUI>();
         if (minimapUI != null)
             minimapUI.ChangeZoomEvent -= OnZoomIn;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        SetActive(true);
+        minimapUI.Select(this);
+        //onClick?.Invoke();
     }
 
-    private void SetActive(bool newActive)
+    public void SetActive(bool newActive)
     {
         active = newActive;
+        image.sprite = active ? hoverSprite : defaultSprite;
         StopAllCoroutines();
         StartCoroutine(AnimateScaleMultiplierRoutine(active ? 1.25f : 1f));
     }
