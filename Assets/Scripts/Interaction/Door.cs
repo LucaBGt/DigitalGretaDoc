@@ -10,24 +10,32 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
     [SerializeField] Transform goalPosition;
 
-    [SerializeField] string companyName;
-    [SerializeField] string url;
-    [SerializeField] Sprite logo;
     [SerializeField] CinemachineVirtualCamera vcam;
 
     [SerializeField] AudioClip openDoor, closeDoor;
 
     Animator animator;
 
+    RuntimeVendorData data;
 
     public event Action Cancel;
 
-    public string CompanyName => companyName;
-    public Sprite Logo => logo;
+    public string CompanyName => IsSetup() ? data.InternalData.Name : "NULL";
+    public Texture Logo => IsSetup() ? data.LogoTexture : null;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
+    }
+
+    public void Setup(RuntimeVendorData runtimeVendorData)
+    {
+        data = runtimeVendorData;
+    }
+
+    private bool IsSetup()
+    {
+        return data != null;
     }
 
     public void EnterInteraction()
@@ -49,6 +57,7 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
     public void OpenURL()
     {
+        string url = IsSetup() ? data.InternalData.LinkWebsite : null;
         if (!string.IsNullOrEmpty(url))
             Application.OpenURL(url);
     }

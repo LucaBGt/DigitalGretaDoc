@@ -18,7 +18,10 @@ public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerCl
 
     private void OnDisable()
     {
-        GetComponentInParent<MinimapUI>().ChangeZoomEvent -= OnZoomIn;
+        //Reference is dirty! Lucas fix me.
+        var minimapUI = GetComponentInParent<MinimapUI>();
+        if (minimapUI != null)
+            minimapUI.ChangeZoomEvent -= OnZoomIn;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -64,6 +67,6 @@ public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerCl
 
     private void UpdateScale()
     {
-        transform.localScale = Vector3.one *((1 / parentScale) * scaleMultiplier);
+        transform.localScale = Vector3.one * ((1 / parentScale) * scaleMultiplier);
     }
 }

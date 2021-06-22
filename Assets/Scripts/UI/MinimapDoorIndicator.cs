@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class MinimapDoorIndicator : MonoBehaviour
 {
     [SerializeField] TMPro.TextMeshProUGUI companyName;
-    [SerializeField] Image logo;
+    [SerializeField] RawImage logo;
     [SerializeField] Button button;
 
     public void Setup(Door d)
@@ -14,7 +14,7 @@ public class MinimapDoorIndicator : MonoBehaviour
         if (d.Logo == null)
             logo.color = Color.clear;
         else
-            logo.sprite = d.Logo;
+            logo.texture = d.Logo;
 
         companyName.text = d.CompanyName;
 

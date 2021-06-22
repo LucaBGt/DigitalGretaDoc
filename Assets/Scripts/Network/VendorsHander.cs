@@ -3,19 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-public class VendorsHander : MonoBehaviour
+public class VendorsHander : SingletonBehaviour<VendorsHander>
 {
-    const string URL_VENDOR_HASH = "http://82.165.109.5:8082/vendor_hash";
-    const string URL_VENDOR_DATA = "http://82.165.109.5:8082/vendor_data";
+    [SerializeField]
+    private string urlVendorRequests = "http://82.165.109.5:8082/";
 
-    private string vendorDataPath;
-    private string vendorJSONPath;
+    const string URL_VENDOR_HASH = "vendor_hash";
+    const string URL_VENDOR_JSON = "vendor_data";
+    const string URL_VENDOR_GET = "get";
+
+    private string vendorDataPathInternal;
+    private string vendorJSONPathInternal;
 
     private Dictionary<int, RuntimeVendorData> vendorDataCache = new Dictionary<int, RuntimeVendorData>();
 
     GretaMarketVendorPackage vendorInfo;
 
-    private void Awake()
+    public event System.Action Ready;
+
+    public int VendorsCount => vendorDataCache.Count;
+
+    private void Start()
     {
 #if UNITY_SERVER
         Destroy(this);
@@ -26,25 +34,25 @@ public class VendorsHander : MonoBehaviour
 
     private void Setup()
     {
-        vendorDataPath = Application.persistentDataPath + "/Vendors/";
-        vendorJSONPath = vendorDataPath + "data.json";
-
 
         StartCoroutine(SetupRoutine());
     }
 
     private IEnumerator SetupRoutine()
     {
-        yield return StartCoroutine(LoadJSON());
+        //handle loading internal data later, for now always download
+        //yield return StartCoroutine(LoadCachedData());
 
         yield return StartCoroutine(CheckHashAndQueueDownload());
     }
 
-    private IEnumerator LoadJSON()
+    private IEnumerator LoadCachedData()
     {
         //use filesystem for loading/deleting, avoid in WEBGL completely
         vendorDataCache = new Dictionary<int, RuntimeVendorData>();
-        UnityWebRequest request = UnityWebRequest.Get("file//" + vendorJSONPath);
+
+
+        UnityWebRequest request = UnityWebRequest.Get("file//" + vendorJSONPathInternal);
         yield return request.SendWebRequest();
 
         switch (request.result)
@@ -52,7 +60,7 @@ public class VendorsHander : MonoBehaviour
             case UnityWebRequest.Result.ConnectionError:
             case UnityWebRequest.Result.DataProcessingError:
             case UnityWebRequest.Result.ProtocolError:
-                Debug.LogError($"Error loading {vendorJSONPath}: {request.error}");
+                Debug.LogError($"Error loading {vendorJSONPathInternal}: {request.error}");
                 yield break;
             case UnityWebRequest.Result.Success:
                 vendorInfo = JsonUtility.FromJson<GretaMarketVendorPackage>(request.downloadHandler.text);
@@ -63,7 +71,7 @@ public class VendorsHander : MonoBehaviour
 
     private IEnumerator CheckHashAndQueueDownload()
     {
-        var request = UnityWebRequest.Get(URL_VENDOR_HASH);
+        var request = UnityWebRequest.Get(urlVendorRequests + URL_VENDOR_HASH);
 
         yield return request.SendWebRequest();
 
@@ -73,10 +81,10 @@ public class VendorsHander : MonoBehaviour
         {
             case UnityWebRequest.Result.ConnectionError:
             case UnityWebRequest.Result.DataProcessingError:
-                Debug.LogError(URL_VENDOR_HASH + ": Error: " + request.error);
+                Debug.LogWarning(URL_VENDOR_HASH + ": Error: " + request.error);
                 break;
             case UnityWebRequest.Result.ProtocolError:
-                Debug.LogError(URL_VENDOR_HASH + ": HTTP Error: " + request.error);
+                Debug.LogWarning(URL_VENDOR_HASH + ": HTTP Error: " + request.error);
                 break;
             case UnityWebRequest.Result.Success:
                 Debug.Log(URL_VENDOR_HASH + ":\nReceived: " + request.downloadHandler.text);
@@ -87,6 +95,7 @@ public class VendorsHander : MonoBehaviour
         if (string.IsNullOrEmpty(hash) || (vendorInfo != null && vendorInfo.Hash == hash))
         {
             Debug.Log("Cancelling VendorData download.");
+            Ready?.Invoke();
         }
         else
         {
@@ -96,7 +105,7 @@ public class VendorsHander : MonoBehaviour
 
     private IEnumerator DownloadDataRoutine()
     {
-        var request = UnityWebRequest.Get(URL_VENDOR_DATA);
+        var request = UnityWebRequest.Get(urlVendorRequests + URL_VENDOR_JSON);
 
         yield return request.SendWebRequest();
 
@@ -104,19 +113,34 @@ public class VendorsHander : MonoBehaviour
         {
             case UnityWebRequest.Result.ConnectionError:
             case UnityWebRequest.Result.DataProcessingError:
-                Debug.LogError(URL_VENDOR_DATA + ": Error: " + request.error);
+                Debug.LogError(URL_VENDOR_JSON + ": Error: " + request.error);
                 yield break;
             case UnityWebRequest.Result.ProtocolError:
-                Debug.LogError(URL_VENDOR_DATA + ": HTTP Error: " + request.error);
+                Debug.LogError(URL_VENDOR_JSON + ": HTTP Error: " + request.error);
                 yield break;
             case UnityWebRequest.Result.Success:
-                Debug.Log(URL_VENDOR_DATA + ":\n Completed ");
+                Debug.Log(URL_VENDOR_JSON + ":\n Completed ");
                 break;
         }
 
-        //??? What do I do now?!
-        //Switch to downloading raw textures
+        vendorInfo = JsonUtility.FromJson<GretaMarketVendorPackage>(request.downloadHandler.text);
 
+        if (vendorInfo == null)
+        {
+            Debug.LogError("Failed to create JSON from download.");
+            yield break;
+        }
+
+        vendorDataCache = new Dictionary<int, RuntimeVendorData>();
+
+        int i = 0;
+        foreach (var vendor in vendorInfo.Vendors)
+        {
+            var data = new RuntimeVendorData(vendor, urlVendorRequests + URL_VENDOR_GET, this);
+            vendorDataCache.Add(i++, data);
+        }
+
+        Ready?.Invoke();
     }
 
 
@@ -140,7 +164,7 @@ public class VendorsHander : MonoBehaviour
                 return null;
             }
 
-            RuntimeVendorData data = new RuntimeVendorData(vendorInfo.Vendors[id], vendorDataPath, this);
+            RuntimeVendorData data = new RuntimeVendorData(vendorInfo.Vendors[id], vendorDataPathInternal, this);
             vendorDataCache.Add(id, data);
             return data;
         }
@@ -152,33 +176,35 @@ public class RuntimeVendorData
 {
     private VendorData data;
 
-    Texture2D logoTexture;
-    Texture2D mainImageTexture;
-    Texture2D[] subImagesTextures;
+    public Texture2D LogoTexture;
+    public Texture2D MainImageTexture;
+    public Texture2D[] SubImagesTextures;
 
     private int loadedTextures = 0;
+
+    public VendorData InternalData => data;
 
     public RuntimeVendorData(VendorData _data, string rootPath, MonoBehaviour coroutineRunner)
     {
         data = _data;
         Debug.Log($"Started loading vendor {_data.Name}");
-        StartLoadTextures(rootPath, coroutineRunner);
+        StartLoadTextures(rootPath + "/" + data.Directory + "_", coroutineRunner);
     }
 
-    private void StartLoadTextures(string rootPath, MonoBehaviour coroutineRunner)
+    private void StartLoadTextures(string retrievePath, MonoBehaviour coroutineRunner)
     {
-        logoTexture = new Texture2D(2, 2);
-        coroutineRunner.StartCoroutine(LoadTexture(rootPath + data.LogoFile, logoTexture));
+        LogoTexture = new Texture2D(2, 2);
+        coroutineRunner.StartCoroutine(LoadTexture(retrievePath + data.LogoFile, LogoTexture));
 
-        mainImageTexture = new Texture2D(2, 2);
-        coroutineRunner.StartCoroutine(LoadTexture(rootPath + data.LogoFile, logoTexture));
+        MainImageTexture = new Texture2D(2, 2);
+        coroutineRunner.StartCoroutine(LoadTexture(retrievePath + data.MainImageFile, LogoTexture));
 
-        subImagesTextures = new Texture2D[data.SubImagesFiles.Length];
+        SubImagesTextures = new Texture2D[data.SubImagesFiles.Length];
 
-        for (int i = 0; i < subImagesTextures.Length; i++)
+        for (int i = 0; i < SubImagesTextures.Length; i++)
         {
-            subImagesTextures[i] = new Texture2D(2, 2);
-            coroutineRunner.StartCoroutine(LoadTexture(rootPath + data.SubImagesFiles[i], subImagesTextures[i]));
+            SubImagesTextures[i] = new Texture2D(2, 2);
+            coroutineRunner.StartCoroutine(LoadTexture(retrievePath + data.SubImagesFiles[i], SubImagesTextures[i]));
         }
     }
 
@@ -190,10 +216,11 @@ public class RuntimeVendorData
             if (string.IsNullOrEmpty(uwr.error))
             {
                 tex.LoadImage(uwr.downloadHandler.data);
+                Debug.Log($"Loaded texture {path}");
             }
             else
             {
-                Debug.LogError("LoadTextureError: " + uwr.error);
+                Debug.LogError($"LoadTextureError: {path}  {uwr.error}" );
             }
             loadedTextures++;
         }
@@ -201,7 +228,7 @@ public class RuntimeVendorData
 
     public bool IsFullyLoaded()
     {
-        return loadedTextures == subImagesTextures.Length + 2;
+        return loadedTextures == SubImagesTextures.Length + 2;
     }
 }
 
@@ -226,4 +253,6 @@ public class VendorData
     public string LogoFile;
     public string MainImageFile;
     public string[] SubImagesFiles;
+
+    public string Directory;
 }
