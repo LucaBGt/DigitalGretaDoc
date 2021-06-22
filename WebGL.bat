@@ -1,11 +1,10 @@
 
-echo "Starting WebGL.sh"
-set -e
-cd ${WORKSPACE}
+echo "Starting WebGL.bat"
 
-UNITY_PATH=C:\Program Files\Unity\Hub\Editor\2020.3.5f1\Editor\Unity
+cd %WORKSPACE%
 
-#WEBGL STUFF 
-$UNITY_PATH -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildWebGL "${WORKSPACE}/Build_WebGL/"
+set UNITY_PATH = C:\Program Files\Unity\Hub\Editor\2020.3.5f1\Editor\Unity
+
+%UNITY_PATH% -batchmode -nographics -quit -executeMethod JenkinsBuild.BuildWebGL "%WORKSPACE%/Build_WebGL/"
 echo "WebGL Build Done"
 
