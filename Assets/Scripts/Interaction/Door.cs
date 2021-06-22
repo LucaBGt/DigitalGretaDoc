@@ -14,6 +14,7 @@ public class Door : MonoBehaviour, ICancallableInteractable
     [SerializeField] CinemachineVirtualCamera vcam;
 
     [SerializeField] AudioClip openDoor, closeDoor;
+    [SerializeField] Shader changeHueShader;
 
     Animator animator;
 
@@ -28,6 +29,32 @@ public class Door : MonoBehaviour, ICancallableInteractable
     private void Start()
     {
         animator = GetComponent<Animator>();
+        RandomiseDoorColor();
+    }
+
+    private void RandomiseDoorColor()
+    {
+        Material matInstance = null;
+        foreach (MeshRenderer meshRenderer in GetComponentsInChildren<MeshRenderer>())
+        {
+            Material[] mat = meshRenderer.materials;
+
+            for (int i = 0; i < mat.Length; i++)
+            {
+                if (mat[i].shader == changeHueShader)
+                {
+                    if (matInstance == null)
+                    {
+                        matInstance = new Material(mat[i]);
+                        matInstance.SetFloat("_hueShift", UnityEngine.Random.Range(0, 360));
+                    }
+
+                    mat[i] = matInstance;
+                }
+            }
+
+            meshRenderer.materials = mat;
+        }
     }
 
     public void Setup(RuntimeVendorData runtimeVendorData)

@@ -265,6 +265,7 @@ MonoBehaviour:
   vcam: {fileID: 5814002809725278496}
   openDoor: {fileID: 8300000, guid: fb30aa767542a064ba1e04f771a722f7, type: 3}
   closeDoor: {fileID: 8300000, guid: 2e9332a77559cd048887b4631a484378, type: 3}
+  changeHueShader: {fileID: -6465566751694194690, guid: 9d8427328dfb3744bb011704fa1b7463, type: 3}
 --- !u!65 &700063762169436709
 BoxCollider:
   m_ObjectHideFlags: 0
