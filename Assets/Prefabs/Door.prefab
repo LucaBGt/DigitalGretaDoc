@@ -56,7 +56,7 @@ MonoBehaviour:
     FieldOfView: 10
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 5000
+    FarClipPlane: 50
     Dutch: 0
     LensShift: {x: 0, y: 0}
   m_Transitions:
@@ -261,9 +261,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goalPosition: {fileID: 8443432455894550162}
-  companyName: 
-  url: http://www.zorc-media.com/Greta/ZorcMedia/stand_info.json
-  logo: {fileID: 0}
   vcam: {fileID: 5814002809725278496}
   openDoor: {fileID: 8300000, guid: fb30aa767542a064ba1e04f771a722f7, type: 3}
   closeDoor: {fileID: 8300000, guid: 2e9332a77559cd048887b4631a484378, type: 3}

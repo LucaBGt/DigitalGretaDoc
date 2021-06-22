@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[SelectionBase]
 public class Door : MonoBehaviour, ICancallableInteractable
 {
     private static readonly int ANIM_OpenDoor = Animator.StringToHash("OpenDoor");
