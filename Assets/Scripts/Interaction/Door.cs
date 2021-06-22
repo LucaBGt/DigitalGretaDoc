@@ -40,6 +40,11 @@ public class Door : MonoBehaviour, ICancallableInteractable
         return data != null;
     }
 
+    public void EnterInteractionFromMap()
+    {
+        UIHandler.Instance.OpenDoor(this);
+    }
+
     public void EnterInteraction()
     {
         UIHandler.Instance.OpenDoor(this);

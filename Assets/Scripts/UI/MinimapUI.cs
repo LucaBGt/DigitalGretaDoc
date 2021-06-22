@@ -82,7 +82,7 @@ public class MinimapUI : MonoBehaviour
             logoImage.texture = door.Logo;
             describtionText.text = door.CompanyDescription;
             infoButton.onClick.RemoveAllListeners();
-            infoButton.onClick.AddListener(door.EnterInteraction);
+            infoButton.onClick.AddListener(door.EnterInteractionFromMap);
             meetingButton.onClick.RemoveAllListeners();
             meetingButton.onClick.AddListener(door.OpenURL);
         }

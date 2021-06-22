@@ -40,6 +40,8 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 
     public bool InLockedUIMode => uiState != UIState.InGame;
 
+    private bool startedGame;
+
     private void Start()
     {
         GetLocalPlayer().PlayerStateChanged += OnPlayerStateChanged;
@@ -101,7 +103,7 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 
     private void UpdateVisuals()
     {
-        mainMenu.SetActive(uiState == UIState.InMainMenu);
+        //mainMenu.SetActive(uiState == UIState.InMainMenu);
         characterSelection.SetActiveTransition(uiState == UIState.InCharacterSelection);
         minimapUI.SetActiveTransition(uiState == UIState.InMinimap);
         ingameUI.SetActive(uiState == UIState.InGame);
@@ -111,6 +113,7 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 
     public void StartGame()
     {
+        startedGame = true;
         GretaNetworkManager.Instance?.GretaJoin();
         StartMenu.Instance.ExitStartMenu();
         ReturnToGame();
@@ -118,9 +121,19 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 
     public void ReturnToGame()
     {
-        uiState = UIState.InGame;
+        if (startedGame)
+        {
+            uiState = UIState.InGame;
+        }
+        else
+        {
+            uiState = UIState.InMainMenu;
+            StartMenu.Instance.JumpToMenuStage(1);
+        }
         ReturnedToGame?.Invoke();
+
         UpdateVisuals();
+
     }
 
     public void OpenDoor(Door d)
