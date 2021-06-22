@@ -14,19 +14,16 @@ public class JenkinsBuild
         var args = FindArgs();
 
         string fullPathAndName = args.targetDir + "Server.x86_64";
-        BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.Standalone,
-                BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode);
+        BuildProject(new string[] { "Assets/Scenes/ServerScene.unity" }, fullPathAndName, BuildTargetGroup.Standalone,
+                BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode | BuildOptions.ConnectWithProfiler | BuildOptions.Development);
     }
 
-    public static void BuildWindows64()
+    public static void BuildAndroid()
     {
         var args = FindArgs();
 
         string fullPathAndName = args.targetDir;
-
-        System.Console.WriteLine("[JenkinsBuildCodeLog] Full path name is " + fullPathAndName);
-
-        BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64, BuildOptions.None);
+        BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.Android, BuildTarget.Android, BuildOptions.None);
     }
     public static void BuildWebGL()
     {
@@ -60,8 +57,6 @@ public class JenkinsBuild
             if (realPos == 0)
             {
                 returnValue.targetDir = args[i];
-                if (!returnValue.targetDir.EndsWith(System.IO.Path.DirectorySeparatorChar + ""))
-                    returnValue.targetDir += System.IO.Path.DirectorySeparatorChar;
 
                 allArgsFound = true;
             }
@@ -97,7 +92,7 @@ public class JenkinsBuild
         else
         {
             System.Console.WriteLine("[JenkinsBuildCodeLog] Unable to change Build Target to: " + buildTarget.ToString() + " Exiting...");
-            return;
+            throw new System.Exception("Change Build Target Failed");
         }
 
         // https://docs.unity3d.com/ScriptReference/BuildPipeline.BuildPlayer.html
@@ -110,7 +105,9 @@ public class JenkinsBuild
         else
         {
             System.Console.WriteLine("[JenkinsBuildCodeLog] Build Failed: Time:" + buildSummary.totalTime + " Total Errors:" + buildSummary.totalErrors);
+            throw new System.Exception("Build Failed");
         }
+
     }
 
     private class Args

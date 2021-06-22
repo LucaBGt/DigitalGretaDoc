@@ -56,7 +56,7 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: 
   transport: {fileID: 6351092224991691717}
-  networkAddress: 82.165.53.165
+  networkAddress: 82.165.109.5
   maxConnections: 100
   disconnectInactiveConnections: 1
   disconnectInactiveTimeout: 60
@@ -65,7 +65,6 @@ MonoBehaviour:
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
-  editorStartsHost: 0
 --- !u!114 &2670116031394013896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,12 +72,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3629165162974774773}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c914cc3e9035524aa65109f6d2b12d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   runDiagnostic: 1
+  logExtensively: 0
   secondsTracked: 20
   outRect:
     serializedVersion: 2

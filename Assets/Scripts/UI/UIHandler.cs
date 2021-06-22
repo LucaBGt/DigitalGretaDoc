@@ -28,26 +28,30 @@ public enum UIState
 
 public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveToggleUI
 {
-    [SerializeField] GameObject doorUI;
+    [SerializeField] ScalingUIElement doorUI, characterSelection, minimapUI;
     [SerializeField] GameObject stopButtonObject;
-    [SerializeField] GameObject mainMenu, characterSelection, emojiUI, minimapUI, ingameUI;
+    [SerializeField] GameObject mainMenu, emojiUI, ingameUI;
     [SerializeField] bool skipMainMenuInEditor;
 
     Door currentDoor = null;
     UIState uiState;
 
+    public event System.Action ReturnedToGame;
+
     public bool InLockedUIMode => uiState != UIState.InGame;
+
+    private bool startedGame;
 
     private void Start()
     {
-        GetLocalPlayer().ChangePlayerState += OnPlayerStateChanged;
+        GetLocalPlayer().PlayerStateChanged += OnPlayerStateChanged;
 
 #if UNITY_EDITOR
         if (skipMainMenuInEditor)
             return;
 #endif
 
-        EnterMainMenu();
+        //EnterMainMenu();
 
         GretaNetworkManager.Instance.ConnectionStateChanged += OnConnectionStateChanged;
     }
@@ -99,24 +103,37 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 
     private void UpdateVisuals()
     {
-        mainMenu.SetActive(uiState == UIState.InMainMenu);
-        characterSelection.SetActive(uiState == UIState.InCharacterSelection);
-        minimapUI.SetActive(uiState == UIState.InMinimap);
+        //mainMenu.SetActive(uiState == UIState.InMainMenu);
+        characterSelection.SetActiveTransition(uiState == UIState.InCharacterSelection);
+        minimapUI.SetActiveTransition(uiState == UIState.InMinimap);
         ingameUI.SetActive(uiState == UIState.InGame);
-        doorUI.SetActive(uiState == UIState.VisitCard);
+        doorUI.SetActiveTransition(uiState == UIState.VisitCard);
         emojiUI.SetActive(uiState == UIState.InGame && GretaNetworkManager.Instance.IsConnected);
     }
 
     public void StartGame()
     {
+        startedGame = true;
         GretaNetworkManager.Instance?.GretaJoin();
+        StartMenu.Instance.ExitStartMenu();
         ReturnToGame();
     }
 
     public void ReturnToGame()
     {
-        uiState = UIState.InGame;
+        if (startedGame)
+        {
+            uiState = UIState.InGame;
+        }
+        else
+        {
+            uiState = UIState.InMainMenu;
+            StartMenu.Instance.JumpToMenuStage(1);
+        }
+        ReturnedToGame?.Invoke();
+
         UpdateVisuals();
+
     }
 
     public void OpenDoor(Door d)

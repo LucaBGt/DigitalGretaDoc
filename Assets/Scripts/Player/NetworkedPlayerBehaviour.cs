@@ -5,9 +5,15 @@ using Mirror;
 using TMPro;
 using System;
 
-public class NetworkedPlayerBehaviour : NetworkBehaviour
+public interface IPlayerBehaviour
+{
+    event System.Action<PlayerState> PlayerStateChanged;
+}
+
+public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
 {
     [SerializeField] GameObject onDestroyEffect;
+    [SerializeField] GameObject playerVisualsObject;
 
     [Header("Player Name")]
     [SerializeField] TextMeshPro playerNameText;
@@ -15,8 +21,12 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
 
     Camera cam;
 
-    public event System.Action<PlayerState> NetworkedPlayerStateChanged;
+    public event System.Action<PlayerState> PlayerStateChanged;
 
+    [SyncVar(hook = nameof(SyncVarHook_SkinChanged))]
+    private int sv_skinID;
+    [SyncVar(hook = nameof(SyncVarHook_UsernameChanged))]
+    private string sv_username;
 
     private void Start()
     {
@@ -38,31 +48,29 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
     [ClientRpc]
     public void RPC_ChangePlayerState(PlayerState newState)
     {
-        NetworkedPlayerStateChanged?.Invoke(newState);
+        PlayerStateChanged?.Invoke(newState);
     }
 
     [Command]
     private void CMD_SetupRemotePlayer(string _name, int skinId)
     {
         // player info sent to server, then server updates sync vars which handles it on all clients
-        RPC_SetupRemotePlayer(_name, skinId);
+        sv_skinID = skinId;
+        sv_username = _name;
     }
 
-
-    [ClientRpc]
-    private void RPC_SetupRemotePlayer(string _name, int skinId)
+    private void SyncVarHook_SkinChanged(int _oldID, int _newID)
     {
-        playerNameText.text = _name;
+        Debug.Log(nameof(SyncVarHook_SkinChanged));
+        if (!isLocalPlayer)
+            LocalPlayerBehaviour.SetupLocalPlayerVisuals(playerNameText, playerSkin, sv_username, _newID);
+    }
 
-        if (skinId < Settings.Instance.SkinsCount)
-        {
-            playerSkin.sharedMaterial = Settings.Instance.SkinsMaterials[skinId];
-        }
-        else
-        {
-            Debug.LogWarning("Passed skinID not present in this version. Selecting default");
-            playerSkin.sharedMaterial = Settings.Instance.SkinsMaterials[0];
-        }
+    private void SyncVarHook_UsernameChanged(string _oldname, string _newname)
+    {
+        Debug.Log(nameof(SyncVarHook_UsernameChanged));
+        if (!isLocalPlayer)
+            LocalPlayerBehaviour.SetupLocalPlayerVisuals(playerNameText, playerSkin, _newname, sv_skinID);
     }
 
 
@@ -70,13 +78,17 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
     {
         CMD_SetupRemotePlayer(Settings.Instance.Username, Settings.Instance.UserSkinID);
 
-        LocalPlayerBehaviour.Instance.ChangePlayerState += OnLocalChangePlayerState;
+        LocalPlayerBehaviour.Instance.PlayerStateChanged += OnLocalChangePlayerState;
+
+        Destroy(playerVisualsObject);
+        Destroy(GetComponent<PlayerAnimationHandler>());
+        Destroy(GetComponent<Animator>());
     }
 
     private void OnDestroy()
     {
         if (isLocalPlayer)
-            LocalPlayerBehaviour.Instance.ChangePlayerState -= OnLocalChangePlayerState;
+            LocalPlayerBehaviour.Instance.PlayerStateChanged -= OnLocalChangePlayerState;
 
         if (onDestroyEffect != null && !GameInstance.ApplicationQuitting)
         {
@@ -96,7 +108,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour
         else
         {
             //remote player update
+            playerNameText.transform.forward = transform.position - cam.transform.position;
         }
-        playerNameText.transform.forward = transform.position - cam.transform.position;
     }
 }

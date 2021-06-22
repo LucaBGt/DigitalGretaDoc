@@ -72,7 +72,7 @@ Material:
     - _RefractionIntensity: 0.15
     - _RefractionScale: 1
     - _Scale: 50
-    - _Smoothness: 1
+    - _Smoothness: 0.6
     - _TessEdgeLength: 16
     - _TessMax: 25
     - _TessMaxDisp: 25
@@ -103,3 +103,4 @@ Material:
     - _NormalScale: {r: 2, g: 2, b: 0, a: 0}
     - _Vector0: {r: 1, g: 1, b: 1, a: 0}
     - _WaterColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BuildTextureStacks: []

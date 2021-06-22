@@ -1,39 +1,60 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[SelectionBase]
 public class Door : MonoBehaviour, ICancallableInteractable
 {
     private static readonly int ANIM_OpenDoor = Animator.StringToHash("OpenDoor");
 
     [SerializeField] Transform goalPosition;
 
-    [SerializeField] string companyName;
-    [SerializeField] string url;
-    [SerializeField] Sprite logo;
+    [SerializeField] CinemachineVirtualCamera vcam;
+
+    [SerializeField] AudioClip openDoor, closeDoor;
 
     Animator animator;
 
+    RuntimeVendorData data;
 
     public event Action Cancel;
 
-    public string CompanyName => companyName;
-    public Sprite Logo => logo;
+    public string CompanyName => IsSetup() ? data.InternalData.Name : "NULL";
+    public string CompanyDescription => IsSetup() ? data.InternalData.Description : "NULL";
+    public Texture Logo => IsSetup() ? data.LogoTexture : null;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
     }
 
+    public void Setup(RuntimeVendorData runtimeVendorData)
+    {
+        data = runtimeVendorData;
+    }
+
+    private bool IsSetup()
+    {
+        return data != null;
+    }
+
+    public void EnterInteractionFromMap()
+    {
+        UIHandler.Instance.OpenDoor(this);
+    }
+
     public void EnterInteraction()
     {
         UIHandler.Instance.OpenDoor(this);
+        vcam.Priority = 20;
     }
 
     public void ExitInteraction()
     {
         UIHandler.Instance.CloseDoor(this);
+        vcam.Priority = 5;
     }
 
     public Vector3 GetInteractPosition()
@@ -43,6 +64,7 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
     public void OpenURL()
     {
+        string url = IsSetup() ? data.InternalData.LinkWebsite : null;
         if (!string.IsNullOrEmpty(url))
             Application.OpenURL(url);
     }
@@ -62,10 +84,12 @@ public class Door : MonoBehaviour, ICancallableInteractable
     private void OnTriggerEnter(Collider other)
     {
         animator.SetBool(ANIM_OpenDoor, true);
+        SoundPlayer.Instance.Play(openDoor, source3D: transform, volume: 0.25f, randomPitchRange: 0.1f);
     }
 
     private void OnTriggerExit(Collider other)
     {
         animator.SetBool(ANIM_OpenDoor, false);
+        SoundPlayer.Instance.Play(closeDoor, source3D: transform, volume: 0.25f, randomPitchRange: 0.1f);
     }
 }
