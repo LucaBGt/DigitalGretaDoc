@@ -140,15 +140,15 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
     public void OpenDoor(Door d)
     {
         uiState = UIState.VisitCard;
-        UpdateVisuals();
         currentDoor = d;
+        UpdateVisuals();
     }
 
     public void CloseDoor(Door d)
     {
         uiState = UIState.InGame;
-        UpdateVisuals();
         currentDoor = null;
+        UpdateVisuals();
     }
 
     public void OpenCurrentDoorLink()

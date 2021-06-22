@@ -27,8 +27,8 @@ public class DoorUI : ScalingUIElement
         smallText.text = data.InternalData.Description;
         logoImage.texture = data.LogoTexture;
         imageBig.texture = data.MainImageTexture;
-        image01.texture = data.SubImagesTextures[0];
-        image02.texture = data.SubImagesTextures[1];
-        image03.texture = data.SubImagesTextures[2];
+        //image01.texture = data.SubImagesTextures[0];
+        //image02.texture = data.SubImagesTextures[1];
+        //image03.texture = data.SubImagesTextures[2];
     }
 }
