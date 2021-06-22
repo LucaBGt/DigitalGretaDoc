@@ -174,7 +174,6 @@ GameObject:
   - component: {fileID: 4532482473638128596}
   - component: {fileID: 8735523722205189237}
   - component: {fileID: 2434076594219747723}
-  - component: {fileID: 5479689553976247051}
   m_Layer: 0
   m_Name: MinimapPin
   m_TagString: Untagged
@@ -252,23 +251,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8144e11ac7606384483197f321cca287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  logo: {fileID: 7198177219052424508}
   defaultSprite: {fileID: 21300000, guid: 09aeb288d30602e438f9e21f7774ec7e, type: 3}
   hoverSprite: {fileID: 21300000, guid: c98fd222dba0e2d4ab7ba4b62098bb4b, type: 3}
   onClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5479689553976247051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516253965046839845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba74a4a95c3311549a44173b6692d8bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  companyName: {fileID: 0}
-  logo: {fileID: 7198177219052424508}
-  button: {fileID: 2434076594219747723}

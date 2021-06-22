@@ -22,6 +22,7 @@ public class Door : MonoBehaviour, ICancallableInteractable
     public event Action Cancel;
 
     public string CompanyName => IsSetup() ? data.InternalData.Name : "NULL";
+    public string CompanyDescription => IsSetup() ? data.InternalData.Description : "NULL";
     public Texture Logo => IsSetup() ? data.LogoTexture : null;
 
     private void Start()

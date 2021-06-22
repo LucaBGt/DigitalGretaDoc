@@ -45,7 +45,6 @@ public class CharacterSelection : MonoBehaviour
 
     public void StartGame()
     {
-        StartMenu.Instance.ExitStartMenu();
         uiHandler.StartGame();
     }
 

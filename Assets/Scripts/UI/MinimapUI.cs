@@ -1,7 +1,11 @@
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MinimapUI : MonoBehaviour
 {
@@ -12,6 +16,12 @@ public class MinimapUI : MonoBehaviour
     [SerializeField] RectTransform doorIndicatorParent;
 
     [SerializeField] RectTransform mapRect;
+
+    [Foldout("DetailWindow")] [SerializeField] TMP_Text nameText;
+    [Foldout("DetailWindow")] [SerializeField] RawImage logoImage;
+    [Foldout("DetailWindow")] [SerializeField] TMP_Text describtionText;
+    [Foldout("DetailWindow")] [SerializeField] Button infoButton;
+    [Foldout("DetailWindow")] [SerializeField] Button meetingButton;
 
     UIMapPinBehaviour[] indicators;
     float zoomFactor = 0.6f;
@@ -25,7 +35,7 @@ public class MinimapUI : MonoBehaviour
 
     private void PopulateMinimap()
     {
-        Door[] doors = FindObjectsOfType<Door>();
+        Door[] doors = FindObjectsOfType<Door>().OrderBy(d => d.transform.position.x).ToArray();
         List<UIMapPinBehaviour> pins = new List<UIMapPinBehaviour>();
 
         for (int i = 0; i < doors.Length; i++)
@@ -40,7 +50,7 @@ public class MinimapUI : MonoBehaviour
         indicators = pins.ToArray();
     }
 
-    internal void Select(UIMapPinBehaviour activePin)
+    internal void Select(UIMapPinBehaviour activePin, Door door)
     {
         foreach (UIMapPinBehaviour pin in indicators)
         {
@@ -48,6 +58,45 @@ public class MinimapUI : MonoBehaviour
             if (pin.Active != active)
                 pin.SetActive(active);
         }
+
+        UpdateDetailWindow(door);
+    }
+
+    public void Deselect()
+    {
+        foreach (UIMapPinBehaviour pin in indicators)
+        {
+            pin.SetActive(false);
+        }
+
+        UpdateDetailWindow(null);
+    }
+
+    private void UpdateDetailWindow(Door door)
+    {
+        bool show = (door != null);
+
+        if (show)
+        {
+            nameText.text = door.CompanyName;
+            logoImage.texture = door.Logo;
+            describtionText.text = door.CompanyDescription;
+            infoButton.onClick.RemoveAllListeners();
+            infoButton.onClick.AddListener(door.EnterInteraction);
+            meetingButton.onClick.RemoveAllListeners();
+            meetingButton.onClick.AddListener(door.OpenURL);
+        }
+        else
+        {
+            nameText.text = "";
+            describtionText.text = "Klicke auf einen Stand um dir seine Informationen anzusehen.";
+            logoImage.texture = null;
+            infoButton.onClick.RemoveAllListeners();
+            meetingButton.onClick.RemoveAllListeners();
+        }
+
+        infoButton.transform.parent.gameObject.SetActive(show);
+        meetingButton.transform.parent.gameObject.SetActive(show);
     }
 
     private void Update()

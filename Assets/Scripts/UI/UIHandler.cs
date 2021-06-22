@@ -112,6 +112,7 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
     public void StartGame()
     {
         GretaNetworkManager.Instance?.GretaJoin();
+        StartMenu.Instance.ExitStartMenu();
         ReturnToGame();
     }
 

@@ -19,6 +19,7 @@ public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerCl
 
     Image image;
     MinimapUI minimapUI;
+    Door door;
 
     public UnityEvent onClick;
 
@@ -28,6 +29,8 @@ public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerCl
             logo.color = Color.clear;
         else
             logo.texture = d.Logo;
+
+        door = d;
 
         image = GetComponent<Image>();
         this.minimapUI = minimapUI;
@@ -43,7 +46,10 @@ public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerCl
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        minimapUI.Select(this);
+        if (active)
+            minimapUI.Deselect();
+        else
+            minimapUI.Select(this, door);
         //onClick?.Invoke();
     }
 
@@ -52,7 +58,7 @@ public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerCl
         active = newActive;
         image.sprite = active ? hoverSprite : defaultSprite;
         StopAllCoroutines();
-        StartCoroutine(AnimateScaleMultiplierRoutine(active ? 1.25f : 1f));
+        StartCoroutine(AnimateScaleMultiplierRoutine(active ? 1.5f : 1f));
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -64,6 +70,9 @@ public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerCl
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (active)
+            return;
+
         StopAllCoroutines();
         StartCoroutine(AnimateScaleMultiplierRoutine(1));
     }
