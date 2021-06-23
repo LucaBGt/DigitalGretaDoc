@@ -16,6 +16,7 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
     [SerializeField] AudioClip openDoor, closeDoor;
     [SerializeField] Shader changeHueShader;
+    [SerializeField] MeshRenderer logoMeshRenderer;
 
     Animator animator;
 
@@ -62,6 +63,14 @@ public class Door : MonoBehaviour, ICancallableInteractable
     public void Setup(RuntimeVendorData runtimeVendorData)
     {
         data = runtimeVendorData;
+        DisplayLogo(Logo);
+    }
+
+    private void DisplayLogo(Texture logo)
+    {
+        Material newMaterial = new Material(logoMeshRenderer.material);
+        newMaterial.mainTexture = logo;
+        logoMeshRenderer.material = newMaterial;
     }
 
     private bool IsSetup()

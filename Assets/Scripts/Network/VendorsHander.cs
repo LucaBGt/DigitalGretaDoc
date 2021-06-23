@@ -197,7 +197,7 @@ public class RuntimeVendorData
         coroutineRunner.StartCoroutine(LoadTexture(retrievePath + data.LogoFile, LogoTexture));
 
         MainImageTexture = new Texture2D(2, 2);
-        coroutineRunner.StartCoroutine(LoadTexture(retrievePath + data.MainImageFile, LogoTexture));
+        coroutineRunner.StartCoroutine(LoadTexture(retrievePath + data.MainImageFile, MainImageTexture));
 
         SubImagesTextures = new Texture2D[data.SubImagesFiles.Length];
 

@@ -9,7 +9,8 @@ public class DoorUI : ScalingUIElement
 {
     [SerializeField] TMP_Text bigText, smallText;
     [SerializeField] RawImage logoImage;
-    [SerializeField] RawImage imageBig, image01, image02, image03;
+    [SerializeField] RawImage imageBig;
+    [SerializeField] RawImage[] imagesSmall;
     [SerializeField] SocialMediaButton socialMediaButtonPrefab;
     [SerializeField] RectTransform socialMediaButtonParent;
     public void SetActiveTransition(bool active, Door currentDoor)
@@ -27,8 +28,11 @@ public class DoorUI : ScalingUIElement
         smallText.text = data.InternalData.Description;
         logoImage.texture = data.LogoTexture;
         imageBig.texture = data.MainImageTexture;
-        //image01.texture = data.SubImagesTextures[0];
-        //image02.texture = data.SubImagesTextures[1];
-        //image03.texture = data.SubImagesTextures[2];
+        for (int i = 0; i < data.SubImagesTextures.Length; i++)
+        {
+            imagesSmall[i].texture = data.SubImagesTextures[i];
+            if (i == 2)
+                break;
+        }
     }
 }

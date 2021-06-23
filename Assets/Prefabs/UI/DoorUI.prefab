@@ -1666,9 +1666,10 @@ MonoBehaviour:
   smallText: {fileID: 8393528954647958026}
   logoImage: {fileID: 2655442563907700300}
   imageBig: {fileID: 8545620136440263420}
-  image01: {fileID: 3437121095608535895}
-  image02: {fileID: 7408678402812241373}
-  image03: {fileID: 3040644796010713047}
+  imagesSmall:
+  - {fileID: 3437121095608535895}
+  - {fileID: 7408678402812241373}
+  - {fileID: 3040644796010713047}
   socialMediaButtonPrefab: {fileID: 5118590260026876806, guid: 33de9755573a4d041accaf041520c86a, type: 3}
   socialMediaButtonParent: {fileID: 1094818950184958395}
 --- !u!1 &3742199303923792608
