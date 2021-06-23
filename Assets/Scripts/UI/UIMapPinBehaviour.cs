@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
     [SerializeField] RawImage logo;
+    [SerializeField] KeepAspectRatio logoAspectRatio;
     [SerializeField] Sprite defaultSprite, hoverSprite;
 
     float scaleMultiplier = 1;
@@ -29,8 +30,10 @@ public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerCl
             logo.color = Color.clear;
         else
             logo.texture = d.Logo;
+        logoAspectRatio.UpdateAspectRatio();
 
         door = d;
+
 
         image = GetComponent<Image>();
         this.minimapUI = minimapUI;
@@ -38,7 +41,7 @@ public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerCl
         UpdateScale();
     }
 
-    private void OnDestroy()
+    protected void OnDestroy()
     {
         if (minimapUI != null)
             minimapUI.ChangeZoomEvent -= OnZoomIn;

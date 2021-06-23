@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(RawImage))]
 public class KeepAspectRatio : AspectRatioFitter
 {
-    RawImage rawImage;
+    protected RawImage rawImage;
     private bool update;
 
     protected override void OnEnable()
@@ -17,8 +17,6 @@ public class KeepAspectRatio : AspectRatioFitter
 
     public void UpdateAspectRatio()
     {
-        aspectRatio = aspectMode == AspectMode.HeightControlsWidth ?
-            (float)rawImage.texture.width / (float)rawImage.texture.height :
-            (float)rawImage.texture.height / (float)rawImage.texture.width;
+        aspectRatio = (float)rawImage.texture.width / (float)rawImage.texture.height;
     }
 }

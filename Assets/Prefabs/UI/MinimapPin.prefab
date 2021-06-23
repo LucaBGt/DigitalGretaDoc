@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3691307626922733930}
   - component: {fileID: 681452256531875702}
   - component: {fileID: 7198177219052424508}
+  - component: {fileID: 3382349322675419122}
   m_Layer: 0
   m_Name: RawImage
   m_TagString: Untagged
@@ -72,6 +73,20 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &3382349322675419122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339971687168014973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97af19dbd8bbfee4d8fac498c6e3ff28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 1
+  m_AspectRatio: 1
 --- !u!1 &1779400961646695566
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logo: {fileID: 7198177219052424508}
+  logoAspectRatio: {fileID: 3382349322675419122}
   defaultSprite: {fileID: 21300000, guid: 09aeb288d30602e438f9e21f7774ec7e, type: 3}
   hoverSprite: {fileID: 21300000, guid: c98fd222dba0e2d4ab7ba4b62098bb4b, type: 3}
   onClick:
