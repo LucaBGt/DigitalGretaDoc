@@ -13,6 +13,13 @@ public class DoorUI : ScalingUIElement
     [SerializeField] RawImage[] imagesSmall;
     [SerializeField] SocialMediaButton socialMediaButtonPrefab;
     [SerializeField] RectTransform socialMediaButtonParent;
+
+    KeepAspectRatio[] keepAspectRatios;
+
+    private void OnEnable()
+    {
+        keepAspectRatios = GetComponentsInChildren<KeepAspectRatio>();
+    }
     public void SetActiveTransition(bool active, Door currentDoor)
     {
         if (active && currentDoor != null)
@@ -33,6 +40,11 @@ public class DoorUI : ScalingUIElement
             imagesSmall[i].texture = data.SubImagesTextures[i];
             if (i == 2)
                 break;
+        }
+
+        foreach (KeepAspectRatio keepAspectRatio in keepAspectRatios)
+        {
+            keepAspectRatio.UpdateAspectRatio();
         }
     }
 }
