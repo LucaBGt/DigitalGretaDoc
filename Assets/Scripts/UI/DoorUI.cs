@@ -35,16 +35,31 @@ public class DoorUI : ScalingUIElement
         smallText.text = data.InternalData.Description;
         logoImage.texture = data.LogoTexture;
         imageBig.texture = data.MainImageTexture;
-        for (int i = 0; i < data.SubImagesTextures.Length; i++)
+        for (int i = 0; i < data.SubImagesTextures.Length && i < 3; i++)
         {
             imagesSmall[i].texture = data.SubImagesTextures[i];
-            if (i == 2)
-                break;
         }
 
         foreach (KeepAspectRatio keepAspectRatio in keepAspectRatios)
         {
             keepAspectRatio.UpdateAspectRatio();
         }
+
+        foreach (Transform child in socialMediaButtonParent)
+        {
+            Destroy(gameObject);
+        }
+
+        TryCreateSocialMediaButton(SocialMediaType.Facebook, data.InternalData.LinkFacebook);
+        TryCreateSocialMediaButton(SocialMediaType.Instagram, data.InternalData.LinkInstagram);
+        TryCreateSocialMediaButton(SocialMediaType.Homepage, data.InternalData.LinkWebsite);
+        TryCreateSocialMediaButton(SocialMediaType.Pinterest, data.InternalData.LinkPinterest);
+        TryCreateSocialMediaButton(SocialMediaType.YouTube, data.InternalData.LinkYouTube);
+    }
+
+    private void TryCreateSocialMediaButton(SocialMediaType type, string url)
+    {
+        if (!string.IsNullOrEmpty(url))
+            Instantiate(socialMediaButtonPrefab, socialMediaButtonParent).Init(type, url);
     }
 }

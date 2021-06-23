@@ -12,7 +12,7 @@ public class FancyAdditionalButtonBehaviour : MonoBehaviour, IPointerEnterHandle
 
     [SerializeField] FancyButtonElement[] fancyButtonElements;
     [SerializeField] AnimationCurve animationCurve = AnimationCurve.EaseInOut(0,0,1,1);
-    [SerializeField] float animationDuration = 1f;
+    [SerializeField] float animationDuration = 0.2f;
 
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -55,8 +55,8 @@ public class FancyAdditionalButtonBehaviour : MonoBehaviour, IPointerEnterHandle
 public class FancyButtonElement
 {
     public Graphic Graphic;
-    public Vector3 scaleDefault;
-    public Vector3 scaleHover;
+    public Vector3 scaleDefault = Vector3.one;
+    public Vector3 scaleHover = Vector3.one * 1.1f;
 
     public void SetScale(float lerpValue)
     {

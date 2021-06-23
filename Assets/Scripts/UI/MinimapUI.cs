@@ -31,6 +31,7 @@ public class MinimapUI : MonoBehaviour
 
     private void Start()
     {
+        UpdateDetailWindow(null);
         PopulateMinimap();
     }
 

@@ -187,6 +187,10 @@ public class RuntimeVendorData
     public RuntimeVendorData(VendorData _data, string rootPath, MonoBehaviour coroutineRunner)
     {
         data = _data;
+        data.LogoFile = "icon.png";
+        data.MainImageFile = "my1.png";
+        data.SubImagesFiles = new string[] { "my2.png", "my3.png", "my4.png" };
+
         Debug.Log($"Started loading vendor {_data.Name}");
         StartLoadTextures(rootPath + "/" + data.Directory + "_", coroutineRunner);
     }
@@ -248,6 +252,8 @@ public class VendorData
     public string LinkWebsite;
     public string LinkFacebook;
     public string LinkInstagram;
+    public string LinkYouTube;
+    public string LinkPinterest;
     public string LinkZoom;
 
     public string LogoFile;
