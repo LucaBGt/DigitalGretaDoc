@@ -95,7 +95,6 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
         if (ReachedDestination())
         {
             StopMoving();
-            Debug.Log("Reached Destination");
 
             if (currentInteractable != null)
                 State = PlayerState.RotatingToTarget;
