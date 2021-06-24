@@ -26,10 +26,17 @@ public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerCl
 
     public void Init(MinimapUI minimapUI, Door d)
     {
+
         if (d.Logo == null)
             logo.color = Color.clear;
         else
-            logo.texture = d.Logo;
+        {
+            if(d.Logo.IsReady)
+                logo.texture = d.Logo.Texture;
+            else
+                logo.texture = null;
+                //Logo texture is not ready and is currently being downloaded, should subscribe to DownloadFinished event and display a loading icon until the event is fired
+        }
         logoAspectRatio.UpdateAspectRatio();
 
         door = d;

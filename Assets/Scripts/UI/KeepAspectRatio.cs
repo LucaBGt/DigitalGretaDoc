@@ -17,6 +17,8 @@ public class KeepAspectRatio : AspectRatioFitter
 
     public void UpdateAspectRatio()
     {
+        //getting null reference excpetion on rawImage, is this component on a wrong object?
+        if(rawImage.texture != null)
         aspectRatio = (float)rawImage.texture.width / (float)rawImage.texture.height;
     }
 }

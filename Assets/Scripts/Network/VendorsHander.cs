@@ -51,12 +51,16 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
         if (!string.IsNullOrEmpty(data))
         {
             vendorInfo = JsonUtility.FromJson<GretaMarketVendorPackage>(data);
+        }else
+        {
+            Debug.Log("No local data.json found.");
         }
     }
 
     private IEnumerator CheckHashAndSetupData()
     {
         var request = UnityWebRequest.Get(urlVendorRequests + URL_VENDOR_HASH);
+        request.timeout = 5;
 
         yield return request.SendWebRequest();
 
@@ -77,8 +81,12 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
                 break;
         }
 
+        if(string.IsNullOrEmpty(hash))
+        {
+            Debug.Log("Requested VendorsHash is empty");
+        }
         //If hash exists and is different than local hash
-        if (!string.IsNullOrEmpty(hash) && (vendorInfo == null || hash != vendorInfo.Hash))
+        else if (vendorInfo == null || hash != vendorInfo.Hash)
         {
             Debug.Log("VendorsHandler Hash difference, downloading new data.");
             yield return StartCoroutine(LoadVendorInfoRoutine());
@@ -94,6 +102,7 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
     private IEnumerator LoadVendorInfoRoutine()
     {
         var request = UnityWebRequest.Get(urlVendorRequests + URL_VENDOR_JSON);
+        request.timeout = 5;
 
         yield return request.SendWebRequest();
 
@@ -128,7 +137,8 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
     {
         if (vendorInfo == null)
         {
-            Debug.LogError("Cannot create runtime vendor data from null");
+            Debug.LogError("Cannot create runtime vendor data from null. This is caused when starting the app for the first time with no internet connection");
+            Ready?.Invoke();
             return;
         }
 
@@ -141,6 +151,7 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
             vendorDataCache.Add(i++, data);
         }
 
+        Debug.Log("VendorsHandler ready.");
         Ready?.Invoke();
     }
 
@@ -182,10 +193,10 @@ public class RuntimeVendorData
     TextureRequest mainTex;
     TextureRequest[] subTexs;
 
-    public Texture2D LogoTexture => logoTex != null ? logoTex.Texture : null;
-    public Texture2D MainImageTexture => mainTex != null ? mainTex.Texture : null;
+    public TextureRequest Logo => logoTex;
+    public TextureRequest MainImage => mainTex;
 
-    public Texture2D[] SubImagesTextures => GetSubImageTextures();
+    public TextureRequest[] SubImages => subTexs;
 
 
     public VendorData InternalData => data;

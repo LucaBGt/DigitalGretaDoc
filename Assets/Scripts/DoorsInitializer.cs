@@ -20,7 +20,13 @@ public class DoorsInitializer : MonoBehaviour
     private void OnVendorsHandlerReady()
     {
         int count = VendorsHander.Instance.VendorsCount;
-        Debug.Log($"DoorsInitializer: Setting up {count} doors");
+        Debug.Log($"DoorsInitializer: Setting up {doors.Length} doors with {count} vendors.");
+
+        if(count <= 0)
+        {
+            Debug.LogError("No vendors present. Cannot setup doors correctly");
+            return;
+        }
 
         for (int i = 0; i < doors.Length; i++)
         {
@@ -30,7 +36,7 @@ public class DoorsInitializer : MonoBehaviour
             }
             else
             {
-                doors[i].Setup(VendorsHander.Instance.GetRuntimeVendorData(0));
+                doors[i].Setup(VendorsHander.Instance.GetRuntimeVendorData(i%count));
                 //Destroy(doors[i].gameObject);
             }
         }

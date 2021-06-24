@@ -16,15 +16,18 @@ public class DoorUI : ScalingUIElement
 
     KeepAspectRatio[] keepAspectRatios;
 
+    Door currentDoor = null;
+
     private void OnEnable()
     {
         keepAspectRatios = GetComponentsInChildren<KeepAspectRatio>();
     }
-    public void SetActiveTransition(bool active, Door currentDoor)
+    public void SetActiveTransition(bool active, Door doorInspected)
     {
-        if (active && currentDoor != null)
+        if (active && doorInspected != null)
         {
-            UpdateContent(currentDoor.Data);
+            currentDoor = doorInspected;
+            UpdateContent(doorInspected.Data);
         }
         SetActiveTransition(active);
     }
@@ -33,11 +36,14 @@ public class DoorUI : ScalingUIElement
     {
         bigText.text = data.InternalData.Name;
         smallText.text = data.InternalData.Description;
-        logoImage.texture = data.LogoTexture;
-        imageBig.texture = data.MainImageTexture;
-        for (int i = 0; i < data.SubImagesTextures.Length && i < 3; i++)
+
+        UpdateTexture(currentDoor, data.Logo,logoImage);
+
+        UpdateTexture(currentDoor, data.MainImage, imageBig);
+
+        for (int i = 0; i < data.SubImages.Length && i < 3; i++)
         {
-            imagesSmall[i].texture = data.SubImagesTextures[i];
+            UpdateTexture(currentDoor, data.SubImages[i],imagesSmall[i]);
         }
 
         foreach (KeepAspectRatio keepAspectRatio in keepAspectRatios)
@@ -56,6 +62,27 @@ public class DoorUI : ScalingUIElement
         TryCreateSocialMediaButton(SocialMediaType.Pinterest, data.InternalData.LinkPinterest);
         TryCreateSocialMediaButton(SocialMediaType.YouTube, data.InternalData.LinkYouTube);
     }
+
+    private void UpdateTexture(Door door, TextureRequest req, RawImage target)
+    {
+        if(req.IsReady)
+        {
+            target.texture = req.Texture;
+        }            
+        else
+        {
+            //Loading icon should be displayed
+            target.texture = null;
+
+            //If the texture is not ready we que up an UpdateContent call on finished download only if this is still the relevant door
+            req.FinishedDownload += (req) =>
+            {
+                if(door == currentDoor)  
+                    UpdateContent(door.Data);
+            };
+        }
+    }
+
 
     private void TryCreateSocialMediaButton(SocialMediaType type, string url)
     {

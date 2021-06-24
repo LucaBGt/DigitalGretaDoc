@@ -48,7 +48,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
     IInteractable currentInteractable = null;
     GameObject targetPreview;
 
-    Camera camera;
+    new Camera camera;
     float turnInput;
 
     public event Action<PlayerState> PlayerStateChanged;

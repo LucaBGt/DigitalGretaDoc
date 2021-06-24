@@ -5,6 +5,7 @@ using System.IO;
 using System;
 using UnityEngine.Networking;
 
+[DefaultExecutionOrder(-100)]
 public class DownloadManager : SingletonBehaviour<DownloadManager>
 {
     const string URL_VENDOR_GET = "get";
@@ -34,6 +35,7 @@ public class DownloadManager : SingletonBehaviour<DownloadManager>
 
     public string GetFileAsString(string name)
     {
+        Debug.Log("Trying to load: " + ROOT_PATH + name);
         if (File.Exists(ROOT_PATH + name))
         {
             return File.ReadAllText(ROOT_PATH + name);
@@ -137,6 +139,9 @@ public class TextureRequest
     {
         using (UnityWebRequest uwr = UnityWebRequest.Get(path))
         {
+            //Is this too high? What do we do in case of download failed?.
+            uwr.timeout = 30;
+
             yield return uwr.SendWebRequest();
             if (string.IsNullOrEmpty(uwr.error))
             {
