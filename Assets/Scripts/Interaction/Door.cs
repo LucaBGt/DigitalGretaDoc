@@ -27,7 +27,7 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
     public string CompanyName => IsSetup() ? data.InternalData.Name : "NULL";
     public string CompanyDescription => IsSetup() ? data.InternalData.Description : "NULL";
-    public Texture Logo => IsSetup() ? data.LogoTexture : null;
+    public TextureRequest Logo => IsSetup() ? data.Logo : null;
 
     private void Start()
     {
@@ -66,11 +66,19 @@ public class Door : MonoBehaviour, ICancallableInteractable
         DisplayLogo(Logo);
     }
 
-    private void DisplayLogo(Texture logo)
+    private void DisplayLogo(TextureRequest logo)
     {
+        if(logo.IsReady)
+        {
         Material newMaterial = new Material(logoMeshRenderer.material);
-        newMaterial.mainTexture = logo;
+        newMaterial.mainTexture = logo.Texture;
         logoMeshRenderer.material = newMaterial;
+        }
+        else
+        {
+            //Logo has not finished downloading yet, should display some kind of loading indicator
+            logo.FinishedDownload += (logo) => DisplayLogo(logo);
+        }
     }
 
     private bool IsSetup()

@@ -26,6 +26,7 @@ public class MinimapUI : MonoBehaviour
 
     UIMapPinBehaviour[] indicators;
     float zoomFactor = 0.6f;
+    private Door currentDoorInspected = null;
     public System.Action<float> ChangeZoomEvent;
 
 
@@ -76,12 +77,29 @@ public class MinimapUI : MonoBehaviour
 
     private void UpdateDetailWindow(Door door)
     {
-        bool show = (door != null);
+        currentDoorInspected = door;
+        bool show = (door != null && door.Data != null);
 
         if (show)
         {
             nameText.text = door.CompanyName;
-            logoImage.texture = door.Logo;
+
+            if(door.Logo.IsReady)
+            {
+                logoImage.texture = door.Logo.Texture;
+            }
+            else
+            {
+                var logo = door.Logo;
+                var thisDoor = door;
+                door.Logo.FinishedDownload += (logo) =>
+                {
+                    if(currentDoorInspected == thisDoor)
+                        logoImage.texture = logo.Texture;
+
+                };
+            }
+
             logoImageRatio.UpdateAspectRatio();
             describtionText.text = door.CompanyDescription;
             infoButton.onClick.RemoveAllListeners();

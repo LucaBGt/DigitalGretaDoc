@@ -10,7 +10,7 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
 
     const string URL_VENDOR_HASH = "vendor_hash";
     const string URL_VENDOR_JSON = "vendor_data";
-    const string URL_VENDOR_GET = "get";
+    const string LOCAL_DATA_NAME = "data.json";
 
     private string vendorDataPathInternal;
     private string vendorJSONPathInternal;
@@ -40,38 +40,27 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
 
     private IEnumerator SetupRoutine()
     {
-        //handle loading internal data later, for now always download
-        //yield return StartCoroutine(LoadCachedData());
-
-        yield return StartCoroutine(CheckHashAndQueueDownload());
+        LoadCachedData();
+        yield return StartCoroutine(CheckHashAndSetupData());
     }
 
-    private IEnumerator LoadCachedData()
+    private void LoadCachedData()
     {
-        //use filesystem for loading/deleting, avoid in WEBGL completely
-        vendorDataCache = new Dictionary<int, RuntimeVendorData>();
+        string data = DownloadManager.Instance.GetFileAsString(LOCAL_DATA_NAME);
 
-
-        UnityWebRequest request = UnityWebRequest.Get("file//" + vendorJSONPathInternal);
-        yield return request.SendWebRequest();
-
-        switch (request.result)
+        if (!string.IsNullOrEmpty(data))
         {
-            case UnityWebRequest.Result.ConnectionError:
-            case UnityWebRequest.Result.DataProcessingError:
-            case UnityWebRequest.Result.ProtocolError:
-                Debug.LogError($"Error loading {vendorJSONPathInternal}: {request.error}");
-                yield break;
-            case UnityWebRequest.Result.Success:
-                vendorInfo = JsonUtility.FromJson<GretaMarketVendorPackage>(request.downloadHandler.text);
-                Debug.Log($"Loaded vendorInfo with hash: {vendorInfo.Hash}");
-                break;
+            vendorInfo = JsonUtility.FromJson<GretaMarketVendorPackage>(data);
+        }else
+        {
+            Debug.Log("No local data.json found.");
         }
     }
 
-    private IEnumerator CheckHashAndQueueDownload()
+    private IEnumerator CheckHashAndSetupData()
     {
         var request = UnityWebRequest.Get(urlVendorRequests + URL_VENDOR_HASH);
+        request.timeout = 5;
 
         yield return request.SendWebRequest();
 
@@ -92,20 +81,28 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
                 break;
         }
 
-        if (string.IsNullOrEmpty(hash) || (vendorInfo != null && vendorInfo.Hash == hash))
+        if(string.IsNullOrEmpty(hash))
         {
-            Debug.Log("Cancelling VendorData download.");
-            Ready?.Invoke();
+            Debug.Log("Requested VendorsHash is empty");
+        }
+        //If hash exists and is different than local hash
+        else if (vendorInfo == null || hash != vendorInfo.Hash)
+        {
+            Debug.Log("VendorsHandler Hash difference, downloading new data.");
+            yield return StartCoroutine(LoadVendorInfoRoutine());
         }
         else
         {
-            yield return StartCoroutine(DownloadDataRoutine());
+            Debug.Log("VendorsHash matches local cache.");
         }
+
+        SetupRuntimeVendorData();
     }
 
-    private IEnumerator DownloadDataRoutine()
+    private IEnumerator LoadVendorInfoRoutine()
     {
         var request = UnityWebRequest.Get(urlVendorRequests + URL_VENDOR_JSON);
+        request.timeout = 5;
 
         yield return request.SendWebRequest();
 
@@ -123,12 +120,26 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
                 break;
         }
 
-        vendorInfo = JsonUtility.FromJson<GretaMarketVendorPackage>(request.downloadHandler.text);
+        string data = request.downloadHandler.text;
+        vendorInfo = JsonUtility.FromJson<GretaMarketVendorPackage>(data);
 
         if (vendorInfo == null)
         {
             Debug.LogError("Failed to create JSON from download.");
-            yield break;
+        }
+        else
+        {
+            DownloadManager.Instance.SaveStringToFile(LOCAL_DATA_NAME, data);
+        }
+    }
+
+    private void SetupRuntimeVendorData()
+    {
+        if (vendorInfo == null)
+        {
+            Debug.LogError("Cannot create runtime vendor data from null. This is caused when starting the app for the first time with no internet connection");
+            Ready?.Invoke();
+            return;
         }
 
         vendorDataCache = new Dictionary<int, RuntimeVendorData>();
@@ -136,10 +147,11 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
         int i = 0;
         foreach (var vendor in vendorInfo.Vendors)
         {
-            var data = new RuntimeVendorData(vendor, urlVendorRequests + URL_VENDOR_GET, this);
+            var data = new RuntimeVendorData(vendor, DownloadManager.Instance);
             vendorDataCache.Add(i++, data);
         }
 
+        Debug.Log("VendorsHandler ready.");
         Ready?.Invoke();
     }
 
@@ -164,7 +176,7 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
                 return null;
             }
 
-            RuntimeVendorData data = new RuntimeVendorData(vendorInfo.Vendors[id], vendorDataPathInternal, this);
+            RuntimeVendorData data = new RuntimeVendorData(vendorInfo.Vendors[id], DownloadManager.Instance);
             vendorDataCache.Add(id, data);
             return data;
         }
@@ -176,64 +188,54 @@ public class RuntimeVendorData
 {
     private VendorData data;
 
-    public Texture2D LogoTexture;
-    public Texture2D MainImageTexture;
-    public Texture2D[] SubImagesTextures;
 
-    private int loadedTextures = 0;
+    TextureRequest logoTex;
+    TextureRequest mainTex;
+    TextureRequest[] subTexs;
+
+    public TextureRequest Logo => logoTex;
+    public TextureRequest MainImage => mainTex;
+
+    public TextureRequest[] SubImages => subTexs;
+
 
     public VendorData InternalData => data;
 
-    public RuntimeVendorData(VendorData _data, string rootPath, MonoBehaviour coroutineRunner)
+    public RuntimeVendorData(VendorData _data, DownloadManager downloadManager)
     {
-        data = _data;
-        data.LogoFile = "icon.png";
-        data.MainImageFile = "my1.png";
-        data.SubImagesFiles = new string[] { "my2.png", "my3.png", "my4.png" };
-
         Debug.Log($"Started loading vendor {_data.Name}");
-        StartLoadTextures(rootPath + "/" + data.Directory + "_", coroutineRunner);
-    }
 
-    private void StartLoadTextures(string retrievePath, MonoBehaviour coroutineRunner)
-    {
-        LogoTexture = new Texture2D(2, 2);
-        coroutineRunner.StartCoroutine(LoadTexture(retrievePath + data.LogoFile, LogoTexture));
+        data = _data;
 
-        MainImageTexture = new Texture2D(2, 2);
-        coroutineRunner.StartCoroutine(LoadTexture(retrievePath + data.MainImageFile, MainImageTexture));
+        logoTex = GetTexture(downloadManager, data.LogoFile);
+        mainTex = GetTexture(downloadManager, data.MainImageFile);
 
-        SubImagesTextures = new Texture2D[data.SubImagesFiles.Length];
-
-        for (int i = 0; i < SubImagesTextures.Length; i++)
+        subTexs = new TextureRequest[data.SubImagesFiles.Length];
+        for (int i = 0; i < subTexs.Length; i++)
         {
-            SubImagesTextures[i] = new Texture2D(2, 2);
-            coroutineRunner.StartCoroutine(LoadTexture(retrievePath + data.SubImagesFiles[i], SubImagesTextures[i]));
+            subTexs[i] = GetTexture(downloadManager, data.SubImagesFiles[i]);
         }
     }
 
-    private IEnumerator LoadTexture(string path, Texture2D tex)
+    private TextureRequest GetTexture(DownloadManager downloadManager, string name)
     {
-        using (UnityWebRequest uwr = UnityWebRequest.Get(path))
-        {
-            yield return uwr.SendWebRequest();
-            if (string.IsNullOrEmpty(uwr.error))
-            {
-                tex.LoadImage(uwr.downloadHandler.data);
-                Debug.Log($"Loaded texture {path}");
-            }
-            else
-            {
-                Debug.LogError($"LoadTextureError: {path}  {uwr.error}" );
-            }
-            loadedTextures++;
-        }
+        if (!string.IsNullOrEmpty(name))
+            return downloadManager.GetTexture(data.Directory, name);
+
+        return null;
     }
 
-    public bool IsFullyLoaded()
+    private Texture2D[] GetSubImageTextures()
     {
-        return loadedTextures == SubImagesTextures.Length + 2;
+        Texture2D[] arr = new Texture2D[subTexs.Length];
+
+        for (int i = 0; i < arr.Length; i++)
+        {
+            arr[i] = subTexs[i] != null ? subTexs[i].Texture : null;
+        }
+        return arr;
     }
+
 }
 
 [System.Serializable]
