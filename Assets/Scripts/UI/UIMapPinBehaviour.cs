@@ -8,8 +8,7 @@ using UnityEngine.UI;
 
 public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
-    [SerializeField] RawImage logo;
-    [SerializeField] KeepAspectRatio logoAspectRatio;
+    [SerializeField] KeepAspectRatioRawImage logo;
     [SerializeField] Sprite defaultSprite, hoverSprite;
 
     float scaleMultiplier = 1;
@@ -28,16 +27,22 @@ public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerCl
     {
 
         if (d.Logo == null)
-            logo.color = Color.clear;
+            logo.Hide();
         else
         {
-            if(d.Logo.IsReady)
+            if (d.Logo.IsReady)
                 logo.texture = d.Logo.Texture;
             else
-                logo.texture = null;
-                //Logo texture is not ready and is currently being downloaded, should subscribe to DownloadFinished event and display a loading icon until the event is fired
+            {
+                logo.SetLoading();
+
+                d.Logo.FinishedDownload += (request) =>
+                {
+                    logo.texture = request.Texture;
+                };
+            }
+            //Logo texture is not ready and is currently being downloaded, should subscribe to DownloadFinished event and display a loading icon until the event is fired
         }
-        logoAspectRatio.UpdateAspectRatio();
 
         door = d;
 

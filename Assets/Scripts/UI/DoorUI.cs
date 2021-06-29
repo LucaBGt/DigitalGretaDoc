@@ -8,19 +8,19 @@ using UnityEngine.UI;
 public class DoorUI : ScalingUIElement
 {
     [SerializeField] TMP_Text bigText, smallText;
-    [SerializeField] RawImage logoImage;
-    [SerializeField] RawImage imageBig;
-    [SerializeField] RawImage[] imagesSmall;
+    [SerializeField] KeepAspectRatioRawImage logoImage;
+    [SerializeField] KeepAspectRatioRawImage imageBig;
+    [SerializeField] KeepAspectRatioRawImage[] imagesSmall;
     [SerializeField] SocialMediaButton socialMediaButtonPrefab;
     [SerializeField] RectTransform socialMediaButtonParent;
 
-    KeepAspectRatio[] keepAspectRatios;
+    KeepAspectRatioRawImage[] keepAspectRatios = new KeepAspectRatioRawImage[0];
 
     Door currentDoor = null;
 
     private void OnEnable()
     {
-        keepAspectRatios = GetComponentsInChildren<KeepAspectRatio>();
+        keepAspectRatios = GetComponentsInChildren<KeepAspectRatioRawImage>();
     }
     public void SetActiveTransition(bool active, Door doorInspected)
     {
@@ -37,18 +37,13 @@ public class DoorUI : ScalingUIElement
         bigText.text = data.InternalData.Name;
         smallText.text = data.InternalData.Description;
 
-        UpdateTexture(currentDoor, data.Logo,logoImage);
+        UpdateTexture(currentDoor, data.Logo, logoImage);
 
         UpdateTexture(currentDoor, data.MainImage, imageBig);
 
         for (int i = 0; i < data.SubImages.Length && i < 3; i++)
         {
-            UpdateTexture(currentDoor, data.SubImages[i],imagesSmall[i]);
-        }
-
-        foreach (KeepAspectRatio keepAspectRatio in keepAspectRatios)
-        {
-            keepAspectRatio.UpdateAspectRatio();
+            UpdateTexture(currentDoor, data.SubImages[i], imagesSmall[i]);
         }
 
         foreach (Transform child in socialMediaButtonParent)
@@ -63,22 +58,23 @@ public class DoorUI : ScalingUIElement
         TryCreateSocialMediaButton(SocialMediaType.YouTube, data.InternalData.LinkYouTube);
     }
 
-    private void UpdateTexture(Door door, TextureRequest req, RawImage target)
+    private void UpdateTexture(Door door, TextureRequest req, KeepAspectRatioRawImage target)
     {
-        if(req.IsReady)
+        Debug.Log($"update texture on {name}");
+
+        if (req.IsReady)
         {
             target.texture = req.Texture;
-        }            
+        }
         else
         {
             //Loading icon should be displayed
-            target.texture = null;
-
+            target.SetLoading();
             //If the texture is not ready we que up an UpdateContent call on finished download only if this is still the relevant door
             req.FinishedDownload += (req) =>
             {
-                if(door == currentDoor)  
-                    UpdateContent(door.Data);
+                if (door == currentDoor)
+                    UpdateTexture(door, req, target);
             };
         }
     }
