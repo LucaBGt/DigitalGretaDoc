@@ -40,6 +40,10 @@ namespace Mirror.SimpleWeb
         {
             // Do not allow this client to communicate with unauthenticated servers.
 
+            //HACK Luca 29/06/21 - to avoid Certificate chain errors
+            if (sslPolicyErrors == SslPolicyErrors.RemoteCertificateNameMismatch)
+                return true;
+
             // only accept if no errors
             return sslPolicyErrors == SslPolicyErrors.None;
         }
