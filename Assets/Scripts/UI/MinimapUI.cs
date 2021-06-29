@@ -18,8 +18,7 @@ public class MinimapUI : MonoBehaviour
     [SerializeField] RectTransform mapRect;
 
     [Foldout("DetailWindow")] [SerializeField] TMP_Text nameText;
-    [Foldout("DetailWindow")] [SerializeField] RawImage logoImage;
-    [Foldout("DetailWindow")] [SerializeField] KeepAspectRatio logoImageRatio;
+    [Foldout("DetailWindow")] [SerializeField] KeepAspectRatioRawImage logoImage;
     [Foldout("DetailWindow")] [SerializeField] TMP_Text describtionText;
     [Foldout("DetailWindow")] [SerializeField] Button infoButton;
     [Foldout("DetailWindow")] [SerializeField] Button meetingButton;
@@ -92,6 +91,7 @@ public class MinimapUI : MonoBehaviour
             {
                 var logo = door.Logo;
                 var thisDoor = door;
+                logoImage.SetLoading();
                 door.Logo.FinishedDownload += (logo) =>
                 {
                     if(currentDoorInspected == thisDoor)
@@ -100,7 +100,6 @@ public class MinimapUI : MonoBehaviour
                 };
             }
 
-            logoImageRatio.UpdateAspectRatio();
             describtionText.text = door.CompanyDescription;
             infoButton.onClick.RemoveAllListeners();
             infoButton.onClick.AddListener(door.EnterInteractionFromMap);
