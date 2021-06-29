@@ -15,9 +15,13 @@ public class ScalingUIElement : MonoBehaviour
 
     public void SetActiveTransition(bool active)
     {
-        gameObject.SetActive(true);
+        if (active)
+            gameObject.SetActive(true);
+
         StopAllCoroutines();
-        StartCoroutine(TransitionRoutine(active));
+
+        if (isActiveAndEnabled)
+            StartCoroutine(TransitionRoutine(active));
     }
 
     private IEnumerator TransitionRoutine(bool active)
