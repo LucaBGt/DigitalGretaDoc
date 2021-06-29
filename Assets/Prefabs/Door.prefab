@@ -576,6 +576,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: 7f8d08a2d54b041d29774c55c4362511, type: 2}
+    - target: {fileID: -4683669308469848369, guid: ac37b4ca603624c01be5a75b32b9172c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 59e8501579f3bff41a15411c0d59d24d, type: 2}
     - target: {fileID: -3542852092398272455, guid: ac37b4ca603624c01be5a75b32b9172c, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7520359
