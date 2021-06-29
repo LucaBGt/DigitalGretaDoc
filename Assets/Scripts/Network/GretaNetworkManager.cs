@@ -62,13 +62,19 @@ public class GretaNetworkManager : NetworkManager
         {
             if (connectionAttemptCounter >= 3)
             {
-                ConnectionStateChanged?.Invoke(GretaConnectionState.OfflineMode);
+                StartCoroutine(OfflineModeRoutine());
             }
             else
             {
                 StartCoroutine(DisconnectedRoutine());
             }
         }
+    }
+
+    private IEnumerator OfflineModeRoutine()
+    {
+        yield return new WaitForSeconds(1);
+        ConnectionStateChanged?.Invoke(GretaConnectionState.OfflineMode);
     }
 
     private IEnumerator DisconnectedRoutine()

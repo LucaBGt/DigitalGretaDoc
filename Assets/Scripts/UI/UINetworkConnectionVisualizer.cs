@@ -35,7 +35,7 @@ public class UINetworkConnectionVisualizer : MonoBehaviour
                 break;
 
             case GretaConnectionState.Disconnected:
-                SetText("Connection Failed", "");
+                SetText("Verbindung Fehlgeschlagen", "");
                 break;
 
             case GretaConnectionState.AttemptingReconnectInDelay:
@@ -43,19 +43,19 @@ public class UINetworkConnectionVisualizer : MonoBehaviour
                 break;
 
             case GretaConnectionState.AttemptConnection:
-                SetText("Connecting...", "");
+                SetText("Verbindung...", "");
                 break;
 
 
             case GretaConnectionState.OfflineMode:
-                SetText("Offline Mode", "", buttonOn: true);
+                SetText("Offline Modus", "", buttonOn: true);
                 break;
         }
     }
 
     private IEnumerator ConnectedRoutine()
     {
-        SetText("Connected", "");
+        SetText("Verbunden!", "");
         yield return new WaitForSeconds(1);
         ResetText();
     }
@@ -66,7 +66,7 @@ public class UINetworkConnectionVisualizer : MonoBehaviour
 
         while (t > 0)
         {
-            SetText("Disconnected", $"Attempting to reconnect in {t.ToString("0")}");
+            SetText("Verbindung Fehlgeschlagen", $"Neuer verbindungsversuch in {t.ToString("0")}");
             yield return null;
             t -= Time.deltaTime;
         }
