@@ -147,6 +147,6 @@ MonoBehaviour:
   waitBeforeSend: 0
   clientUseWss: 1
   sslEnabled: 1
-  sslCertJson: ./sslcert.json
+  sslCertJson: /root/ssl/sslcert.json
   sslProtocols: -1
   _logLevels: 3
