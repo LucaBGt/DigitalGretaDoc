@@ -2,22 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using System;
 
 public enum GretaConnectionState
 {
     Disconnected,
-    Connected
+    Connected,
+    AttemptingReconnectInDelay,
+    AttemptConnection,
+    OfflineMode
 }
 
 public class GretaNetworkManager : NetworkManager
 {
     private static GretaNetworkManager instance;
 
+    [SerializeField] float reconnectDelay;
 
-    public bool IsConnected => NetworkClient.isConnected;
+    private int connectionAttemptCounter = 0;
 
     public event System.Action<GretaConnectionState> ConnectionStateChanged;
 
+    public bool IsConnected => NetworkClient.isConnected;
+    public float ReconnectDelay => reconnectDelay;
     public static GretaNetworkManager Instance => instance;
 
     public override void Awake()
@@ -29,7 +36,7 @@ public class GretaNetworkManager : NetworkManager
         }
         else
         {
-            Debug.LogError($"Spawned Second Instance of {GetType()}, destroying");
+            Debug.LogError($"Spawned Second Instance of GretaNetworkManager, destroying");
             Destroy(gameObject);
         }
     }
@@ -38,14 +45,44 @@ public class GretaNetworkManager : NetworkManager
     public override void Start()
     {
         //override default bool
-        #if UNITY_SERVER
+#if UNITY_SERVER
         Application.targetFrameRate = 50;
         StartServer();
+#else
+
+        ConnectionStateChanged += OnConnectionStateChanged;
+
         #endif
+
+    }
+
+    private void OnConnectionStateChanged(GretaConnectionState state)
+    {
+        if(state == GretaConnectionState.Disconnected)
+        {
+            if (connectionAttemptCounter >= 3)
+            {
+                ConnectionStateChanged?.Invoke(GretaConnectionState.OfflineMode);
+            }
+            else
+            {
+                StartCoroutine(DisconnectedRoutine());
+            }
+        }
+    }
+
+    private IEnumerator DisconnectedRoutine()
+    {
+        yield return new WaitForSeconds(1);
+        ConnectionStateChanged?.Invoke(GretaConnectionState.AttemptingReconnectInDelay);
+        yield return new WaitForSeconds(reconnectDelay);
+        GretaJoin();
     }
 
     public void GretaJoin()
     {
+        connectionAttemptCounter++;
+        ConnectionStateChanged?.Invoke(GretaConnectionState.AttemptConnection);
         StartClient();
     }
 
@@ -55,7 +92,7 @@ public class GretaNetworkManager : NetworkManager
         base.OnServerDisconnect(conn);
 
         //in case of testing with local host
-        ConnectionStateChanged?.Invoke(GretaConnectionState.Disconnected);
+            //ConnectionStateChanged?.Invoke(GretaConnectionState.Disconnected);
     }
 
     public override void OnClientConnect(NetworkConnection conn)
@@ -68,11 +105,8 @@ public class GretaNetworkManager : NetworkManager
     public override void OnClientDisconnect(NetworkConnection conn)
     {
         base.OnClientDisconnect(conn);
-
-        //Failed to connect
+        
         Debug.Log("Disconnected / Connection Failed");
         ConnectionStateChanged?.Invoke(GretaConnectionState.Disconnected);
-
-        //Fallback??? TODO
     }
 }

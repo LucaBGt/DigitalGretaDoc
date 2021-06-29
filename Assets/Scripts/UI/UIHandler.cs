@@ -63,10 +63,10 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
             GretaNetworkManager.Instance.ConnectionStateChanged -= OnConnectionStateChanged;
     }
 
-    private void OnConnectionStateChanged(GretaConnectionState obj)
+    private void OnConnectionStateChanged(GretaConnectionState state)
     {
-        Debug.Log(obj);
-        switch (obj)
+        Debug.Log("Network State: " + state);
+        switch (state)
         {
             case GretaConnectionState.Connected:
                 emojiUI.SetActive(uiState == UIState.InGame);
