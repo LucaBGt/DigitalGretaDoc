@@ -55,7 +55,7 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: 
   transport: {fileID: 6351092224991691717}
-  networkAddress: 82.165.109.5
+  networkAddress: greta.lucamartinelli.de
   maxConnections: 100
   disconnectInactiveConnections: 1
   disconnectInactiveTimeout: 60
