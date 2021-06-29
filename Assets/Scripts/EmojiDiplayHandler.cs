@@ -21,6 +21,7 @@ public class EmojiDiplayHandler : NetworkBehaviour
 
     internal void SpawnEmoji(int index)
     {
+        Debug.LogWarning($"Spawn Emoji ({index})");
         CMD_SpawnEmoji(index);
     }
 
@@ -35,6 +36,6 @@ public class EmojiDiplayHandler : NetworkBehaviour
     private void RPC_SpawnEmoji(int index)
     {
         EmojiObject prefab = emojis[index];
-        EmojiObject emojiObject = Instantiate(prefab, Vector3.zero, Quaternion.identity, parent);
+        EmojiObject emojiObject = Instantiate(prefab, parent);
     }
 }
