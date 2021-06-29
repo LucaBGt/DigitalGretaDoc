@@ -16,6 +16,7 @@ public class DownloadManager : SingletonBehaviour<DownloadManager>
 
     private int downloadingCount = 0;
 
+    public string UrlVendorRequests => urlVendorRequests;
 
     private void Start()
     {
