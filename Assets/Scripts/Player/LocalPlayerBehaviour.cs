@@ -44,7 +44,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
     [SerializeField] Renderer playerSkin;
 
     PlayerState internal_State;
-    PerspectiveMode perspective;
+    PerspectiveMode perspective = PerspectiveMode.ThirdPerson;
     IInteractable currentInteractable = null;
     GameObject targetPreview;
 
@@ -69,6 +69,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
         targetPreview = Instantiate(targetPreviewPrefab);
         targetPreview.SetActive(false);
         orthoPersonCam.transform.parent = null;
+        UpdateCameras();
         UIHandler.Instance.ReturnedToGame += OnReturnedToGame;
     }
 
@@ -213,6 +214,11 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
     {
         perspective = (PerspectiveMode)((((int)perspective) + 1) % 3);
 
+        UpdateCameras();
+    }
+
+    private void UpdateCameras()
+    {
         firstPersonCam.SetActive(perspective == PerspectiveMode.FirstPerson);
         thirdPersonCam.SetActive(perspective == PerspectiveMode.ThirdPerson);
         orthoPersonCam.SetActive(perspective == PerspectiveMode.OrthoCam);
