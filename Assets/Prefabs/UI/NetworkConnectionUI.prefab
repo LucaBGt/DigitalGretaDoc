@@ -417,6 +417,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button_Desi
       objectReference: {fileID: 0}
+    - target: {fileID: 4546261398270903161, guid: 37bcf9b8fc52bc54ebc99126311dfb2b, type: 3}
+      propertyPath: fancyButtonElements.Array.data[0].scaleHover.x
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546261398270903161, guid: 37bcf9b8fc52bc54ebc99126311dfb2b, type: 3}
+      propertyPath: fancyButtonElements.Array.data[0].scaleHover.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546261398270903161, guid: 37bcf9b8fc52bc54ebc99126311dfb2b, type: 3}
+      propertyPath: fancyButtonElements.Array.data[0].scaleHover.z
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546261398270903161, guid: 37bcf9b8fc52bc54ebc99126311dfb2b, type: 3}
+      propertyPath: fancyButtonElements.Array.data[0].scaleDefault.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546261398270903161, guid: 37bcf9b8fc52bc54ebc99126311dfb2b, type: 3}
+      propertyPath: fancyButtonElements.Array.data[0].scaleDefault.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546261398270903161, guid: 37bcf9b8fc52bc54ebc99126311dfb2b, type: 3}
+      propertyPath: fancyButtonElements.Array.data[0].scaleDefault.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5006054911835458565, guid: 37bcf9b8fc52bc54ebc99126311dfb2b, type: 3}
       propertyPath: m_text
       value: Verbinden
