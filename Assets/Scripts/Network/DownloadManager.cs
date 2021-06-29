@@ -140,7 +140,7 @@ public class TextureRequest
         using (UnityWebRequest uwr = UnityWebRequest.Get(path))
         {
             //Is this too high? What do we do in case of download failed?.
-            uwr.timeout = 30;
+            uwr.timeout = 600;
 
             yield return uwr.SendWebRequest();
             if (string.IsNullOrEmpty(uwr.error))
