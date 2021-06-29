@@ -18,6 +18,19 @@ public class JenkinsBuild
                 BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode | BuildOptions.ConnectWithProfiler | BuildOptions.Development);
     }
 
+    [MenuItem("Builder/Build Windows Server")]
+    public static void BuildWindowsServer()
+    {
+        string path = EditorUtility.OpenFolderPanel("Location", "", "");
+
+        if (string.IsNullOrEmpty(path)) return;
+
+        path += "/Server.exe";
+
+        BuildProject(new string[] { "Assets/Scenes/ServerScene.unity" }, path, BuildTargetGroup.Standalone,
+                BuildTarget.StandaloneWindows, BuildOptions.EnableHeadlessMode | BuildOptions.ConnectWithProfiler | BuildOptions.Development);
+    }
+
     public static void BuildAndroid()
     {
         var args = FindArgs();
