@@ -14,7 +14,7 @@ echo "Server Build Done"
 #replace and restart server
 echo "killing server"
 
-pkill Server.x86_64
+pkill Server.x86_64 || echo "server not running"
 
 sleep 3
 
