@@ -2313,6 +2313,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 8839776395268755137, guid: 8d6818095f9fa3841b0a5a11e0c66762, type: 3}
+      propertyPath: m_text
+      value: Wo bin ich
+      objectReference: {fileID: 0}
+    - target: {fileID: 8839776395268755137, guid: 8d6818095f9fa3841b0a5a11e0c66762, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4e569b0dda608104ea54285905e57758, type: 2}
+    - target: {fileID: 8839776395268755137, guid: 8d6818095f9fa3841b0a5a11e0c66762, type: 3}
+      propertyPath: m_fontStyle
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8839776395268755137, guid: 8d6818095f9fa3841b0a5a11e0c66762, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8774013920768968367, guid: 4e569b0dda608104ea54285905e57758, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d6818095f9fa3841b0a5a11e0c66762, type: 3}
 --- !u!224 &5227557442237607088 stripped
@@ -2449,8 +2465,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8839776395268755137, guid: 8d6818095f9fa3841b0a5a11e0c66762, type: 3}
       propertyPath: m_text
-      value: Spiel Modus
+      value: Spiel mit mir
       objectReference: {fileID: 0}
+    - target: {fileID: 8839776395268755137, guid: 8d6818095f9fa3841b0a5a11e0c66762, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4e569b0dda608104ea54285905e57758, type: 2}
+    - target: {fileID: 8839776395268755137, guid: 8d6818095f9fa3841b0a5a11e0c66762, type: 3}
+      propertyPath: m_fontStyle
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8839776395268755137, guid: 8d6818095f9fa3841b0a5a11e0c66762, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8774013920768968367, guid: 4e569b0dda608104ea54285905e57758, type: 2}
     - target: {fileID: 8839776395549697482, guid: 8d6818095f9fa3841b0a5a11e0c66762, type: 3}
       propertyPath: m_Sprite
       value: 
