@@ -48,7 +48,7 @@ public class DoorUI : ScalingUIElement
 
         foreach (Transform child in socialMediaButtonParent)
         {
-            Destroy(gameObject);
+            Destroy(child.gameObject);
         }
 
         TryCreateSocialMediaButton(SocialMediaType.Facebook, data.InternalData.LinkFacebook);
@@ -60,7 +60,6 @@ public class DoorUI : ScalingUIElement
 
     private void UpdateTexture(Door door, TextureRequest req, KeepAspectRatioRawImage target)
     {
-        Debug.Log($"update texture on {name}");
 
         if (req.IsReady)
         {

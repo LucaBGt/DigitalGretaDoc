@@ -63,8 +63,6 @@ public class KeepAspectRatioRawImage : AspectRatioFitter
         if (rawImage != null)
             return;
 
-        Debug.Log($"I'm enabled: {enabled}.");
-
         rawImage = GetComponent<RawImage>();
     }
 
