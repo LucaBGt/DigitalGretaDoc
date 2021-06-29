@@ -56,7 +56,7 @@ public class UINetworkConnectionVisualizer : MonoBehaviour
     private IEnumerator ConnectedRoutine()
     {
         SetText("Verbindung hergestellt", "");
-        yield return new WaitForSeconds(2.5);
+        yield return new WaitForSeconds(2.5f);
         ResetText();
     }
 
