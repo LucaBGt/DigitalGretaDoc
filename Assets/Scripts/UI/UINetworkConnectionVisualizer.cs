@@ -66,7 +66,7 @@ public class UINetworkConnectionVisualizer : MonoBehaviour
 
         while (t > 0)
         {
-            SetText("Verbindung Fehlgeschlagen", $"Neuer verbindungsversuch in {t.ToString("0")}");
+            SetText("Verbindung Fehlgeschlagen", $"Nächster versuch in {t.ToString("0")}");
             yield return null;
             t -= Time.deltaTime;
         }
