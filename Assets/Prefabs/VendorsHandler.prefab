@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479d5bdf210b69944b7c9cb121e6fcff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  urlVendorRequests: http://82.165.109.5:8082/
+  urlVendorRequests: https://greta.lucamartinelli.de:8082/
 --- !u!114 &2135318521927901708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,7 +58,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51003a2935025df4e9e809bbc69ea9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  urlVendorRequests: http://82.165.109.5:8082/
 --- !u!114 &469393229521302480
 MonoBehaviour:
   m_ObjectHideFlags: 0

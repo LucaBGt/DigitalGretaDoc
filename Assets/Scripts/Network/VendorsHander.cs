@@ -5,9 +5,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 public class VendorsHander : SingletonBehaviour<VendorsHander>
 {
-    [SerializeField]
-    private string urlVendorRequests = "http://82.165.109.5:8082/";
-
     const string URL_VENDOR_HASH = "vendor_hash";
     const string URL_VENDOR_JSON = "vendor_data";
     const string LOCAL_DATA_NAME = "data.json";
@@ -59,7 +56,7 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
 
     private IEnumerator CheckHashAndSetupData()
     {
-        var request = UnityWebRequest.Get(urlVendorRequests + URL_VENDOR_HASH);
+        var request = UnityWebRequest.Get(DownloadManager.Instance.UrlVendorRequests + URL_VENDOR_HASH);
         request.timeout = 5;
 
         yield return request.SendWebRequest();
@@ -101,7 +98,7 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
 
     private IEnumerator LoadVendorInfoRoutine()
     {
-        var request = UnityWebRequest.Get(urlVendorRequests + URL_VENDOR_JSON);
+        var request = UnityWebRequest.Get(DownloadManager.Instance.UrlVendorRequests + URL_VENDOR_JSON);
         request.timeout = 5;
 
         yield return request.SendWebRequest();
