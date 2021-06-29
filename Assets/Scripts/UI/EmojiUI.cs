@@ -21,10 +21,9 @@ public class EmojiUI : MonoBehaviour
         animate = true;
     }
 
-    public void SendEmoji(Sprite sprite)
+    public void SendEmoji(int index)
     {
-        Vector3 playerPosition = LocalPlayerBehaviour.Instance.transform.position;
-        EmojiDiplayHandler.Instance.SpawnEmoji(playerPosition, sprite);
+        EmojiDiplayHandler.Instance.SpawnEmoji(index);
         StartCoroutine(DisableRoutine());
     }
 

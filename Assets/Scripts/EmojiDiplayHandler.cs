@@ -1,13 +1,12 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EmojiDiplayHandler : NetworkBehaviour
 {
-    [SerializeField] EmojiObject prefab;
-    [SerializeField] Vector3 offset;
-    [SerializeField] List<Sprite> emojis;
+    [SerializeField] List<EmojiObject> emojis;
     [SerializeField] Transform parent;
 
     private static EmojiDiplayHandler instance;
@@ -20,24 +19,22 @@ public class EmojiDiplayHandler : NetworkBehaviour
         Debug.Log("Setup local Emoji Display Handler");
     }
 
-    public void SpawnEmoji(Vector3 playerPosition, Sprite emojiSprite)
+    internal void SpawnEmoji(int index)
     {
-        int emjoiIndex = emojis.IndexOf(emojiSprite);
-        CMD_SpawnEmoji(playerPosition, emjoiIndex);
+        CMD_SpawnEmoji(index);
     }
 
     [Command]
-    private void CMD_SpawnEmoji(Vector3 playerPosition, int emojiSpriteIndex)
+    private void CMD_SpawnEmoji(int index)
     {
         Debug.Log(nameof(CMD_SpawnEmoji));
-        RPC_SpawnEmoji(playerPosition, emojiSpriteIndex);
+        RPC_SpawnEmoji(index);
     }
 
     [ClientRpc]
-    private void RPC_SpawnEmoji(Vector3 playerPosition, int emojiSpriteIndex)
+    private void RPC_SpawnEmoji(int index)
     {
-        Sprite emojiSprite = emojis[emojiSpriteIndex];
-        EmojiObject emojiObject = Instantiate(prefab, playerPosition + offset, Quaternion.identity, parent);
-        emojiObject.SetSprite(emojiSprite);
+        EmojiObject prefab = emojis[index];
+        EmojiObject emojiObject = Instantiate(prefab, Vector3.zero, Quaternion.identity, parent);
     }
 }

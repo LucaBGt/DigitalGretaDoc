@@ -5,23 +5,10 @@ using UnityEngine.UI;
 
 public class EmojiObject : MonoBehaviour
 {
-    [SerializeField] Image image;
-    Camera cam;
-
-    public void SetSprite(Sprite sprite)
-    {
-        image.sprite = sprite;
-    }
+    [SerializeField] float duration = 3;
 
     private void Start()
     {
-        cam = Camera.main;
-        Destroy(gameObject, 3);
-    }
-
-    void Update()
-    {
-        transform.forward = transform.position - cam.transform.position;
-        transform.Translate(Vector3.up * Time.deltaTime);
+        Destroy(gameObject, duration);
     }
 }

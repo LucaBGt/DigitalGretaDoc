@@ -172,13 +172,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  prefab: {fileID: 2879870464658192013, guid: 11e9c8ad0a3a74b48acbad539147ab7a, type: 3}
-  offset: {x: 0, y: 2, z: 0}
   emojis:
-  - {fileID: -963658648544420510, guid: f271ea6906eca1f42a48a3c559adeb4f, type: 3}
-  - {fileID: -1599389504229660486, guid: f271ea6906eca1f42a48a3c559adeb4f, type: 3}
-  - {fileID: -9069865241736795838, guid: f271ea6906eca1f42a48a3c559adeb4f, type: 3}
-  - {fileID: 1182789318238466018, guid: f271ea6906eca1f42a48a3c559adeb4f, type: 3}
+  - {fileID: 2879870464658192013, guid: 11e9c8ad0a3a74b48acbad539147ab7a, type: 3}
+  - {fileID: 2879870464658192013, guid: 3d1aff289447060469dca7d0f637cdf0, type: 3}
   parent: {fileID: 5556484970286271010}
 --- !u!205 &8636340599230345687
 LODGroup:
