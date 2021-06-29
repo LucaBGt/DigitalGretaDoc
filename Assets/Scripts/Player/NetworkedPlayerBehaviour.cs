@@ -108,7 +108,8 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
         else
         {
             //remote player update
-            playerNameText.transform.forward = transform.position - cam.transform.position;
+            if (cam != null)
+                playerNameText.transform.forward = transform.position - cam.transform.position;
         }
     }
 }
