@@ -83,7 +83,7 @@ public class MinimapUI : MonoBehaviour
         {
             nameText.text = door.CompanyName;
 
-            if(door.Logo.IsReady)
+            if (door.Logo.IsReady)
             {
                 logoImage.texture = door.Logo.Texture;
             }
@@ -94,13 +94,14 @@ public class MinimapUI : MonoBehaviour
                 logoImage.SetLoading();
                 door.Logo.FinishedDownload += (logo) =>
                 {
-                    if(currentDoorInspected == thisDoor)
+                    if (currentDoorInspected == thisDoor)
                         logoImage.texture = logo.Texture;
 
                 };
             }
 
-            describtionText.text = door.CompanyDescription;
+            string describtion = door.CompanyDescription;
+            describtionText.text = (describtion.Length > 250) ? (door.CompanyDescription.Substring(0, 250) + " ...") : describtion;
             infoButton.onClick.RemoveAllListeners();
             infoButton.onClick.AddListener(door.EnterInteractionFromMap);
             meetingButton.onClick.RemoveAllListeners();

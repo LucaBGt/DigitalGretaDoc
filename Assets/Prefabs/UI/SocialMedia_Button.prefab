@@ -94,7 +94,7 @@ MonoBehaviour:
       m_Calls: []
   typeSpritePairs:
   - Type: 0
-    Sprite: {fileID: 21300000, guid: df047c1aafa25df49a18a47e6cb3fb46, type: 3}
+    Sprite: {fileID: 21300000, guid: a8d0d103b3ff6f54e9ade15ee6baff03, type: 3}
   - Type: 1
     Sprite: {fileID: 21300000, guid: ccaa00e0ef6e8fe4487e429c7f929d19, type: 3}
   - Type: 2
@@ -120,7 +120,7 @@ MonoBehaviour:
   fancyButtonElements:
   - Graphic: {fileID: 8500743529326030982}
     scaleDefault: {x: 1, y: 1, z: 1}
-    scaleHover: {x: 1.1, y: 1.1, z: 1.1}
+    scaleHover: {x: 1.2, y: 1.2, z: 1.2}
   animationCurve:
     serializedVersion: 2
     m_Curve:

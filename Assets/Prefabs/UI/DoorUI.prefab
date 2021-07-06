@@ -724,6 +724,7 @@ GameObject:
   - component: {fileID: 4923500006931543032}
   - component: {fileID: 6774756562947846519}
   - component: {fileID: 8237750851904300288}
+  - component: {fileID: 6161044739993627367}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -892,6 +893,47 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6161044739993627367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2961551930284343377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9037c03db1982247ad5d37ad3a72c1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fancyButtonElements:
+  - Graphic: {fileID: 6774756562947846519}
+    scaleDefault: {x: 1, y: 1, z: 1}
+    scaleHover: {x: 1.1, y: 1.1, z: 1.1}
+  animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  animationDuration: 0.2
 --- !u!1 &3424713753349544824
 GameObject:
   m_ObjectHideFlags: 0
@@ -2602,11 +2644,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eec515880076e03479643bae18506883, type: 3}
---- !u!224 &9020938272031490593 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2608657169814797021, guid: eec515880076e03479643bae18506883, type: 3}
-  m_PrefabInstance: {fileID: 6413970637211039996}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4460579590400489749 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7269981666654962153, guid: eec515880076e03479643bae18506883, type: 3}
@@ -2618,6 +2655,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad134c2159b949c498bc0e1f2b8c018b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &9020938272031490593 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2608657169814797021, guid: eec515880076e03479643bae18506883, type: 3}
+  m_PrefabInstance: {fileID: 6413970637211039996}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6777462073323814570
 PrefabInstance:
   m_ObjectHideFlags: 0
