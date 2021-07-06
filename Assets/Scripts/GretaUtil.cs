@@ -9,9 +9,6 @@ public static class GretaUtil
     {
         if (!string.IsNullOrEmpty(url))
         {
-            //Debug.Log("OpenWindow JS");
-            //WebGLUtil.openWindow(url);
-
             if (!url.StartsWith("http"))
                 url = "https://" + url;
 
