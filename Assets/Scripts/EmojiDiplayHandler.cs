@@ -21,7 +21,7 @@ public class EmojiDiplayHandler : NetworkBehaviour
 
     internal void SpawnEmoji(int index)
     {
-        Debug.LogWarning($"Spawn Emoji ({index})");
+        Debug.Log($"Spawn Emoji ({index})");
         CMD_SpawnEmoji(index);
     }
 
