@@ -84,10 +84,11 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
         stopButtonObject.SetActive(obj != PlayerState.Looking && obj != PlayerState.InInteraction);
     }
 
-    public void EnterMainMenu()
+    public void ReturnFromCharacterSelection()
     {
         uiState = UIState.InMainMenu;
         UpdateVisuals();
+        StartMenu.Instance.JumpToMenuStage(1);
     }
 
     public void EnterMinimap()

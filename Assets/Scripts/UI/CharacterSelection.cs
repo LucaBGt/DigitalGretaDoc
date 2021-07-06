@@ -50,7 +50,7 @@ public class CharacterSelection : MonoBehaviour
 
     public void Back()
     {
-        uiHandler.EnterMainMenu();
+        uiHandler.ReturnFromCharacterSelection();
     }
 
 }
