@@ -113,14 +113,13 @@ public class Door : MonoBehaviour, ICancallableInteractable
         string url = IsSetup() ? data.InternalData.LinkWebsite : null;
         if (!string.IsNullOrEmpty(url))
         {
-#if UNITY_WEBGL
-            Debug.Log("OpenWindow JS");
-            
-            WebGLUtil.openWindow(url);
-#else
-            Debug.Log("OpenWindow Normal");
+            //Debug.Log("OpenWindow JS");
+            //WebGLUtil.openWindow(url);
+
+            if (!url.StartsWith("http"))
+                url = "https://" + url;
+
             Application.OpenURL(url);
-#endif
         }
     }
 
