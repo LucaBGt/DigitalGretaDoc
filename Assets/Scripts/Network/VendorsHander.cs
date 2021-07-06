@@ -9,6 +9,9 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
     const string URL_VENDOR_JSON = "vendor_data";
     const string LOCAL_DATA_NAME = "data.json";
 
+    [SerializeField] bool forceZoomModeOn;
+
+
     private string vendorDataPathInternal;
     private string vendorJSONPathInternal;
 
@@ -19,6 +22,8 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
     public event System.Action Ready;
 
     public int VendorsCount => vendorDataCache.Count;
+
+    public bool ShowZoomLinks => forceZoomModeOn || (vendorInfo == null ? false : vendorInfo.ShowZoomLinks);
 
     private void Start()
     {
@@ -48,7 +53,8 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
         if (!string.IsNullOrEmpty(data))
         {
             vendorInfo = JsonUtility.FromJson<GretaMarketVendorPackage>(data);
-        }else
+        }
+        else
         {
             Debug.Log("No local data.json found.");
         }
@@ -78,7 +84,7 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
                 break;
         }
 
-        if(string.IsNullOrEmpty(hash))
+        if (string.IsNullOrEmpty(hash))
         {
             Debug.Log("Requested VendorsHash is empty");
         }
@@ -241,6 +247,8 @@ public class GretaMarketVendorPackage
     public string Hash;
 
     public VendorData[] Vendors;
+
+    public bool ShowZoomLinks;
 }
 
 [System.Serializable]

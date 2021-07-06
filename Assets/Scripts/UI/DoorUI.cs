@@ -13,6 +13,7 @@ public class DoorUI : ScalingUIElement
     [SerializeField] KeepAspectRatioRawImage[] imagesSmall;
     [SerializeField] SocialMediaButton socialMediaButtonPrefab;
     [SerializeField] RectTransform socialMediaButtonParent;
+    [SerializeField] Button zoomMeetingButton;
 
     KeepAspectRatioRawImage[] keepAspectRatios = new KeepAspectRatioRawImage[0];
 
@@ -56,6 +57,19 @@ public class DoorUI : ScalingUIElement
         TryCreateSocialMediaButton(SocialMediaType.Homepage, data.InternalData.LinkWebsite);
         TryCreateSocialMediaButton(SocialMediaType.Pinterest, data.InternalData.LinkPinterest);
         TryCreateSocialMediaButton(SocialMediaType.YouTube, data.InternalData.LinkYouTube);
+
+
+        if (VendorsHander.Instance.ShowZoomLinks && !string.IsNullOrEmpty(data.InternalData.LinkZoom))
+        {
+            zoomMeetingButton.gameObject.SetActive(true);
+            zoomMeetingButton.onClick.RemoveAllListeners();
+            zoomMeetingButton.onClick.AddListener(() => GretaUtil.OpenURL(data.InternalData.LinkZoom));
+        }
+        else
+        {
+            zoomMeetingButton.gameObject.SetActive(false);
+        }
+
     }
 
     private void UpdateTexture(Door door, TextureRequest req, KeepAspectRatioRawImage target)

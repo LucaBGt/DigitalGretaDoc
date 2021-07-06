@@ -726,7 +726,7 @@ GameObject:
   - component: {fileID: 8237750851904300288}
   - component: {fileID: 6161044739993627367}
   m_Layer: 0
-  m_Name: Button
+  m_Name: ZoomButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1176,6 +1176,7 @@ MonoBehaviour:
   - {fileID: 2764604150824613454}
   socialMediaButtonPrefab: {fileID: 5118590260026876806, guid: 33de9755573a4d041accaf041520c86a, type: 3}
   socialMediaButtonParent: {fileID: 1094818950184958395}
+  zoomMeetingButton: {fileID: 8237750851904300288}
 --- !u!1 &3879235477824860488
 GameObject:
   m_ObjectHideFlags: 0

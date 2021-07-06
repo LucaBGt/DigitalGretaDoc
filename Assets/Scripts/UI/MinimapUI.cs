@@ -79,6 +79,9 @@ public class MinimapUI : MonoBehaviour
         currentDoorInspected = door;
         bool show = (door != null && door.Data != null);
 
+        infoButton.gameObject.SetActive(show);
+        meetingButton.gameObject.SetActive(show);
+
         if (show)
         {
             nameText.text = door.CompanyName;
@@ -104,8 +107,17 @@ public class MinimapUI : MonoBehaviour
             describtionText.text = (describtion.Length > 250) ? (door.CompanyDescription.Substring(0, 250) + " ...") : describtion;
             infoButton.onClick.RemoveAllListeners();
             infoButton.onClick.AddListener(door.EnterInteractionFromMap);
-            meetingButton.onClick.RemoveAllListeners();
-            meetingButton.onClick.AddListener(door.OpenURL);
+
+            if (VendorsHander.Instance.ShowZoomLinks)
+            {
+                meetingButton.gameObject.SetActive(true);
+                meetingButton.onClick.RemoveAllListeners();
+                meetingButton.onClick.AddListener(door.OpenURL);
+            }
+            else
+            {
+                meetingButton.gameObject.SetActive(false);
+            }
         }
         else
         {
@@ -115,9 +127,6 @@ public class MinimapUI : MonoBehaviour
             infoButton.onClick.RemoveAllListeners();
             meetingButton.onClick.RemoveAllListeners();
         }
-
-        infoButton.transform.parent.gameObject.SetActive(show);
-        meetingButton.transform.parent.gameObject.SetActive(show);
     }
 
     private void Update()
