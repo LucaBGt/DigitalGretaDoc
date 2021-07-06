@@ -35,6 +35,9 @@ public class JenkinsBuild
     {
         var args = FindArgs();
 
+        PlayerSettings.keyaliasPass = "dyfhL9Zv2HACgX2r";
+        PlayerSettings.keystorePass = "dyfhL9Zv2HACgX2r";
+
         string fullPathAndName = args.targetDir;
         BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.Android, BuildTarget.Android, BuildOptions.None);
     }
