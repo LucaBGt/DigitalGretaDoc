@@ -112,7 +112,13 @@ public class Door : MonoBehaviour, ICancallableInteractable
     {
         string url = IsSetup() ? data.InternalData.LinkWebsite : null;
         if (!string.IsNullOrEmpty(url))
+        {
+        #if UNITY_WEBGL
+            WebGLUtil.openWindow(url);
+        #else
             Application.OpenURL(url);
+        #endif
+        }
     }
 
     public void CancelInteraction()
