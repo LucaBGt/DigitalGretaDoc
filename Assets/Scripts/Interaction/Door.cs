@@ -68,11 +68,11 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
     private void DisplayLogo(TextureRequest logo)
     {
-        if(logo.IsReady)
+        if (logo.IsReady)
         {
-        Material newMaterial = new Material(logoMeshRenderer.material);
-        newMaterial.mainTexture = logo.Texture;
-        logoMeshRenderer.material = newMaterial;
+            Material newMaterial = new Material(logoMeshRenderer.material);
+            newMaterial.mainTexture = logo.Texture;
+            logoMeshRenderer.material = newMaterial;
         }
         else
         {
@@ -113,11 +113,14 @@ public class Door : MonoBehaviour, ICancallableInteractable
         string url = IsSetup() ? data.InternalData.LinkWebsite : null;
         if (!string.IsNullOrEmpty(url))
         {
-        #if UNITY_WEBGL
+#if UNITY_WEBGL
+            Debug.Log("OpenWindow JS");
+            
             WebGLUtil.openWindow(url);
-        #else
+#else
+            Debug.Log("OpenWindow Normal");
             Application.OpenURL(url);
-        #endif
+#endif
         }
     }
 
