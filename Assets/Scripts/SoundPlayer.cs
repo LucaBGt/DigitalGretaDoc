@@ -3,10 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Audio;
 
 public class SoundPlayer : SingletonBehaviour<SoundPlayer>
 {
+    [SerializeField] AudioMixerGroup mixerGroup;
+
     List<PlayingAudio> currentlyPlaying = new List<PlayingAudio>();
+
+    private void Start()
+    {
+        UpdateVolume();
+    }
+
+    public void UpdateVolume()
+    {
+        mixerGroup.audioMixer.SetFloat("MasterVolume", Settings.Instance.MasterVolume);
+    }
+
     public void Play(AudioClip clip, GameObject toPlayFrom = null, Transform source3D = null, float volume = 1, float randomPitchRange = 0, bool playOnlyIfFinished = false)
     {
         float pitch = 1f + UnityEngine.Random.Range(-randomPitchRange, randomPitchRange);
@@ -34,6 +48,7 @@ public class SoundPlayer : SingletonBehaviour<SoundPlayer>
         newAudio.source.clip = clip;
         newAudio.source.volume = volume;
         newAudio.source.pitch = pitch;
+        newAudio.source.outputAudioMixerGroup = mixerGroup;
         newAudio.source.Play();
         newAudio.coroutine = StartCoroutine(WaitForEndOfClipRoutine(newAudio));
         currentlyPlaying.Add(newAudio);
