@@ -122,7 +122,8 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
 
         float dir = OffsetBetweenAngles(current, target);
 
-        dir = Mathf.Clamp(dir, -1, 1);
+        //*0.1 to slow down when below 10 degrees, allow low fps devices to work correctly 
+        dir = Mathf.Clamp(dir * 0.1f, -1, 1);
         float movement = dir * Time.deltaTime * sensetivity;
         transform.Rotate(0, movement, 0);
 
