@@ -111,16 +111,7 @@ public class Door : MonoBehaviour, ICancallableInteractable
     public void OpenURL()
     {
         string url = IsSetup() ? data.InternalData.LinkWebsite : null;
-        if (!string.IsNullOrEmpty(url))
-        {
-            //Debug.Log("OpenWindow JS");
-            //WebGLUtil.openWindow(url);
-
-            if (!url.StartsWith("http"))
-                url = "https://" + url;
-
-            Application.OpenURL(url);
-        }
+        GretaUtil.OpenURL(url);
     }
 
     public void CancelInteraction()

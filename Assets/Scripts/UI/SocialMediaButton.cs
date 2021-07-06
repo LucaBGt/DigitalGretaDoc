@@ -33,7 +33,7 @@ public class SocialMediaButton : CustomButtonBehaviour
 
     private void OpenUrl()
     {
-        Application.OpenURL(url);
+        GretaUtil.OpenURL(url);
     }
 
     private Sprite GetSpriteBySocialMediaType(SocialMediaType type)
