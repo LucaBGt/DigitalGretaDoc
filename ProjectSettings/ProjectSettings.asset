@@ -148,6 +148,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.TwoEyedCyclops.DigitalGreta
     Standalone: com.TwoEyedCyclops.DigitalGreta
+    iPhone: com.TwoEyedCyclops.DigitalGreta
   buildNumber:
     Standalone: 0
     iPhone: 0
