@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Web Interface</title>
+{% endblock %}
+
+{% block body %}
+
+<h1>Gretaland Vendors Editor</title>
+
+<ul>
+{%- for item in list.children %}
+    
+	    <h2>{{ item.Name }}</h2>
+	   	<p><small>{{ item.Description }}</small></p>
+	   	<div class="content">
+		   	<img class="logoImage"src = "get/{{ item.Folder + '_' +  item.LogoFile }}">
+
+		   	<form method="POST" enctype="multipart/form-data">
+		   	 <div class="row">
+				<div class="col">
+			   		<div class="custom-file">
+				  		<input type="file" class="custom-file-input" name="{{ item.Folder }}/{{ item.LogoFile }}" id="image">
+				  		<label class="custom-file-label" for="image">Choose file</label>
+					</div>
+				</div>
+				<div class="col">
+					<button type="submit" class="btn btn-primary">Upload</button>
+				</div>
+			</form>
+		</div>
+		<hr/>
+	   	<div class="links">
+	   		{%- for name, link in item.Links.items() %}
+			<form>
+			  <div class="row">
+			    <div class="col">
+			      	<div class="input-group mb-2">
+		        		<div class="input-group-prepend w-25">
+		          			<div class="input-group-text">{{ name }}</div>
+		        			</div>
+		        		<input type="text" class="form-control" id="inlineFormInputGroup" value="{{ link }}">
+		      		</div>
+			    </div>
+			    <div class="col">
+			      <button type="submit" class="btn btn-primary">Speichern</button>
+			    </div>
+			  </div>
+			</form>
+			{%- endfor %}
+
+	   	</div>
+	    <p><small>{{ item }}</small></p>
+{%- endfor %}
+
+</ul>
+
+<div>
+	Hello World
+	{% include 'details.html' %}
+</div>
+{% endblock %}

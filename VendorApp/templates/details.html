@@ -1,0 +1,45 @@
+{% extends 'list.html' %}
+{% block details %}
+<div class="col-8">
+		    <h2>{{ detail.Name }}</h2>
+		   	<p><small>{{ detail.Description }}</small></p>
+			   	<img class="logoImage"src = "get/{{ detail.Folder + '_' +  detail.LogoFile }}">
+
+			   	<form method="POST" enctype="multipart/form-data">
+			   	 <div class="row">
+					<div class="col">
+				   		<div class="custom-file">
+					  		<input type="file" class="custom-file-input" name="{{ detail.Folder }}/{{ detail.LogoFile }}" id="image">
+					  		<label class="custom-file-label" for="image">Choose file</label>
+						</div>
+					</div>
+					<div class="col">
+						<button type="submit" class="btn btn-primary">Upload</button>
+					</div>
+				</form>
+			<br/>
+			<hr/>
+		   	<div class="links">
+		   		{%- for name, link in detail.Links.items() %}
+				<form>
+				  <div class="row">
+				    <div class="col">
+				      	<div class="input-group mb-2">
+			        		<div class="input-group-prepend w-25">
+			          			<div class="input-group-text">{{ name }}</div>
+			        			</div>
+			        		<input type="text" class="form-control" id="inlineFormInputGroup" value="{{ link }}">
+			      		</div>
+				    </div>
+				    <div class="col">
+				      <button type="submit" class="btn btn-primary">Speichern</button>
+				    </div>
+				  </div>
+				</form>
+				{%- endfor %}
+
+		   	</div>
+		    <p><small>{{ detail }}</small></p>
+
+		 </div>
+		 {% endblock %}
