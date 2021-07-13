@@ -36,8 +36,8 @@ public class DoorsInitializer : MonoBehaviour
             }
             else
             {
-                doors[i].Setup(VendorsHander.Instance.GetRuntimeVendorData(i%count));
-                //Destroy(doors[i].gameObject);
+                //doors[i].Setup(VendorsHander.Instance.GetRuntimeVendorData(i%count));
+                Destroy(doors[i].gameObject);
             }
         }
 
