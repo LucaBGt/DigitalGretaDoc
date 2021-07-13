@@ -1,34 +1,263 @@
-{% extends 'list.html' %}
-{% block details %}
-<div class="col-8">
-		    <h2>{{ detail.Name }}</h2>
-		   	<p><small>{{ detail.Description }}</small></p>
-			   	<img class="logoImage"src = "get/{{ detail.Folder + '_' +  detail.LogoFile }}">
+{% extends 'base.html' %}
 
-			   	<form method="POST" enctype="multipart/form-data">
-			   	 <div class="row">
+{% block head %}
+<title>Web Interface</title>
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-4">
+			{% include 'list.html' %}
+		</div>
+		<div class="col-8">
+			<div class="row editable">
+
+				<!--
+				NAME
+				-->
+
+			    <div class="col-auto">
+			    	<h2>{{ detail.Name }}</h2>
+			    </div>
+			    <div class="col">
+					<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#editNameModal">
+						<i class="icon-pencil symbol-white" title="bearbeiten"></i>
+					</button>
+				</div>
+				<div class="col-auto">
+					<a href="/" class="col">
+			    		<button type="button" class="btn-close" aria-label="Close"></button>
+			    	</a>
+				</div>
+
+			    <!--
+				NAME MODAL
+				-->
+
+				<div class="modal fade" id="editNameModal" tabindex="-1" aria-labelledby="editNameModalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-lg">
+				    <div class="modal-content">
+				    	<form method=POST name="confirmationForm">
+				      		<div class="modal-header">
+				        		<h5 class="modal-title" id="editNameModalLabel">Namen bearbeiten</h5>
+				        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      		</div>
+				      		<div class="modal-body">
+				      			<input name="Name" type="text" class="form-control" id="exampleInputEmail1" value="{{ detail.Name }}">
+				      		</div>
+				      		<div class="modal-footer">
+				        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+				        		<button type="submit" class="btn btn-primary">Speichern</button>
+				      		</div>
+				      	</form>
+				    </div>
+				  </div>
+				</div>
+			</div>
+
+			<hr/>
+
+			<!--
+			DESCRIPTION
+			-->
+
+			<div class="editable">
+				<div class="row">
+					<div class="col-md-auto">
+						<h4>Beschreibung</h4>
+					</div>
+					<div class="col-md-auto">
+						<p>max. 600 Zeichen<p>
+					</div>
+				</div>
+				<div class="row my-2">
 					<div class="col">
-				   		<div class="custom-file">
-					  		<input type="file" class="custom-file-input" name="{{ detail.Folder }}/{{ detail.LogoFile }}" id="image">
-					  		<label class="custom-file-label" for="image">Choose file</label>
+						<p><small>{{ detail.Description }}</small></p>
+					</div>
+					<div class="col-2">
+						<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#editDescriptionModal">
+							<i class="icon-pencil symbol-white" title="bearbeiten"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<hr/>
+
+			<!--
+			EDIT DESCRIPTION MODAL
+			-->
+
+			<div class="modal fade" id="editDescriptionModal" tabindex="-1" aria-labelledby="editDescriptionModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg">
+			    <div class="modal-content">
+			    	<form method=POST name="confirmationForm">
+			      		<div class="modal-header">
+			      			<div class="row">
+			      				<div class=" col">
+			        				<h5 class="modal-title" id="editDescriptionModalLabel">Beschreibung bearbeiten</h5>
+			        			</div>
+			        			<div class=" col-auto">
+			        				<span class="badge bg-primary rounded-pill">14</span>
+			        			</div>
+			        		</div>
+			        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      		</div>
+			      		<div class="modal-body">
+			      			<input name="Description" type="hidden" id="hidden">
+			      			<textarea id="textarea" class="form-control" rows="6">{{ detail.Description }}</textarea>
+			      		</div>
+			      		<div class="modal-footer">
+			        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+			        		<button type="submit" class="btn btn-primary">Speichern</button>
+			      		</div>
+			      	</form>
+			    </div>
+			  </div>
+			</div>
+
+
+			<!--
+			LOGO PICTURE
+			-->
+
+			<div class="row">
+				<div class="col editable">
+					<h4>Logo Picture</h4>
+					<div class="row my-2">
+						<div class="col">
+							<p class="fs-6">
+								höhe: 256 - 512 px<br>
+								breite: -/-<br>
+								<strong>nie höher als breit</strong>
+							</p>
+						</div>
+						<div class="col">
+							<img class="logoImage" src = "get/{{ detail.Folder + '_' +  detail.LogoFile }}" style="height: 150px; width: auto;">
+						</div>
+						<div class="col">
+							<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/logo">
+								<i class="icon-pencil symbol-white" title="bearbeiten"></i>
+							</button>
 						</div>
 					</div>
-					<div class="col">
-						<button type="submit" class="btn btn-primary">Upload</button>
+				</div>
+
+				<!--
+				MAIN IMAGE
+				-->
+
+				<div class="col editable">
+					<h4>Main Image</h4>
+					<div class="row my-2">
+						<div class="col">
+							<p class="fs-6">
+								höhe: 480 - 1080 px<br>
+								breite: 640 - 1920px<br>
+								<strong>4/3 bis 16/9</strong>
+							</p>
+						</div>
+						<div class="col">
+							<img class="mainImage" src = "get/{{ detail.Folder + '_' +  detail.MainImageFile }}" style="height: 150px; width: auto;">
+						</div>
+						<div class="col">
+							<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/main">
+								<i class="icon-pencil symbol-white" title="bearbeiten"></i>
+							</button>
+						</div>
 					</div>
-				</form>
-			<br/>
+				</div>
+			</div>
+
+			<!--
+			SUB IMAGES
+			-->
+
+			<div class="row">
+				<h4>Sub Images</h4>
+				<p class="fs-6">
+					höhe: 480 - 720 px
+					breite: 640 - 1280px
+					<strong>4/3 bis 16/9</strong>
+				</p>
+			</div>
+
+			<div class="row">
+
+				{%- for image in detail.SubImagesFiles %}
+
+				<div class="col editable">
+					<div class="row my-2">
+						<div class="col-auto">
+							<img class="mainImage" src = "get/{{ detail.Folder + '_' +  image }}" style="height: 100px; width: auto;">
+						</div>
+						<div class="col">
+							<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/sub{{ loop.index }}">
+								<i class="icon-pencil symbol-white" title="bearbeiten"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				{%- endfor %}
+
+			</div>
+
 			<hr/>
+
+			<!--
+			IMAGE MODALS
+			-->
+
+			<div class="modal fade" id="uploadImagesModal" tabindex="-1" aria-labelledby="uploadImagesModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="uploadImagesModalLabel">Bild hochladen</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        <form method="POST" enctype="multipart/form-data">
+			         <div class="row">
+			          <div class="col-md-auto">
+						<div class="custom-file">
+						  <input type="file" class="form-control form-control-sm">
+						  <input type="hidden" name="NameBefore" value="test.png" class="form-control form-control-sm">
+						</div>
+					  </div>
+					  <div class="col-auto">
+						<button type="submit" class="btn btn-primary">Upload</button>
+					  </div>
+					 </div>
+			        </form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			        <!--<button type="button" class="btn btn-primary">Send message</button>-->
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+			<!--
+			LINKS
+			-->
+
 		   	<div class="links">
+
+		   		<h4>Links</h4>
+
 		   		{%- for name, link in detail.Links.items() %}
-				<form>
+				<form method="POST" enctype="multipart/form-data">
 				  <div class="row">
 				    <div class="col">
 				      	<div class="input-group mb-2">
 			        		<div class="input-group-prepend w-25">
 			          			<div class="input-group-text">{{ name }}</div>
-			        			</div>
-			        		<input type="text" class="form-control" id="inlineFormInputGroup" value="{{ link }}">
+			        		</div>
+			        		<input id="changeLink" type="hidden" name="ChangeLink">
+			        		<input id="linkType" type="hidden" value="{{ name }}">
+			        		<input id="linkValue" type="text" class="form-control" value="{{ link }}">
 			      		</div>
 				    </div>
 				    <div class="col">
@@ -39,7 +268,19 @@
 				{%- endfor %}
 
 		   	</div>
-		    <p><small>{{ detail }}</small></p>
 
-		 </div>
-		 {% endblock %}
+		   	<!--
+			DATA
+			-->
+		   	<div class="row my-4">
+			   	<div class="col">
+			   		<h5>Daten</h5>
+			    	<p><small>{{ detail }}</small></p>
+			    </div>
+		    </div>
+		</div>
+	</div>
+
+	<script src="static/js/modal.js"></script>
+
+{% endblock %}

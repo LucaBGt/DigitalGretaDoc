@@ -1,23 +1,70 @@
-{% extends 'base.html' %}
-{% block body %}
-<div class="container">
-	<div class="row">
-	  <div class="col-4">
 
-	  	<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-		  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-		  <label class="btn btn-outline-primary" for="btnradio1">Zeige Zoom</label>
 
-		  <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-		  <label class="btn btn-outline-primary" for="btnradio3">Verstecke Zoom</label>
+<div class="row">
+	<div class="col">
+		<h1>Gretaland Aussteller Editor</h1>
+		<p><em>version 0.1</em></p>
+    </div>
+</div>
+<!--
+<div class="row">
+	<div class="col">
+		<div class="btn-group my-2" role="group" aria-label="Basic radio toggle button group">
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+			<label class="btn btn-outline-primary" for="btnradio1">Zeige Zoom</label>
+
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+			<label class="btn btn-outline-primary" for="btnradio3">Verstecke Zoom</label>
 		</div>
-
-		<h1>Aussteller</h1>
-		{%- for item in list %}
-		<a href="?Folder={{ item.Folder }}"><h4>{{ item.Name }}</h4></a>
-		{%- endfor %}
-	  </div>
-	  {% block detail %}{% endblock %}
 	</div>
 </div>
-{% endblock %}
+-->
+<h3>Aussteller</h3>
+<ul class="list-group my-1">
+{%- for item in list %}
+ <li class="list-group-item">
+	<div class="row editable">
+		<div class="col-auto">
+			<button type="button" class="btn btn-primary edit" data-bs-toggle="modal">
+				<i class="icon-pencil symbol-white" title="bearbeiten"></i>
+			</button>
+		</div>
+		<div class="col">
+			<a href="/details?Folder={{ item.Folder }}"><h4>{{ item.Name }}</h4></a>
+		</div>
+		<div class="col-auto">
+			<form method="POST">
+				<input type="hidden" name="Clear" value="{{ item.Folder }}">
+				<button type="submit" class="btn btn-danger edit"><i class="icon-trash"></i></button>
+			</form>
+		</div>
+	</div>
+</li>
+{%- endfor %}
+ <li class="list-group-item">
+<div class="row justify-content-md-center">
+	<div class="col-auto">
+		<form method="POST" class="my-1">
+			<input type="hidden" name="NewVendor">
+			<button type="submit" class="btn btn-primary"><i class="icon-plus"></i> Neuer Aussteller</button>
+		</form>
+	</div>
+</div>
+</li>
+</ul>
+
+<div class="row my-5">
+
+	<form method="POST" class="my-1 row">
+		<div class="form-check col-auto align-self-center">
+		  <input name="Rebuild" class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+		  <label class="form-check-label" for="flexCheckChecked">
+		    Zeige Zoom Links?
+		  </label>
+		</div>
+		<button type="submit" class="btn btn-primary col-auto">
+		<i class="icon-upload-alt" title="bearbeiten"></i>
+		Änderungen ins Spiel laden
+		</button>
+	</form>
+</div>

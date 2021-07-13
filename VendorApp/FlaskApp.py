@@ -4,6 +4,9 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 import json
+import uuid
+import DataCollector
+import shutil
 from werkzeug.exceptions import InternalServerError, abort
 
 
@@ -38,9 +41,11 @@ def make_list(path):
         pass #ignore errors
     else:
         for name in lst:
-            fn = os.path.join(path, name, "info.json")
-            _list.append(create_link(fn, name))
+            fn = os.path.join(path, name)
+            if os.path.isdir(fn):
+                _list.append(create_link( os.path.join(fn, "info.json"), name))
 
+    print(fn)
     return _list
 
 def read_info(path, folderName):
@@ -50,22 +55,26 @@ def read_info(path, folderName):
 
     with open(os.path.join(path,folderName,"info.json")) as f:
         data = json.load(f)
-        data['Folder'] = folderName
-        data['Links'] = {}
-
-        if data['LinkWebsite'] is not None:
-            data['Links']['Website'] = data['LinkWebsite']
-
-        if data['LinkFacebook'] is not None:
-            data['Links']['Facebook'] = data['LinkFacebook']
-
-        if data['LinkInstagram'] is not None:
-            data['Links']['Instagram'] = data['LinkInstagram']
-
-        if data['LinkZoom'] is not None:
-            data['Links']['Zoom'] = data['LinkZoom']
-
     return data
+
+def prepare_info(json, folderName):
+
+    json['Folder'] = folderName
+#    json['Links'] = {}
+#
+#    if json['LinkWebsite'] is not None:
+#        json['Links']['Website'] = json['LinkWebsite']
+#
+#    if json['LinkFacebook'] is not None:
+#        json['Links']['Facebook'] = json['LinkFacebook']
+#
+#    if json['LinkInstagram'] is not None:
+#        json['Links']['Instagram'] = json['LinkInstagram']
+#
+#    if json['LinkZoom'] is not None:
+#        json['Links']['Zoom'] = json['LinkZoom']
+
+    return json;
 
 def create_link(path, folderName):
     with open(path) as f:
@@ -74,10 +83,42 @@ def create_link(path, folderName):
 
     return dict(Folder=folderName, Name=name)
 
+def process_list_edit_actions(_dict):
+    if 'NewVendor' in _dict.keys():
+
+        print("create new...")
+
+        dirName = os.path.join(SOURCE_PATH,str(uuid.uuid4()))
+        os.mkdir(dirName)
+
+        with open(os.path.join(SOURCE_PATH,"default.json")) as f:
+            defaultJson = json.load(f)
+
+        with open(dirName + "/info.json", "w+") as new:
+            json.dump(defaultJson, new)
+
+        return True
+
+    elif 'Rebuild' in _dict.keys():
+
+        print("rebuilding...")
+        DataCollector.generate_data_json(True)
+
+        return True
+
+    elif 'Clear' in _dict.keys():
+
+        for toDelete in _dict.values():
+            print("delete: ", toDelete)
+            path = os.path.join(SOURCE_PATH,toDelete)
+            shutil.rmtree(path)
+
+        return True
+
+    return False
+
 @app.route('/details', methods=["GET", "POST"])
 def details():
-
-    print(request.method)
 
     folder = None
 
@@ -86,9 +127,12 @@ def details():
     if request.args:
         folder = request.args.get("Folder")
 
-    elif request.method == "POST":
+    jsonFile = read_info(SOURCE_PATH, folder)
 
-        print(request.files)
+    if request.method == "POST":
+
+        print("files: ", request.files)
+        print("forms: ", request.form)
 
         if request.files:
 
@@ -98,19 +142,54 @@ def details():
 
             values_view =request.files.keys()
             value_iterator = iter(values_view)
-            name = next(value_iterator)
+            toSplit = next(value_iterator)
 
-            path = join(SOURCE_PATH, name)
+            folderName, prefix = toSplit.split('/')
 
-            
+            #here help ajudame!
+
+            name = prefix + "_" + str(uuid.uuid4())
+
+            path = join(SOURCE_PATH, folderName, name)
             image.save(path)
 
             print("save image to: " + path)
 
             return redirect(request.url)
 
-    info = read_info(SOURCE_PATH, folder)
-    print(info)
+        elif request.form:
+
+            _dict = request.form
+
+            if process_list_edit_actions(_dict):
+
+                print("edited list...")
+
+            elif 'ChangeLink' in _dict.keys():
+
+                for string in _dict.values():
+
+                    pair = string.split(',')
+                    key = pair[0]
+                    value = pair[1]
+
+                    print("CHANGED LINK", key, " FROM ", jsonFile["Links"][key], " TO ", value)
+                    jsonFile["Links"][key] = value
+
+            else:
+                for key in _dict:
+
+                    print("CHANGED ", key, " => \n ", jsonFile[key], "\n TO => \n ", _dict[key])
+                    jsonFile[key] = _dict[key]
+
+                path = os.path.join(SOURCE_PATH,folder,"info.json")
+                with open(path,'w') as outfile:
+                    json.dump(jsonFile, outfile)
+                    print("saved changes to: ", path)
+
+    info = prepare_info(jsonFile, folder)
+    #print("")
+    #print(info)
 
     return render_template('details.html', list=make_list(SOURCE_PATH), detail=info)
         
@@ -118,39 +197,21 @@ def details():
 @app.route('/', methods=["GET", "POST"])
 def index():
 
+    folder = None
+
+    print(request.args)
+
     if request.method == "POST":
 
-        print(request.files)
+        print("forms: ", request.form)
 
-        if request.files:
+        if request.form:
 
-            values_view =request.files.values()
-            value_iterator = iter(values_view)
-            image = next(value_iterator)
+            _dict = request.form
 
-            values_view =request.files.keys()
-            value_iterator = iter(values_view)
-            name = next(value_iterator)
-
-            path = join(SOURCE_PATH, name)
-
+            process_list_edit_actions(_dict);
             
-            image.save(path)
-
-            print("save image to: " + path)
-
-            return redirect(request.url)
-
-    folder = None
-    if request.args:
-        folder = request.args.get("Folder")
-
-    info = None
-    if folder:
-        info = read_info(SOURCE_PATH, folder)
-
-    print(info)
-    return render_template('index.html', list=make_list(SOURCE_PATH), detail=info)
+    return render_template('index.html', list=make_list(SOURCE_PATH))
 
 
 @app.route('/tree')
