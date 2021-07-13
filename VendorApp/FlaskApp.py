@@ -60,19 +60,19 @@ def read_info(path, folderName):
 def prepare_info(json, folderName):
 
     json['Folder'] = folderName
-    json['Links'] = {}
-
-    if json['LinkWebsite'] is not None:
-        json['Links']['Website'] = json['LinkWebsite']
-
-    if json['LinkFacebook'] is not None:
-        json['Links']['Facebook'] = json['LinkFacebook']
-
-    if json['LinkInstagram'] is not None:
-        json['Links']['Instagram'] = json['LinkInstagram']
-
-    if json['LinkZoom'] is not None:
-        json['Links']['Zoom'] = json['LinkZoom']
+#    json['Links'] = {}
+#
+#    if json['LinkWebsite'] is not None:
+#        json['Links']['Website'] = json['LinkWebsite']
+#
+#    if json['LinkFacebook'] is not None:
+#        json['Links']['Facebook'] = json['LinkFacebook']
+#
+#    if json['LinkInstagram'] is not None:
+#        json['Links']['Instagram'] = json['LinkInstagram']
+#
+#    if json['LinkZoom'] is not None:
+#        json['Links']['Zoom'] = json['LinkZoom']
 
     return json;
 
@@ -142,11 +142,15 @@ def details():
 
             values_view =request.files.keys()
             value_iterator = iter(values_view)
-            name = next(value_iterator)
+            toSplit = next(value_iterator)
 
-            path = join(SOURCE_PATH, name)
+            folderName, prefix = toSplit.split('/')
 
-            
+            #here help ajudame!
+
+            name = prefix + "_" + str(uuid.uuid4())
+
+            path = join(SOURCE_PATH, folderName, name)
             image.save(path)
 
             print("save image to: " + path)
@@ -161,10 +165,21 @@ def details():
 
                 print("edited list...")
 
+            elif 'ChangeLink' in _dict.keys():
+
+                for string in _dict.values():
+
+                    pair = string.split(',')
+                    key = pair[0]
+                    value = pair[1]
+
+                    print("CHANGED LINK", key, " FROM ", jsonFile["Links"][key], " TO ", value)
+                    jsonFile["Links"][key] = value
+
             else:
                 for key in _dict:
 
-                    print("changed ", key, " => \n ", jsonFile[key], "\n to => \n ", _dict[key])
+                    print("CHANGED ", key, " => \n ", jsonFile[key], "\n TO => \n ", _dict[key])
                     jsonFile[key] = _dict[key]
 
                 path = os.path.join(SOURCE_PATH,folder,"info.json")

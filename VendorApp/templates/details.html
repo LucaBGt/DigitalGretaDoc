@@ -136,7 +136,7 @@
 							<img class="logoImage" src = "get/{{ detail.Folder + '_' +  detail.LogoFile }}" style="height: 150px; width: auto;">
 						</div>
 						<div class="col">
-							<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/{{ detail.LogoFile }}">
+							<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/logo">
 								<i class="icon-pencil symbol-white" title="bearbeiten"></i>
 							</button>
 						</div>
@@ -161,7 +161,7 @@
 							<img class="mainImage" src = "get/{{ detail.Folder + '_' +  detail.MainImageFile }}" style="height: 150px; width: auto;">
 						</div>
 						<div class="col">
-							<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/{{ detail.MainImageFile }}">
+							<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/main">
 								<i class="icon-pencil symbol-white" title="bearbeiten"></i>
 							</button>
 						</div>
@@ -192,7 +192,7 @@
 							<img class="mainImage" src = "get/{{ detail.Folder + '_' +  image }}" style="height: 100px; width: auto;">
 						</div>
 						<div class="col">
-							<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/{{ image }}">
+							<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/sub{{ loop.index }}">
 								<i class="icon-pencil symbol-white" title="bearbeiten"></i>
 							</button>
 						</div>
@@ -222,6 +222,7 @@
 			          <div class="col-md-auto">
 						<div class="custom-file">
 						  <input type="file" class="form-control form-control-sm">
+						  <input type="hidden" name="NameBefore" value="test.png" class="form-control form-control-sm">
 						</div>
 					  </div>
 					  <div class="col-auto">
@@ -253,8 +254,10 @@
 				      	<div class="input-group mb-2">
 			        		<div class="input-group-prepend w-25">
 			          			<div class="input-group-text">{{ name }}</div>
-			        			</div>
-			        		<input type="text" name="{{ 'Link' + name }}" class="form-control" value="{{ link }}">
+			        		</div>
+			        		<input id="changeLink" type="hidden" name="ChangeLink">
+			        		<input id="linkType" type="hidden" value="{{ name }}">
+			        		<input id="linkValue" type="text" class="form-control" value="{{ link }}">
 			      		</div>
 				    </div>
 				    <div class="col">
