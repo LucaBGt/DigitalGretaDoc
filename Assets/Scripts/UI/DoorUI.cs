@@ -52,18 +52,19 @@ public class DoorUI : ScalingUIElement
             Destroy(child.gameObject);
         }
 
-        TryCreateSocialMediaButton(SocialMediaType.Facebook, data.InternalData.LinkFacebook);
-        TryCreateSocialMediaButton(SocialMediaType.Instagram, data.InternalData.LinkInstagram);
-        TryCreateSocialMediaButton(SocialMediaType.Homepage, data.InternalData.LinkWebsite);
-        TryCreateSocialMediaButton(SocialMediaType.Pinterest, data.InternalData.LinkPinterest);
-        TryCreateSocialMediaButton(SocialMediaType.YouTube, data.InternalData.LinkYouTube);
+        for (int i = 0; i < SocialMediaButton.SOCIALMEDIA_COUNT; i++)
+        {
+            var type = (SocialMediaType)i;
+
+            TryCreateSocialMediaButton(type, data.InternalData.GetLink(type));
+        }
 
 
-        if (VendorsHander.Instance.ShowZoomLinks && !string.IsNullOrEmpty(data.InternalData.LinkZoom))
+        if (VendorsHander.Instance.ShowZoomLinks && !string.IsNullOrEmpty(data.InternalData.GetLink(SocialMediaType.Zoom)))
         {
             zoomMeetingButton.gameObject.SetActive(true);
             zoomMeetingButton.onClick.RemoveAllListeners();
-            zoomMeetingButton.onClick.AddListener(() => GretaUtil.OpenURL(data.InternalData.LinkZoom));
+            zoomMeetingButton.onClick.AddListener(() => GretaUtil.OpenURL(data.InternalData.GetLink(SocialMediaType.Zoom)));
         }
         else
         {

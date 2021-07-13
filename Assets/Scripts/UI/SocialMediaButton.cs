@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public enum SocialMediaType
 {
     Homepage,
@@ -15,6 +16,8 @@ public enum SocialMediaType
 
 public class SocialMediaButton : CustomButtonBehaviour
 {
+    public const int SOCIALMEDIA_COUNT = 5;
+
     [SerializeField] SocialMediaTypeSpritePair[] typeSpritePairs;
 
     private string url;

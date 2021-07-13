@@ -185,6 +185,13 @@ public class VendorsHander : SingletonBehaviour<VendorsHander>
         }
     }
 
+    [NaughtyAttributes.Button]
+    private void GenerateTest()
+    {
+        VendorData vd = new VendorData();
+        vd.Links = new VendorLinks();
+        Debug.Log(JsonUtility.ToJson(vd, true));
+    }
 }
 
 public class RuntimeVendorData
@@ -256,16 +263,49 @@ public class VendorData
 {
     public string Name;
     public string Description;
-    public string LinkWebsite;
-    public string LinkFacebook;
-    public string LinkInstagram;
-    public string LinkYouTube;
-    public string LinkPinterest;
-    public string LinkZoom;
+
+    public VendorLinks Links;
 
     public string LogoFile;
     public string MainImageFile;
     public string[] SubImagesFiles;
 
     public string Directory;
+
+    public string GetLink(SocialMediaType type)
+    {
+        switch (type)
+        {
+            case SocialMediaType.Homepage:
+                return Links.Homepage;
+
+            case SocialMediaType.Facebook:
+                return Links.Facebook;
+
+            case SocialMediaType.YouTube:
+                return Links.YouTube;
+
+            case SocialMediaType.Instagram:
+                return Links.Instagram;
+
+            case SocialMediaType.Pinterest:
+                return Links.Pinterest;
+
+            case SocialMediaType.Zoom:
+                return Links.Zoom;
+        }
+
+        return null;
+    }
+}
+
+[System.Serializable]
+public class VendorLinks
+{
+    public string Homepage;
+    public string Facebook;
+    public string YouTube;
+    public string Instagram;
+    public string Pinterest;
+    public string Zoom;
 }

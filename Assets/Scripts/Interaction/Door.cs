@@ -110,7 +110,7 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
     public void OpenURL()
     {
-        string url = IsSetup() ? data.InternalData.LinkWebsite : null;
+        string url = IsSetup() ? data.InternalData.GetLink(SocialMediaType.Homepage) : null;
         GretaUtil.OpenURL(url);
     }
 
