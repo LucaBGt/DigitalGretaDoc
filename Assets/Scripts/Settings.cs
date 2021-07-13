@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Settings : SingletonBehaviour<Settings>
 {
-    const string DEFAULT_USERNAME = "Greta";
+    const string DEFAULT_USERNAME = "Gast";
 
     private GretaSettings generalSettings;
 
@@ -32,7 +32,6 @@ public class Settings : SingletonBehaviour<Settings>
         this.username = username;
     }
 
-
     protected override void Awake()
     {
         base.Awake();
@@ -52,7 +51,18 @@ public class Settings : SingletonBehaviour<Settings>
     }
 
 
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+            Save();
+    }
+
     private void OnDestroy()
+    {
+        Save();
+    }
+
+    private void Save()
     {
         PlayerPrefs.SetString(nameof(username), username);
         PlayerPrefs.SetInt(nameof(userSkin), userSkin);
