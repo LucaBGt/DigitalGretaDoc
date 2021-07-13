@@ -30,6 +30,42 @@ ModelImporter:
   - first:
       74: -2268429608328417406
     second: Plane.002|PlaneAction.001
+  - first:
+      74: -4784464097045040348
+    second: Pants|Plane.001Action
+  - first:
+      74: 8964891884295241495
+    second: Pants|Plane.002Action
+  - first:
+      74: 6012721058247174432
+    second: Pants|Plane.002Action.001
+  - first:
+      74: -404461762055021517
+    second: Pants|PlaneAction.001
+  - first:
+      74: 883602739150968040
+    second: Shirt|Plane.001Action
+  - first:
+      74: -1554248327594634664
+    second: Shirt|Plane.002Action
+  - first:
+      74: 4743574965035709731
+    second: Shirt|Plane.002Action.001
+  - first:
+      74: 2085125164717604913
+    second: Shirt|PlaneAction.001
+  - first:
+      74: -1591629967750052298
+    second: Head|Plane.001Action
+  - first:
+      74: 1518057129092509424
+    second: Head|Plane.002Action
+  - first:
+      74: -3604670013490149045
+    second: Head|Plane.002Action.001
+  - first:
+      74: 3659796836774622212
+    second: Head|PlaneAction.001
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -100,7 +136,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []
