@@ -1,5 +1,7 @@
 
-from flask import Flask, send_from_directory, render_template, request, redirect
+from flask import Flask, send_from_directory, render_template, request, redirect, flash
+#from flask_login import login_user, logout_user, login_required
+#from flask_login import LoginManager
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
@@ -17,22 +19,14 @@ HASH_PATH = os.getenv("VENDOR_HASH_PATH")
 JSON_PATH = os.getenv("VENDOR_JSON_PATH")
 SOURCE_PATH = os.getenv("VENDOR_SOURCE_PATH")
 
+#setup
 app = Flask(__name__)
 CORS(app)
+#login_manager = LoginManager()
+#login_manager.login_view = 'login'
+#login_manager.init_app(app)
+###
 
-def make_tree(path):
-    tree = dict(name=os.path.basename(path), children=[])
-    try: lst = os.listdir(path)
-    except OSError:
-        pass #ignore errors
-    else:
-        for name in lst:
-            fn = os.path.join(path, name)
-            if os.path.isdir(fn):
-                tree['children'].append(make_tree(fn))
-            else:
-                tree['children'].append(dict(name=name))
-    return tree
 
 def make_list(path):
     _list = []
@@ -55,31 +49,25 @@ def read_info(path, folderName):
 
     with open(os.path.join(path,folderName,"info.json")) as f:
         data = json.load(f)
+        
     return data
+
+def save_info(folder, jsonFile):
+    path = join(SOURCE_PATH, folder,"info.json")
+    with open(path,'w') as outfile:
+        json.dump(jsonFile, outfile)
+        print("saved changes to: ", path)
 
 def prepare_info(json, folderName):
 
     json['Folder'] = folderName
-#    json['Links'] = {}
-#
-#    if json['LinkWebsite'] is not None:
-#        json['Links']['Website'] = json['LinkWebsite']
-#
-#    if json['LinkFacebook'] is not None:
-#        json['Links']['Facebook'] = json['LinkFacebook']
-#
-#    if json['LinkInstagram'] is not None:
-#        json['Links']['Instagram'] = json['LinkInstagram']
-#
-#    if json['LinkZoom'] is not None:
-#        json['Links']['Zoom'] = json['LinkZoom']
 
-    return json;
+    return json
 
 def create_link(path, folderName):
     with open(path) as f:
         data = json.load(f)
-        name = data['Name'];
+        name = data['Name']
 
     return dict(Folder=folderName, Name=name)
 
@@ -117,75 +105,120 @@ def process_list_edit_actions(_dict):
 
     return False
 
+def try_delete(folder, fileName):
+    if fileName is None:
+        return
+
+    path = join(SOURCE_PATH, folder,fileName)
+    print ("deleting " + path)
+
+    try:
+        os.remove(path)
+    except FileNotFoundError:
+        print ("FileNotFound: " + path)
+
+def handle_file_upload(jsonFile):
+    image = next(iter(request.files.values()))
+
+    toSplit =next(iter(request.files.keys()))
+
+    folderName, prefix = toSplit.split('/')
+
+    name = prefix + "_" + str(uuid.uuid4())
+
+    table = {
+        "main" : (False,"MainImageFile"),
+        "logo" : (False,"LogoFile"),
+        "sub1" : (True, "SubImagesFiles",0),
+        "sub2" : (True, "SubImagesFiles",1),
+        "sub3" : (True, "SubImagesFiles",2)
+    }
+
+    if prefix in table:
+
+        value = table[prefix]
+        isSub = value[0]
+        jsonKey = value[1]
+
+        if isSub:
+            subIndex = value[2]
+            try_delete(folderName, jsonFile[jsonKey][subIndex])
+            jsonFile[jsonKey][subIndex] = name
+
+        else:
+            try_delete(folderName, jsonFile[jsonKey])
+            jsonFile[jsonKey] = name
+
+
+    save_info(folderName, jsonFile)
+
+    path = join(SOURCE_PATH, folderName, name)
+    image.save(path)
+    print("save image to: " + path)
+
+    return redirect(request.url)
+
+def handle_form_submission(folder, jsonFile):
+    _dict = request.form
+
+    if process_list_edit_actions(_dict):
+
+        print("edited list...")
+
+    elif 'ChangeLink' in _dict.keys():
+
+        for string in _dict.values():
+
+            pair = string.split(',')
+            key = pair[0]
+            value = pair[1]
+
+            print("CHANGED LINK", key, " FROM ", jsonFile["Links"][key], " TO ", value)
+            jsonFile["Links"][key] = value
+
+        save_info(folder, jsonFile)
+
+    else:
+
+        for key in _dict:
+            print("CHANGED ", key, " => \n ", jsonFile[key], "\n TO => \n ", _dict[key])
+            jsonFile[key] = _dict[key]
+
+        save_info(folder, jsonFile)
+            
+
+def is_password_valid(password):
+    return True
+
+
 @app.route('/details', methods=["GET", "POST"])
 def details():
 
     folder = None
 
-    print(request.args)
+    #print(request.args)
 
     if request.args:
         folder = request.args.get("Folder")
 
-    jsonFile = read_info(SOURCE_PATH, folder)
+    try:
+        jsonFile = read_info(SOURCE_PATH, folder)
+    except FileNotFoundError:
+        return redirect("/")
+
 
     if request.method == "POST":
 
-        print("files: ", request.files)
-        print("forms: ", request.form)
+        #print("files: ", request.files)
+        #print("forms: ", request.form)
 
         if request.files:
-
-            values_view =request.files.values()
-            value_iterator = iter(values_view)
-            image = next(value_iterator)
-
-            values_view =request.files.keys()
-            value_iterator = iter(values_view)
-            toSplit = next(value_iterator)
-
-            folderName, prefix = toSplit.split('/')
-
-            #here help ajudame!
-
-            name = prefix + "_" + str(uuid.uuid4())
-
-            path = join(SOURCE_PATH, folderName, name)
-            image.save(path)
-
-            print("save image to: " + path)
-
-            return redirect(request.url)
-
+            return handle_file_upload(jsonFile)
+            
         elif request.form:
+            handle_form_submission(folder, jsonFile)
+            
 
-            _dict = request.form
-
-            if process_list_edit_actions(_dict):
-
-                print("edited list...")
-
-            elif 'ChangeLink' in _dict.keys():
-
-                for string in _dict.values():
-
-                    pair = string.split(',')
-                    key = pair[0]
-                    value = pair[1]
-
-                    print("CHANGED LINK", key, " FROM ", jsonFile["Links"][key], " TO ", value)
-                    jsonFile["Links"][key] = value
-
-            else:
-                for key in _dict:
-
-                    print("CHANGED ", key, " => \n ", jsonFile[key], "\n TO => \n ", _dict[key])
-                    jsonFile[key] = _dict[key]
-
-                path = os.path.join(SOURCE_PATH,folder,"info.json")
-                with open(path,'w') as outfile:
-                    json.dump(jsonFile, outfile)
-                    print("saved changes to: ", path)
 
     info = prepare_info(jsonFile, folder)
     #print("")
@@ -193,7 +226,6 @@ def details():
 
     return render_template('details.html', list=make_list(SOURCE_PATH), detail=info)
         
-
 @app.route('/', methods=["GET", "POST"])
 def index():
 
@@ -212,12 +244,6 @@ def index():
             process_list_edit_actions(_dict);
             
     return render_template('index.html', list=make_list(SOURCE_PATH))
-
-
-@app.route('/tree')
-def dirtree():
-    path = os.path.expanduser(u'~')
-    return render_template('dirtree.html', tree=make_tree(SOURCE_PATH))
 
 
 @app.route("/vendor_hash",methods = ['GET'])
