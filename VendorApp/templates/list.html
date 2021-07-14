@@ -20,38 +20,49 @@
 </div>
 -->
 <h3>Aussteller</h3>
-<ul class="list-group my-1">
-{%- for item in list %}
- <li class="list-group-item">
-	<div class="row editable">
-		<div class="col-auto">
-			<button type="button" class="btn btn-primary edit" data-bs-toggle="modal">
-				<i class="icon-pencil symbol-white" title="bearbeiten"></i>
-			</button>
+<div class="list-group">
+
+	{%- for item in list %}
+
+{% if detail and detail.Folder == item.Folder %}
+    <a class="list-group-item list-group-item-action active" aria-current="true" href="/details?Folder={{ item.Folder }}">
+{% else %}
+    <a class="list-group-item list-group-item-action" href="/details?Folder={{ item.Folder }}">
+{% endif %}
+		<div class="row editable">
+			<div class="col-auto">
+				<button type="button" class="btn btn-primary edit" data-bs-toggle="modal">
+					<i class="icon-pencil symbol-white" title="bearbeiten"></i>
+				</button>
+			</div>
+			<div class="col">
+				<h4>{{ item.Name }}</h4>
+			</div>
+			<div class="col-auto">
+				<form method="POST">
+					<input type="hidden" name="Clear" value="{{ item.Folder }}">
+					<button type="submit" class="btn btn-danger edit"><i class="icon-trash"></i></button>
+				</form>
+			</div>
 		</div>
-		<div class="col">
-			<a href="/details?Folder={{ item.Folder }}"><h4>{{ item.Name }}</h4></a>
-		</div>
-		<div class="col-auto">
-			<form method="POST">
-				<input type="hidden" name="Clear" value="{{ item.Folder }}">
-				<button type="submit" class="btn btn-danger edit"><i class="icon-trash"></i></button>
-			</form>
-		</div>
-	</div>
-</li>
-{%- endfor %}
- <li class="list-group-item">
-<div class="row justify-content-md-center">
-	<div class="col-auto">
-		<form method="POST" class="my-1">
-			<input type="hidden" name="NewVendor">
-			<button type="submit" class="btn btn-primary"><i class="icon-plus"></i> Neuer Aussteller</button>
-		</form>
-	</div>
+	</a>
+
+	{%- endfor %}
+
+	<form method="POST">
+		<input type="hidden" name="NewVendor">
+		<button type="submit" class="list-group-item list-group-item-action list-group-item-success">
+			<div class="row">
+				<div class="col-auto ps-5">	
+					<i class="icon-plus align-self-center"></i>
+				</div>
+				<div class="col">	
+					<h5 class="align-self-center">Neuer Aussteller</h5>
+				</div>
+			</div>
+		</button>
+	</form>
 </div>
-</li>
-</ul>
 
 <div class="row my-5">
 

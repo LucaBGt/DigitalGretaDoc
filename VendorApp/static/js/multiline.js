@@ -1,6 +1,9 @@
 $(document).ready(function() {
 	$("#textarea").on('keyup',function(e) {
-	    $("#hidden").val($(this).val()); //store content to input[type=hidden]
+		let text = $(this).val();
+		$("#wordcount").html(text.length + " / 600");
+		console.log(text.length);
+	    $("#hidden").val(text); //store content to input[type=hidden]
 	});
 
 	$("#linkValue").on('keyup',function(e) {

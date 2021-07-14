@@ -82,8 +82,6 @@
 				</div>
 			</div>
 
-			<hr/>
-
 			<!--
 			EDIT DESCRIPTION MODAL
 			-->
@@ -98,7 +96,7 @@
 			        				<h5 class="modal-title" id="editDescriptionModalLabel">Beschreibung bearbeiten</h5>
 			        			</div>
 			        			<div class=" col-auto">
-			        				<span class="badge bg-primary rounded-pill">14</span>
+			        				<span class="badge bg-primary rounded-pill" id="wordcount"></span>
 			        			</div>
 			        		</div>
 			        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -122,23 +120,23 @@
 			-->
 
 			<div class="row">
-				<div class="col editable">
-					<h4>Logo Picture</h4>
-					<div class="row my-2">
-						<div class="col">
-							<p class="fs-6">
-								höhe: 256 - 512 px<br>
-								breite: -/-<br>
-								<strong>nie höher als breit</strong>
-							</p>
-						</div>
-						<div class="col">
-							<img class="logoImage" src = "get/{{ detail.Folder + '_' +  detail.LogoFile }}" style="height: 150px; width: auto;">
-						</div>
-						<div class="col">
-							<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/logo">
-								<i class="icon-pencil symbol-white" title="bearbeiten"></i>
-							</button>
+				<div class="col editable card m-1" style="height: 16vh; overflow: hidden;">
+					<img src = "get/{{ detail.Folder + '_' +  detail.LogoFile }}" style="width: 100%; height: 15vw; object-fit: contain;">
+					  <div class="card-img-overlay">
+					  	<div class="row">
+					  		<div class="col">
+							  	<h4>Logo Picture</h4>
+							  	<p class="fs-6">
+									höhe: 256 - 512 px<br>
+									breite: -/-<br>
+									<strong>nie höher als breit</strong>
+								</p>
+							</div>
+							<div class="col-auto">
+							    <button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/logo">
+									<i class="icon-pencil symbol-white" title="bearbeiten"></i>
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -147,23 +145,23 @@
 				MAIN IMAGE
 				-->
 
-				<div class="col editable">
-					<h4>Main Image</h4>
-					<div class="row my-2">
-						<div class="col">
-							<p class="fs-6">
-								höhe: 480 - 1080 px<br>
-								breite: 640 - 1920px<br>
-								<strong>4/3 bis 16/9</strong>
-							</p>
-						</div>
-						<div class="col">
-							<img class="mainImage" src = "get/{{ detail.Folder + '_' +  detail.MainImageFile }}" style="height: 150px; width: auto;">
-						</div>
-						<div class="col">
-							<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/main">
-								<i class="icon-pencil symbol-white" title="bearbeiten"></i>
-							</button>
+				<div class="col editable card m-1" style="height: 16vh; overflow: hidden;">
+					<img src = "get/{{ detail.Folder + '_' +  detail.MainImageFile }}" style="width: 100%; height: 15vw; object-fit: cover;">
+					  <div class="card-img-overlay">
+					  	<div class="row">
+					  		<div class="col">
+							  	<h4>Main Image</h4>
+							  	<p class="fs-6">
+										höhe: 480 - 1080 px<br>
+										breite: 640 - 1920px<br>
+										<strong>4/3 bis 16/9</strong>
+								</p>
+							</div>
+							<div class="col-auto">
+							    <button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/main">
+									<i class="icon-pencil symbol-white" title="bearbeiten"></i>
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -186,17 +184,13 @@
 
 				{%- for image in detail.SubImagesFiles %}
 
-				<div class="col editable">
-					<div class="row my-2">
-						<div class="col-auto">
-							<img class="mainImage" src = "get/{{ detail.Folder + '_' +  image }}" style="height: 100px; width: auto;">
-						</div>
-						<div class="col">
-							<button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/sub{{ loop.index }}">
-								<i class="icon-pencil symbol-white" title="bearbeiten"></i>
-							</button>
-						</div>
-					</div>
+				<div class="col card editable m-1" style="height: 12vh; overflow: hidden;">
+				  <img src = "get/{{ detail.Folder + '_' +  image }}" class="card-img" style="width: 100%; height: 15vw; object-fit: cover;">
+				  <div class="card-img-overlay">
+				    <button type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#uploadImagesModal" data-bs-whatever="{{ detail.Folder }}/sub{{ loop.index }}">
+						<i class="icon-pencil symbol-white" title="bearbeiten"></i>
+					</button>
+				  </div>
 				</div>
 
 				{%- endfor %}
