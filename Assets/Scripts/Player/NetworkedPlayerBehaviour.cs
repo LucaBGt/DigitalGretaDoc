@@ -24,7 +24,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
     public event System.Action<PlayerState> PlayerStateChanged;
 
     [SyncVar(hook = nameof(SyncVarHook_SkinChanged))]
-    private int sv_skinID;
+    private int sv_skinID = -1;
     [SyncVar(hook = nameof(SyncVarHook_UsernameChanged))]
     private string sv_username;
 

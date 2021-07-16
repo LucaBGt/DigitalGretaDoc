@@ -309,20 +309,20 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
             Destroy(currentVisuals);
         GameObject prefab = null;
 
-        if (_playerPrefabId < Settings.Instance.SkinsCount && _playerPrefabId > 0)
+        if (_playerPrefabId < Settings.Instance.SkinsCount && _playerPrefabId >= 0)
         {
             prefab = Settings.Instance.VisualPrefabs[_playerPrefabId];
         }
         else
         {
-            Debug.LogWarning("Passed skinID not present in this version. Selecting default");
+            Debug.LogWarning($"Passed skinID {_playerPrefabId} not present in this version. Selecting default");
             prefab = Settings.Instance.VisualPrefabs[0];
         }
 
         currentVisuals = Instantiate(prefab , parent);
         currentVisuals.transform.localPosition = Vector3.zero;
         currentVisuals.transform.localRotation = Quaternion.identity;
-        //rehook animator
+        Debug.Log("setup visuals: " + currentVisuals.name);
 
     }
 
