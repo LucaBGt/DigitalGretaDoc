@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
 	$("#textarea").on('keyup',function(e) {
 		let text = $(this).val();
 		$("#wordcount").html(text.length + " / 600");
@@ -6,9 +7,13 @@ $(document).ready(function() {
 	    $("#hidden").val(text); //store content to input[type=hidden]
 	});
 
-	$("#linkValue").on('keyup',function(e) {
+
+	
+	$(".linkValue").on('keyup',function(e) {
 		console.log($(this).val());
-	    $("#changeLink").val($("#linkType").val() + "," + $(this).val()); //store content to input[type=hidden]
+		let parent = $(this).parent();
+		console.log($(parent));
+	    $(parent).find(".changeLink").val($(parent).find(".linkType").val() + "," + $(this).val()); //store content to input[type=hidden]
 	});
 
 	//optional - one line but wrap it
