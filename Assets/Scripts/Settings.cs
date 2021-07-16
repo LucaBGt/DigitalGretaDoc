@@ -12,14 +12,14 @@ public class Settings : SingletonBehaviour<Settings>
     private int userSkin;
     private float volume;
 
-    public int UserSkinID => userSkin;
+    public int UserSkinID => Mathf.Clamp(userSkin, 0, generalSettings.VisualsPrefab.Length - 1);
     public string Username => username;
 
     public float MasterVolume => volume;
 
     public int SkinsCount => generalSettings.Skins.Length;
-    public Texture2D[] Skins => generalSettings.Skins;
-    public Material[] SkinsMaterials => generalSettings.SkinsMaterials;
+    public Sprite[] Skins => generalSettings.Skins;
+    public GameObject[] VisualPrefabs => generalSettings.VisualsPrefab;
 
     public int ChangeSkinID(int id)
     {

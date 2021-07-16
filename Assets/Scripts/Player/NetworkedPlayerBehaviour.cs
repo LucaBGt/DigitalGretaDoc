@@ -13,13 +13,13 @@ public interface IPlayerBehaviour
 public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
 {
     [SerializeField] GameObject onDestroyEffect;
-    [SerializeField] GameObject playerVisualsObject;
+    [SerializeField] PlayerAnimationHandler animationHandler;
 
     [Header("Player Name")]
     [SerializeField] TextMeshPro playerNameText;
-    [SerializeField] Renderer playerSkin;
 
     Camera cam;
+    GameObject currentVisuals;
 
     public event System.Action<PlayerState> PlayerStateChanged;
 
@@ -61,16 +61,19 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
 
     private void SyncVarHook_SkinChanged(int _oldID, int _newID)
     {
-        Debug.Log(nameof(SyncVarHook_SkinChanged));
+        //Debug.Log(nameof(SyncVarHook_SkinChanged));
         if (!isLocalPlayer)
-            LocalPlayerBehaviour.SetupLocalPlayerVisuals(playerNameText, playerSkin, sv_username, _newID);
+        {
+            LocalPlayerBehaviour.SetupLocalPlayerVisuals(ref currentVisuals, transform, _newID);
+            animationHandler.ReselectAnimator();
+        }
     }
 
     private void SyncVarHook_UsernameChanged(string _oldname, string _newname)
     {
-        Debug.Log(nameof(SyncVarHook_UsernameChanged));
+        //Debug.Log(nameof(SyncVarHook_UsernameChanged));
         if (!isLocalPlayer)
-            LocalPlayerBehaviour.SetupLocalPlayerVisuals(playerNameText, playerSkin, _newname, sv_skinID);
+            playerNameText.text = _newname;
     }
 
 
@@ -80,9 +83,8 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
 
         LocalPlayerBehaviour.Instance.PlayerStateChanged += OnLocalChangePlayerState;
 
-        Destroy(playerVisualsObject);
         Destroy(GetComponent<PlayerAnimationHandler>());
-        Destroy(GetComponent<Animator>());
+        Destroy(playerNameText.gameObject);
     }
 
     private void OnDestroy()

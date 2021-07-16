@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class PlayerAnimationHandler : MonoBehaviour
 {
     private static readonly int ANIM_Walk = Animator.StringToHash("Walk");
-    private static readonly int ANIM_Idle = Animator.StringToHash("Idle");
 
     [SerializeField] IPlayerBehaviour player;
 
@@ -15,7 +13,7 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        animator = GetComponent<Animator>();
+        ReselectAnimator();
         player = GetComponent<IPlayerBehaviour>();
         player.PlayerStateChanged += ChangePlayerState;
     }
@@ -26,6 +24,11 @@ public class PlayerAnimationHandler : MonoBehaviour
             player.PlayerStateChanged -= ChangePlayerState;
     }
 
+    public void ReselectAnimator()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
+
     private void ChangePlayerState(PlayerState state)
     {
         if (animator == null)
@@ -34,11 +37,11 @@ public class PlayerAnimationHandler : MonoBehaviour
         switch (state)
         {
             case PlayerState.Walking:
-                animator.SetTrigger(ANIM_Walk);
+                animator.SetBool(ANIM_Walk, true);
                 break;
 
             default:
-                animator.SetTrigger(ANIM_Idle);
+                animator.SetBool(ANIM_Walk, false);
                 break;
         }
     }

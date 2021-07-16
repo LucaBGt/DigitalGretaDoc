@@ -7,7 +7,7 @@ public class GretaSettings : ScriptableObject
 {
     [NaughtyAttributes.InfoBox("This should always be: Resources/Settings", NaughtyAttributes.EInfoBoxType.Warning)]
 
-    public Texture2D[] Skins;
-    public Material[] SkinsMaterials;
+    public Sprite[] Skins;
+    public GameObject[] VisualsPrefab;
 
 }

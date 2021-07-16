@@ -20,8 +20,7 @@ public enum PlayerState
 public enum PerspectiveMode
 {
     FirstPerson,
-    ThirdPerson,
-    OrthoCam
+    ThirdPerson
 }
 
 [DefaultExecutionOrder(-100)]
@@ -29,9 +28,11 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
 {
     [SerializeField] NavMeshAgent agent;
 
-    [SerializeField] GameObject firstPersonCam, thirdPersonCam, orthoPersonCam;
+    [SerializeField] GameObject firstPersonCam, thirdPersonCam;
 
     [SerializeField] GameObject targetPreviewPrefab;
+    [SerializeField] PlayerAnimationHandler animationHandler;
+
 
     [SerializeField] LayerMask raycastLayer;
     [SerializeField] float raycastMaxDistance;
@@ -41,7 +42,6 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
 
     [Header("Player Name")]
     [SerializeField] TextMeshPro playerNameText;
-    [SerializeField] Renderer playerSkin;
 
     PlayerState internal_State;
     PerspectiveMode perspective = PerspectiveMode.ThirdPerson;
@@ -50,6 +50,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
 
     new Camera camera;
     float turnInput;
+    GameObject currentVisuals;
 
     public event Action<PlayerState> PlayerStateChanged;
 
@@ -68,14 +69,15 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
         camera = Camera.main;
         targetPreview = Instantiate(targetPreviewPrefab);
         targetPreview.SetActive(false);
-        orthoPersonCam.transform.parent = null;
         UpdateCameras();
         UIHandler.Instance.ReturnedToGame += OnReturnedToGame;
     }
 
     private void OnReturnedToGame()
     {
-        SetupLocalPlayerVisuals(playerNameText, playerSkin, Settings.Instance.Username, Settings.Instance.UserSkinID);
+        playerNameText.text = Settings.Instance.Username;
+        SetupLocalPlayerVisuals(ref currentVisuals, transform, Settings.Instance.UserSkinID);
+        animationHandler.ReselectAnimator();
     }
 
     private void OnDestroy()
@@ -213,7 +215,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
 
     public void TogglePerspective()
     {
-        perspective = (PerspectiveMode)((((int)perspective) + 1) % 3);
+        perspective = (PerspectiveMode)((((int)perspective) + 1) % 2);
 
         UpdateCameras();
     }
@@ -222,7 +224,6 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
     {
         firstPersonCam.SetActive(perspective == PerspectiveMode.FirstPerson);
         thirdPersonCam.SetActive(perspective == PerspectiveMode.ThirdPerson);
-        orthoPersonCam.SetActive(perspective == PerspectiveMode.OrthoCam);
     }
 
     private void FixedUpdate()
@@ -302,19 +303,27 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
         return NormalizedAngleRange(offset);
     }
 
-    public static void SetupLocalPlayerVisuals(TextMeshPro _playerNameText, Renderer _playerSkin, string _name, int _skinId)
+    public static void SetupLocalPlayerVisuals( ref GameObject currentVisuals, Transform parent, int _playerPrefabId)
     {
-        _playerNameText.text = _name;
+        if (currentVisuals != null)
+            Destroy(currentVisuals);
+        GameObject prefab = null;
 
-        if (_skinId < Settings.Instance.SkinsCount)
+        if (_playerPrefabId < Settings.Instance.SkinsCount && _playerPrefabId > 0)
         {
-            _playerSkin.sharedMaterial = Settings.Instance.SkinsMaterials[_skinId];
+            prefab = Settings.Instance.VisualPrefabs[_playerPrefabId];
         }
         else
         {
             Debug.LogWarning("Passed skinID not present in this version. Selecting default");
-            _playerSkin.sharedMaterial = Settings.Instance.SkinsMaterials[0];
+            prefab = Settings.Instance.VisualPrefabs[0];
         }
+
+        currentVisuals = Instantiate(prefab , parent);
+        currentVisuals.transform.localPosition = Vector3.zero;
+        currentVisuals.transform.localRotation = Quaternion.identity;
+        //rehook animator
+
     }
 
 }

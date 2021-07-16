@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CharacterSelection : MonoBehaviour
 {
     [SerializeField] UIHandler uiHandler;
-    [SerializeField] RawImage characterTexture;
+    [SerializeField] Image characterTexture;
     [SerializeField] TMPro.TMP_InputField usernameInputField;
     int currentSkin;
 
@@ -23,7 +23,7 @@ public class CharacterSelection : MonoBehaviour
 
     private void UpdateVisuals()
     {
-        characterTexture.texture = settings.Skins[currentSkin];
+        characterTexture.sprite = settings.Skins[currentSkin];
     }
 
     public void ChangeCharacterRight()

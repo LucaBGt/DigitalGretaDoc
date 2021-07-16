@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Settings
   m_EditorClassIdentifier: 
   Skins:
-  - {fileID: 2800000, guid: 1fa6ad83d3eb2c340aca5cca836fe93e, type: 3}
-  - {fileID: 2800000, guid: 7361b01f18b1da24a99373410f1e0acd, type: 3}
-  - {fileID: 2800000, guid: 100705ef54a406b4484f1b026f7ab046, type: 3}
-  SkinsMaterials:
-  - {fileID: 2100000, guid: 9b04fe99c25ce334e9163ec50089a7f7, type: 2}
-  - {fileID: 2100000, guid: 9b7b8c134f078c844b8f37ef4efdf85b, type: 2}
-  - {fileID: 2100000, guid: 59e9b9f23d7c8634c8ea1b7c9ca639c1, type: 2}
+  - {fileID: -8185052856979080653, guid: 9fbd44782743846a3a976dd5bcbd951b, type: 3}
+  - {fileID: 8719988194526102781, guid: 0e56aa390b37d4b8dab130112af04475, type: 3}
+  VisualsPrefab:
+  - {fileID: 2686399510475415124, guid: f702d0e56170e4f179d60c0224364dbd, type: 3}
+  - {fileID: 16971152711142172, guid: 0da7c8f89c218462e873978436826101, type: 3}
