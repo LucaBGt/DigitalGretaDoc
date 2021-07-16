@@ -1,38 +1,59 @@
 fileFormatVersion: 2
-guid: b03bc46c5c2e94af68bde8ed0af7add4
+guid: c4cf41969b6b5410d94c51d5416291b0
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: 2418431585831821929
-    second: Plane|Plane.001Action
+      74: -675539586928324132
+    second: Armature|Armature
   - first:
-      74: -3201207233082399036
-    second: Plane|Plane.002Action
+      74: 4743084820616853705
+    second: Armature|CameraAction
   - first:
-      74: -7218490717262395308
-    second: Plane|PlaneAction.001
+      74: -3515513834397474805
+    second: Armature|HeadAction
   - first:
-      74: -2858551162337178960
-    second: Plane.001|Plane.001Action
+      74: -8434355280063164500
+    second: Armature|Plane.002Action
   - first:
-      74: 6855588529536243965
-    second: Plane.001|Plane.002Action
+      74: 9179888607658821283
+    second: Armature|Plane.002Action.001
   - first:
-      74: 4020719003613406083
-    second: Plane.001|PlaneAction.001
+      74: 2920023865792766560
+    second: Armature|PlaneAction
   - first:
-      74: 4910038636033323727
-    second: Plane.002|Plane.001Action
+      74: -3722548421079296135
+    second: Armature|PlaneAction.001
   - first:
-      74: -1177906569688301896
-    second: Plane.002|Plane.002Action
+      74: 3188179081554864017
+    second: Armature|PlaneAction.002
   - first:
-      74: -2268429608328417406
-    second: Plane.002|PlaneAction.001
+      74: 8440248360967096626
+    second: Camera|CameraAction
   - first:
-      74: -4784464097045040348
-    second: Pants|Plane.001Action
+      74: -6402990525649277420
+    second: Camera|HeadAction
+  - first:
+      74: 2635359509988710922
+    second: Camera|Plane.002Action
+  - first:
+      74: 6635711865944940851
+    second: Camera|Plane.002Action.001
+  - first:
+      74: 735782386219177548
+    second: Camera|PlaneAction
+  - first:
+      74: 3900010758969184820
+    second: Camera|PlaneAction.001
+  - first:
+      74: -5021770621962308807
+    second: Camera|PlaneAction.002
+  - first:
+      74: -1747628548768773068
+    second: Pants|CameraAction
+  - first:
+      74: -1768116051389714182
+    second: Pants|HeadAction
   - first:
       74: 8964891884295241495
     second: Pants|Plane.002Action
@@ -40,23 +61,20 @@ ModelImporter:
       74: 6012721058247174432
     second: Pants|Plane.002Action.001
   - first:
+      74: 6240594063030767438
+    second: Pants|PlaneAction
+  - first:
       74: -404461762055021517
     second: Pants|PlaneAction.001
   - first:
-      74: 883602739150968040
-    second: Shirt|Plane.001Action
+      74: 4630378209447240719
+    second: Pants|PlaneAction.002
   - first:
-      74: -1554248327594634664
-    second: Shirt|Plane.002Action
+      74: -6256770227974963447
+    second: Head|CameraAction
   - first:
-      74: 4743574965035709731
-    second: Shirt|Plane.002Action.001
-  - first:
-      74: 2085125164717604913
-    second: Shirt|PlaneAction.001
-  - first:
-      74: -1591629967750052298
-    second: Head|Plane.001Action
+      74: 8999604976272010351
+    second: Head|HeadAction
   - first:
       74: 1518057129092509424
     second: Head|Plane.002Action
@@ -64,9 +82,56 @@ ModelImporter:
       74: -3604670013490149045
     second: Head|Plane.002Action.001
   - first:
+      74: 4372995740875698448
+    second: Head|PlaneAction
+  - first:
       74: 3659796836774622212
     second: Head|PlaneAction.001
-  externalObjects: {}
+  - first:
+      74: 36052985249995693
+    second: Head|PlaneAction.002
+  - first:
+      74: 3241284955432955543
+    second: Shirt|CameraAction
+  - first:
+      74: 516355982204776474
+    second: Shirt|HeadAction
+  - first:
+      74: -1554248327594634664
+    second: Shirt|Plane.002Action
+  - first:
+      74: 4743574965035709731
+    second: Shirt|Plane.002Action.001
+  - first:
+      74: -6288082010546979652
+    second: Shirt|PlaneAction
+  - first:
+      74: 2085125164717604913
+    second: Shirt|PlaneAction.001
+  - first:
+      74: 2126993073997493431
+    second: Shirt|PlaneAction.002
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catman_Face
+    second: {fileID: 2100000, guid: cccaf9cf93bc540b2bcb75f45e7fa82a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catman_Pants
+    second: {fileID: 2100000, guid: d3005c08e546c460bbce96a86da9b429, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catman_Shirt
+    second: {fileID: 2100000, guid: 0ee6236448dbf4c5686dd963afd52ce1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paper
+    second: {fileID: 2100000, guid: 345f5ce3859ed46dfb0bd49db58fc593, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -153,11 +218,11 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 275ab53bfc02e4f61b44fd0e1ca03db4, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   additionalBone: 0
   userData: 
