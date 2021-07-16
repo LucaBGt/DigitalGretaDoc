@@ -293,6 +293,9 @@ public class VendorData
 
             case SocialMediaType.Zoom:
                 return Links.Zoom;
+
+            case SocialMediaType.Etsy:
+                return Links.Etsy;
         }
 
         return null;
@@ -308,4 +311,5 @@ public class VendorLinks
     public string Instagram;
     public string Pinterest;
     public string Zoom;
+    public string Etsy;
 }

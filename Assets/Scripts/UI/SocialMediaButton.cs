@@ -11,12 +11,13 @@ public enum SocialMediaType
     YouTube,
     Instagram,
     Pinterest,
-    Zoom,
+    Etsy,
+    Zoom
 }
 
 public class SocialMediaButton : CustomButtonBehaviour
 {
-    public const int SOCIALMEDIA_COUNT = 5;
+    public const int SOCIALMEDIA_COUNT = 6;
 
     [SerializeField] SocialMediaTypeSpritePair[] typeSpritePairs;
 

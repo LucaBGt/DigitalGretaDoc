@@ -104,6 +104,8 @@ MonoBehaviour:
   - Type: 4
     Sprite: {fileID: 21300000, guid: 9018cc1fd51880f48996fa4ba9aa866e, type: 3}
   - Type: 5
+    Sprite: {fileID: 21300000, guid: 28f9460a5b59a1148a14090b2e1eb6ff, type: 3}
+  - Type: 6
     Sprite: {fileID: 21300000, guid: df047c1aafa25df49a18a47e6cb3fb46, type: 3}
 --- !u!114 &2600028465828607153
 MonoBehaviour:
