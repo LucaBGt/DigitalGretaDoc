@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class DoorsInitializer : MonoBehaviour
 {
@@ -11,18 +12,18 @@ public class DoorsInitializer : MonoBehaviour
 
     private void Start()
     {
-        doors = FindObjectsOfType<Door>();
-
         VendorsHander.Instance.Ready += OnVendorsHandlerReady;
-
     }
 
     private void OnVendorsHandlerReady()
     {
+        doors = FindObjectsOfType<Door>();
+        doors = doors.OrderBy((d) => d.ID).ToArray();
+
         int count = VendorsHander.Instance.VendorsCount;
         Debug.Log($"DoorsInitializer: Setting up {doors.Length} doors with {count} vendors.");
 
-        if(count <= 0)
+        if (count <= 0)
         {
             Debug.LogError("No vendors present. Cannot setup doors correctly");
             return;

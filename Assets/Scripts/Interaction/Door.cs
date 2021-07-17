@@ -9,6 +9,8 @@ public class Door : MonoBehaviour, ICancallableInteractable
 {
     private static readonly int ANIM_OpenDoor = Animator.StringToHash("OpenDoor");
 
+    [SerializeField] int doorID;
+
     [SerializeField] Transform goalPosition;
 
     [SerializeField] CinemachineVirtualCamera vcam;
@@ -28,6 +30,8 @@ public class Door : MonoBehaviour, ICancallableInteractable
     public string CompanyName => IsSetup() ? data.InternalData.Name : "NULL";
     public string CompanyDescription => IsSetup() ? data.InternalData.Description : "NULL";
     public TextureRequest Logo => IsSetup() ? data.Logo : null;
+
+    public int ID => doorID;
 
     private void Start()
     {
