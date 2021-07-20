@@ -20,6 +20,7 @@ public class GretaNetworkManager : NetworkManager
     [SerializeField] float reconnectDelay;
 
     private int connectionAttemptCounter = 0;
+    private InternalState internalState = InternalState.Initializing;
 
     public event System.Action<GretaConnectionState> ConnectionStateChanged;
 
@@ -51,14 +52,30 @@ public class GretaNetworkManager : NetworkManager
 #else
 
         ConnectionStateChanged += OnConnectionStateChanged;
+        internalState = InternalState.Ready;
+#endif
 
-        #endif
+    }
 
+    private void OnApplicationPause(bool pause)
+    {
+        if (internalState != InternalState.Active) return;
+
+        if (pause)
+        {
+            StopClient();
+            StopAllCoroutines();
+        }
+        else
+        {
+            connectionAttemptCounter = 0;
+            GretaJoin();
+        }
     }
 
     private void OnConnectionStateChanged(GretaConnectionState state)
     {
-        if(state == GretaConnectionState.Disconnected)
+        if (state == GretaConnectionState.Disconnected)
         {
             if (connectionAttemptCounter >= 3)
             {
@@ -90,6 +107,7 @@ public class GretaNetworkManager : NetworkManager
         connectionAttemptCounter++;
         ConnectionStateChanged?.Invoke(GretaConnectionState.AttemptConnection);
         StartClient();
+        internalState = InternalState.Active;
     }
 
 
@@ -98,7 +116,7 @@ public class GretaNetworkManager : NetworkManager
         base.OnServerDisconnect(conn);
 
         //in case of testing with local host
-            //ConnectionStateChanged?.Invoke(GretaConnectionState.Disconnected);
+        //ConnectionStateChanged?.Invoke(GretaConnectionState.Disconnected);
     }
 
     public override void OnClientConnect(NetworkConnection conn)
@@ -111,8 +129,15 @@ public class GretaNetworkManager : NetworkManager
     public override void OnClientDisconnect(NetworkConnection conn)
     {
         base.OnClientDisconnect(conn);
-        
+
         Debug.Log("Disconnected / Connection Failed");
         ConnectionStateChanged?.Invoke(GretaConnectionState.Disconnected);
+    }
+
+    public enum InternalState
+    {
+        Initializing,
+        Ready,
+        Active
     }
 }

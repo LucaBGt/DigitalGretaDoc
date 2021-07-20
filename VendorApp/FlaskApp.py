@@ -90,7 +90,7 @@ def process_list_edit_actions(_dict):
     elif 'Rebuild' in _dict.keys():
 
         print("rebuilding...")
-        DataCollector.generate_data_json(True)
+        DataCollector.generate_data_json(False)
 
         return True
 
