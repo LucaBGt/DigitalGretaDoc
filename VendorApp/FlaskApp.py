@@ -169,7 +169,14 @@ def handle_form_submission(folder, jsonFile):
 
         for string in _dict.values():
 
+            if not string:
+                return;                
+
             pair = string.split(',')
+
+            if len(pair ) != 2:
+                return;
+
             key = pair[0]
             value = pair[1]
 

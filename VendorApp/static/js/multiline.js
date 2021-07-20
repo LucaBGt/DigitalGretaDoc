@@ -9,10 +9,8 @@ $(document).ready(function() {
 
 
 	
-	$(".linkValue").on('keyup',function(e) {
-		console.log($(this).val());
+	$(".linkValue").on('input',function(e) {
 		let parent = $(this).parent();
-		console.log($(parent));
 	    $(parent).find(".changeLink").val($(parent).find(".linkType").val() + "," + $(this).val()); //store content to input[type=hidden]
 	});
 
