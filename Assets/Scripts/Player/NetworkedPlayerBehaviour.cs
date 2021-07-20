@@ -23,6 +23,8 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
 
     public event System.Action<PlayerState> PlayerStateChanged;
 
+
+    [SyncVar(hook = nameof(SyncVarHook_SkinChanged))]
     private int sv_skinID = -1;
     [SyncVar(hook = nameof(SyncVarHook_UsernameChanged))]
     private string sv_username;
@@ -56,17 +58,6 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
         // player info sent to server, then server updates sync vars which handles it on all clients
         sv_skinID = skinId;
         sv_username = _name;
-        RPC_SetupRemotePlayer();
-    }
-
-    [ClientRpc]
-    private void RPC_SetupRemotePlayer()
-    {
-        if (!isLocalPlayer)
-        {
-            LocalPlayerBehaviour.SetupLocalPlayerVisuals(ref currentVisuals, transform, sv_skinID);
-            animationHandler.ReselectAnimator();
-        }
     }
 
     private void SyncVarHook_UsernameChanged(string _oldname, string _newname)
@@ -76,6 +67,15 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
             playerNameText.text = _newname;
     }
 
+    private void SyncVarHook_SkinChanged(int _oldId, int _newID)
+    {
+        Debug.Log(name + " skin changed to " + _newID);
+        if (!isLocalPlayer)
+        {
+            LocalPlayerBehaviour.SetupLocalPlayerVisuals(ref currentVisuals, transform, sv_skinID);
+            animationHandler.ReselectAnimator();
+        }
+    }
 
     public override void OnStartLocalPlayer()
     {
