@@ -19,6 +19,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
     [SerializeField] TextMeshPro playerNameText;
 
     Camera cam;
+    bool localPlayerStarted = false;
     GameObject currentVisuals;
 
     public event System.Action<PlayerState> PlayerStateChanged;
@@ -70,7 +71,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
     private void SyncVarHook_SkinChanged(int _oldId, int _newID)
     {
         Debug.Log(name + " skin changed to " + _newID);
-        if (!isLocalPlayer)
+        if (!isLocalPlayer && !localPlayerStarted)
         {
             LocalPlayerBehaviour.SetupLocalPlayerVisuals(ref currentVisuals, transform, sv_skinID);
             animationHandler.ReselectAnimator();
@@ -80,6 +81,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
     public override void OnStartLocalPlayer()
     {
         Debug.Log("OnStartLocalPlayer");
+        localPlayerStarted = true;
         CMD_SetupRemotePlayer(Settings.Instance.Username, Settings.Instance.UserSkinID);
 
         LocalPlayerBehaviour.Instance.PlayerStateChanged += OnLocalChangePlayerState;
