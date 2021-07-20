@@ -38,6 +38,11 @@ public class JenkinsBuild
         PlayerSettings.keyaliasPass = "dyfhL9Zv2HACgX2r";
         PlayerSettings.keystorePass = "dyfhL9Zv2HACgX2r";
 
+        var delta = System.DateTime.Now - new System.DateTime(2020, 07, 20, 9, 0, 0);
+        int code = Mathf.Clamp(delta.Hours, 0, 100000);
+
+        PlayerSettings.Android.bundleVersionCode = code;
+
         string fullPathAndName = args.targetDir;
         BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.Android, BuildTarget.Android, BuildOptions.None);
     }
