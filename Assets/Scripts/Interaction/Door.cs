@@ -77,6 +77,9 @@ public class Door : MonoBehaviour, ICancallableInteractable
             Material newMaterial = new Material(logoMeshRenderer.material);
             newMaterial.mainTexture = logo.Texture;
             logoMeshRenderer.material = newMaterial;
+
+            float height = ((float)logo.Texture.height / (float)logo.Texture.width) * logoMeshRenderer.transform.localScale.x;
+            logoMeshRenderer.transform.localScale = new Vector3(logoMeshRenderer.transform.localScale.x, 1, height);
         }
         else
         {
