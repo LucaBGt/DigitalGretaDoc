@@ -2600,6 +2600,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lantern (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 752343530658410956, guid: 9d4b2280b39874d27a65eeb6518ba8b4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d4b2280b39874d27a65eeb6518ba8b4, type: 3}
 --- !u!4 &170414095 stripped
@@ -27308,6 +27312,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flags (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2028601493265125109, guid: 58dff1a346fbb48d18e40894aa7cb0b1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58dff1a346fbb48d18e40894aa7cb0b1, type: 3}
 --- !u!4 &1384481758 stripped
@@ -35097,6 +35105,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2142018170}
     m_Modifications:
+    - target: {fileID: 2365700393953556076, guid: 4770083d9147746f0b6793a22991715c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3503672029478227203, guid: 4770083d9147746f0b6793a22991715c, type: 3}
       propertyPath: m_RootOrder
       value: 16
@@ -41838,6 +41850,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 1cbb7e38d173940eabee9f8af11b31d0, type: 2}
+    - target: {fileID: 8493995734688669380, guid: ee2e85436d15e482b9d3c98cfc30dc1b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8493995734688669380, guid: ee2e85436d15e482b9d3c98cfc30dc1b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
