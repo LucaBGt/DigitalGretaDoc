@@ -19,6 +19,7 @@ public class KeyboardKey : MonoBehaviour
     {
         basePos = transform.position;
         meshRenderer.material = new Material(meshRenderer.material);
+        Animate(0);
     }
 
     private IEnumerator AnimateTowards(bool up = true)
@@ -29,7 +30,7 @@ public class KeyboardKey : MonoBehaviour
         {
             Debug.Log("Animate " + (up?"up":"down"));
 
-            alpha += Time.deltaTime * (up ? 1f : -1f) * 10;
+            alpha += Time.deltaTime * (up ? 1f : -1f) * 2;
 
             if (up ? (alpha >= 1) : (alpha <= 0))
                 alpha = up ? 1 : 0;
