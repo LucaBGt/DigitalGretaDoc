@@ -73,6 +73,13 @@ public class DoorUI : ScalingUIElement
 
     }
 
+    public void FullscreenImage(int index)
+    {
+        Texture toFullscreen = imagesSmall[index].texture;
+        imagesSmall[index].texture = imageBig.texture;
+        imageBig.texture = toFullscreen;
+    }
+
     private void UpdateTexture(Door door, TextureRequest req, KeepAspectRatioRawImage target)
     {
 
