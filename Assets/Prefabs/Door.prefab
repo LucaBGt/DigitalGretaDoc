@@ -217,11 +217,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5375551121993223995}
-  m_LocalRotation: {x: 0, y: 0.9988446, z: 0, w: 0.04805667}
-  m_LocalPosition: {x: -0.00299, y: 0.00026, z: 0.00342}
-  m_LocalScale: {x: 0.0005365444, y: 0.53654444, z: 0.0005365444}
+  m_LocalRotation: {x: 0.00017529911, y: 0.998838, z: 0.003644317, w: 0.048056394}
+  m_LocalPosition: {x: -0.0028287694, y: 0.00023528516, z: 0.0034117808}
+  m_LocalScale: {x: 0.00053654425, y: 0.536544, z: 0.00053654454}
   m_Children: []
-  m_Father: {fileID: 6604198266688662648}
+  m_Father: {fileID: 8926311334975297441}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 174.491, z: 0}
 --- !u!33 &2805674699897041847
@@ -364,6 +364,12 @@ MonoBehaviour:
   closeDoor: {fileID: 8300000, guid: 2e9332a77559cd048887b4631a484378, type: 3}
   changeHueShader: {fileID: -6465566751694194690, guid: 9d8427328dfb3744bb011704fa1b7463, type: 3}
   logoMeshRenderer: {fileID: 6553528961216452317}
+  doorTextures:
+  - {fileID: 2800000, guid: 9b622ee3781022d4bb8a01f3a5d5cae1, type: 3}
+  - {fileID: 2800000, guid: 0385684ffa3e8fc45b0f6c360c36ff18, type: 3}
+  - {fileID: 2800000, guid: 57af738ebc65392469a9ed51057ca6c1, type: 3}
+  - {fileID: 2800000, guid: 89a5fd12edbf3e047a918c83e639cd92, type: 3}
+  - {fileID: 2800000, guid: aac9df7c9d6759142983be72e7401924, type: 3}
 --- !u!65 &700063762169436709
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -609,10 +615,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 03e2569fe03404c10ab0cdd2b673d00a, type: 2}
+    - target: {fileID: -804731622281664130, guid: ac37b4ca603624c01be5a75b32b9172c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eb33533e469df7f4085ea3d7b5d069b2, type: 2}
     - target: {fileID: -678588488315902003, guid: ac37b4ca603624c01be5a75b32b9172c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 03e2569fe03404c10ab0cdd2b673d00a, type: 2}
+      objectReference: {fileID: 2100000, guid: eb33533e469df7f4085ea3d7b5d069b2, type: 2}
     - target: {fileID: 919132149155446097, guid: ac37b4ca603624c01be5a75b32b9172c, type: 3}
       propertyPath: m_Name
       value: Door_1
@@ -648,8 +658,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ac37b4ca603624c01be5a75b32b9172c, type: 3}
   m_PrefabInstance: {fileID: 1545739212238646337}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6604198266688662648 stripped
+--- !u!4 &8926311334975297441 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -3542852092398272455, guid: ac37b4ca603624c01be5a75b32b9172c, type: 3}
+  m_CorrespondingSourceObject: {fileID: -1255605710908113952, guid: ac37b4ca603624c01be5a75b32b9172c, type: 3}
   m_PrefabInstance: {fileID: 1545739212238646337}
   m_PrefabAsset: {fileID: 0}
