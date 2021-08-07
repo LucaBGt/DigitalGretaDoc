@@ -19,6 +19,7 @@ public class Door : MonoBehaviour, ICancallableInteractable
     [SerializeField] AudioClip openDoor, closeDoor;
     [SerializeField] Shader changeHueShader;
     [SerializeField] MeshRenderer logoMeshRenderer;
+    [SerializeField] Texture[] doorTextures;
 
     Animator animator;
 
@@ -36,10 +37,10 @@ public class Door : MonoBehaviour, ICancallableInteractable
     private void Start()
     {
         animator = GetComponent<Animator>();
-        RandomiseDoorColor();
+        RandomiseDoor();
     }
 
-    private void RandomiseDoorColor()
+    private void RandomiseDoor()
     {
         Material matInstance = null;
         foreach (MeshRenderer meshRenderer in GetComponentsInChildren<MeshRenderer>())
@@ -53,6 +54,8 @@ public class Door : MonoBehaviour, ICancallableInteractable
                     if (matInstance == null)
                     {
                         matInstance = new Material(mat[i]);
+                        matInstance.mainTexture = doorTextures[UnityEngine.Random.Range(0, doorTextures.Length)];
+                        matInstance.SetTexture("_mainTex", matInstance.mainTexture);
                         matInstance.SetFloat("_hueShift", UnityEngine.Random.Range(0, 360));
                     }
 
@@ -62,6 +65,9 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
             meshRenderer.materials = mat;
         }
+
+        float deviation = UnityEngine.Random.Range(-0.2f, 0.2f);
+        transform.localScale = new Vector3(1, 1 - deviation, 1 - (deviation * -1));
     }
 
     public void Setup(RuntimeVendorData runtimeVendorData)
@@ -77,6 +83,9 @@ public class Door : MonoBehaviour, ICancallableInteractable
             Material newMaterial = new Material(logoMeshRenderer.material);
             newMaterial.mainTexture = logo.Texture;
             logoMeshRenderer.material = newMaterial;
+
+            float height = ((float)logo.Texture.height / (float)logo.Texture.width) * logoMeshRenderer.transform.localScale.x;
+            logoMeshRenderer.transform.localScale = new Vector3(logoMeshRenderer.transform.localScale.x, 1, height);
         }
         else
         {

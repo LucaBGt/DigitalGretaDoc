@@ -74,8 +74,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -192,6 +192,8 @@ GameObject:
   - component: {fileID: 2534387466954501003}
   - component: {fileID: 7991849640855673330}
   - component: {fileID: 6775305281129258663}
+  - component: {fileID: 7852289471332671162}
+  - component: {fileID: 3470249337784480566}
   m_Layer: 0
   m_Name: mask
   m_TagString: Untagged
@@ -270,6 +272,74 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!114 &7852289471332671162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937816763027952054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea07296ca3217641918a361a22547fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6770010614758382112}
+        m_TargetAssemblyTypeName: DoorUI, Core
+        m_MethodName: FullscreenImage
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3470249337784480566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937816763027952054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9037c03db1982247ad5d37ad3a72c1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fancyButtonElements:
+  - Graphic: {fileID: 7991849640855673330}
+    scaleDefault: {x: 1, y: 1, z: 1}
+    scaleHover: {x: 1.05, y: 1.05, z: 1.05}
+  animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  animationDuration: 0.2
 --- !u!1 &1991326326846903600
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,8 +419,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -789,8 +859,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -946,6 +1016,8 @@ GameObject:
   - component: {fileID: 8004614340891741268}
   - component: {fileID: 2161237724842397942}
   - component: {fileID: 9059395409363677261}
+  - component: {fileID: 2981756925432464027}
+  - component: {fileID: 6247700557439417349}
   m_Layer: 0
   m_Name: mask (2)
   m_TagString: Untagged
@@ -1024,6 +1096,74 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!114 &2981756925432464027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3424713753349544824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea07296ca3217641918a361a22547fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6770010614758382112}
+        m_TargetAssemblyTypeName: DoorUI, Core
+        m_MethodName: FullscreenImage
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6247700557439417349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3424713753349544824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9037c03db1982247ad5d37ad3a72c1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fancyButtonElements:
+  - Graphic: {fileID: 2161237724842397942}
+    scaleDefault: {x: 1, y: 1, z: 1}
+    scaleHover: {x: 1.05, y: 1.05, z: 1.05}
+  animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  animationDuration: 0.2
 --- !u!1 &3425760124721026410
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,6 +1176,8 @@ GameObject:
   - component: {fileID: 8731644244599408871}
   - component: {fileID: 4554025616366942476}
   - component: {fileID: 9091411992216874666}
+  - component: {fileID: 402108240840606113}
+  - component: {fileID: 2449788720165175251}
   m_Layer: 0
   m_Name: mask (1)
   m_TagString: Untagged
@@ -1114,6 +1256,74 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!114 &402108240840606113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3425760124721026410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea07296ca3217641918a361a22547fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6770010614758382112}
+        m_TargetAssemblyTypeName: DoorUI, Core
+        m_MethodName: FullscreenImage
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2449788720165175251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3425760124721026410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9037c03db1982247ad5d37ad3a72c1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fancyButtonElements:
+  - Graphic: {fileID: 4554025616366942476}
+    scaleDefault: {x: 1, y: 1, z: 1}
+    scaleHover: {x: 1.05, y: 1.05, z: 1.05}
+  animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  animationDuration: 0.2
 --- !u!1 &3594100724041272575
 GameObject:
   m_ObjectHideFlags: 0
@@ -2308,7 +2518,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 84e60b7495509414d99ce7387ae8b8d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 50b1f91213236da4ebeb4939198fc971, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2528,11 +2738,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eec515880076e03479643bae18506883, type: 3}
---- !u!224 &1667049977392299665 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2608657169814797021, guid: eec515880076e03479643bae18506883, type: 3}
-  m_PrefabInstance: {fileID: 3679795766544319564}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6338089758908876197 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7269981666654962153, guid: eec515880076e03479643bae18506883, type: 3}
@@ -2544,6 +2749,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad134c2159b949c498bc0e1f2b8c018b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1667049977392299665 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2608657169814797021, guid: eec515880076e03479643bae18506883, type: 3}
+  m_PrefabInstance: {fileID: 3679795766544319564}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6413970637211039996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2871,11 +3081,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eec515880076e03479643bae18506883, type: 3}
---- !u!224 &6241246950873181024 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2608657169814797021, guid: eec515880076e03479643bae18506883, type: 3}
-  m_PrefabInstance: {fileID: 8263703819156656573}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1606301936939520084 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7269981666654962153, guid: eec515880076e03479643bae18506883, type: 3}
@@ -2887,3 +3092,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad134c2159b949c498bc0e1f2b8c018b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &6241246950873181024 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2608657169814797021, guid: eec515880076e03479643bae18506883, type: 3}
+  m_PrefabInstance: {fileID: 8263703819156656573}
+  m_PrefabAsset: {fileID: 0}

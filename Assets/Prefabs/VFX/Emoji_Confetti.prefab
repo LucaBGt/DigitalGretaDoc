@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1837468504518217022}
   - component: {fileID: 8555808084798295580}
   m_Layer: 5
-  m_Name: Emoji
+  m_Name: Emoji_Confetti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a76ac0600597cb47b2e8e3364ba0ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
+  duration: 3
 --- !u!199 &1837468504518217022
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -305,21 +305,21 @@ ParticleSystem:
       maxColor: {r: 0, g: 1, b: 0.93078065, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0, b: 0, a: 1}
-        key1: {r: 1, g: 0.8065821, b: 0, a: 1}
-        key2: {r: 1, g: 0.9498721, b: 0.1372549, a: 0}
-        key3: {r: 0.13664329, g: 1, b: 0, a: 0}
-        key4: {r: 0, g: 1, b: 0.9720304, a: 0}
-        key5: {r: 0, g: 0.20000005, b: 1, a: 0}
-        key6: {r: 0.5307561, g: 0.14901958, b: 0.972549, a: 0}
-        key7: {r: 1, g: 0, b: 0.8929777, a: 0}
+        key0: {r: 1, g: 0.39999998, b: 0.39999998, a: 1}
+        key1: {r: 1, g: 0.8847059, b: 0.39999998, a: 1}
+        key2: {r: 1, g: 0.97565454, b: 0.588, a: 0}
+        key3: {r: 0.5686275, g: 1, b: 0.5, a: 0}
+        key4: {r: 0.695, g: 1, b: 0.99162745, a: 0}
+        key5: {r: 0.66999996, g: 0.736, b: 1, a: 0}
+        key6: {r: 0.65855473, g: 0.38901958, b: 0.972549, a: 0}
+        key7: {r: 1, g: 0.5, b: 0.9470587, a: 0}
         ctime0: 0
-        ctime1: 9252
+        ctime1: 8662
         ctime2: 17733
         ctime3: 26985
         ctime4: 35081
         ctime5: 46838
-        ctime6: 57054
+        ctime6: 55823
         ctime7: 65535
         atime0: 0
         atime1: 65535
