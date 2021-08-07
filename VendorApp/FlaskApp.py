@@ -1,7 +1,10 @@
 
+from re import S
 from flask import Flask, send_from_directory, render_template, request, redirect, flash
-#from flask_login import login_user, logout_user, login_required
-#from flask_login import LoginManager
+import flask
+from flask_login import login_user, logout_user, login_required
+from flask_login import LoginManager
+import flask_login
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
@@ -9,26 +12,36 @@ import json
 import uuid
 import DataCollector
 import shutil
-from werkzeug.exceptions import InternalServerError, abort
+from werkzeug.exceptions import InternalServerError, abort 
 
-
-load_dotenv()
-
+#shorthand for commonly used operations
 join = os.path.join
 isdir = os.path.isdir
 
+#Cache Env variables
+load_dotenv()
 HASH_PATH = os.getenv("VENDOR_HASH_PATH")
 JSON_PATH = os.getenv("VENDOR_JSON_PATH")
 SOURCE_PATH = os.getenv("VENDOR_SOURCE_PATH")
 
-#setup
+### SETUP
 app = Flask(__name__)
+app.secret_key = "637836CE59A24B43CF33CFBF3BE7C"
 CORS(app)
-#login_manager = LoginManager()
-#login_manager.login_view = 'login'
-#login_manager.init_app(app)
-###
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+
+class GretaUser(flask_login.UserMixin):
+    pass
+
+main_user = GretaUser()
+main_user.id ="MAIN_USER_ID_AHKJBDAKVJWNVDLVS".encode("utf-8").decode("utf-8")
+main_user.username = "Greta"
+main_user.password = "33mm[)(NSS[b.Ee"
+
+### UTILITY METHODS
 
 #Creates a list of dictionaries containing name and location extracted from info.json located in subdirectories
 def make_list(path):
@@ -80,10 +93,6 @@ def create_link(path, folderName):
 
     return dict(Folder=folderName, Name=name)
 
-#Not implemented 
-def is_password_valid(password):
-    return True
-
 #Tries to delete file located at {SOURCE_PATH}/{folder}/{fileName}
 def try_delete(folder, fileName):
     if fileName is None:
@@ -101,7 +110,7 @@ def try_delete(folder, fileName):
 ### REQUESTS HANDLING METHODS
 
 #Handles special requests from form submission
-def process_list_edit_actions(_dict):
+def handle_list_edit_actions(_dict):
     if 'NewVendor' in _dict.keys():
 
         print("create new...")
@@ -136,7 +145,7 @@ def process_list_edit_actions(_dict):
     return False
 
 
-
+#saves image to file and deletes old
 def handle_file_upload(jsonFile):
     image = next(iter(request.files.values()))
 
@@ -181,7 +190,7 @@ def handle_file_upload(jsonFile):
 def handle_form_submission(folder, jsonFile):
     _dict = request.form
 
-    if process_list_edit_actions(_dict):
+    if handle_list_edit_actions(_dict):
 
         print("edited list...")
 
@@ -214,11 +223,37 @@ def handle_form_submission(folder, jsonFile):
         save_info(folder, jsonFile)
             
 
+### CREDENTIALS AND LOGIN
 
 
-### REQUESTS
+@login_manager.user_loader
+def load_user(user_id):
+    print("load_user called with ID " + user_id)
+    if user_id == main_user.get_id():
+        return main_user
+    return None
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == "POST":
+        form = request.form
+
+        if form is not None and form["Username"] == main_user.username and form["Password"] == main_user.password:
+            # Login and validate the user.
+            login_user(main_user)
+            flask.flash('Logged in successfully.')
+            return flask.redirect(flask.url_for('index'))
+    return flask.render_template('login.html')    
+
+@app.route("/logout", methods=['GET'])
+def logout():
+    logout_user()
+    return "LOGOUT"
+    
+### WEB INTERFACE
 
 @app.route('/details', methods=["GET", "POST"])
+@login_required
 def details():
 
     folder = None
@@ -254,8 +289,8 @@ def details():
     return render_template('details.html', list=make_list(SOURCE_PATH), detail=info)
         
 
-
 @app.route('/', methods=["GET", "POST"])
+@login_required
 def index():
 
     folder = None
@@ -270,11 +305,12 @@ def index():
 
             _dict = request.form
 
-            process_list_edit_actions(_dict);
+            handle_list_edit_actions(_dict);
             
     return render_template('index.html', list=make_list(SOURCE_PATH))
 
 
+### BACKEND REQUESTS
 
 @app.route("/vendor_hash",methods = ['GET'])
 def get_vendor_hash():
@@ -301,7 +337,6 @@ def get_file(subpath, filename):
         return send_from_directory(path, filename)
     else:
         return abort(404)
-
 
 
 #Run app on port 8082 using ssl_certificate

@@ -1,1 +1,35 @@
-LOGIN
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Web Interface - Login</title>
+{% endblock %}
+
+{% block body %}
+
+    <div>LOGIN</div>
+
+	<form method="POST" name="loginForm">
+        <div>
+            Username: 
+            <input name="Username" id="username">
+        </div>
+        <div>
+            Password: 
+            <input name="Password" id="password">
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+    </form>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+    {% endwith %}
+
+{% endblock %}
