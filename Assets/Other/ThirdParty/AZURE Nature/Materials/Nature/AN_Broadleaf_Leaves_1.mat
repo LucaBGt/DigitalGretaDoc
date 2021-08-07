@@ -116,7 +116,7 @@ Material:
     - _Color2OverlayType: 0
     - _Color2Power: 0.975
     - _Color2__________: 0
-    - _Cutoff: 0.35
+    - _Cutoff: 0.02
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnableColor2: 1
@@ -131,7 +131,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SNOW: 0
-    - _Smoothness: 0.2
+    - _Smoothness: 0.411
     - _SmoothnessTextureChannel: 0
     - _Snow: 0
     - _SnowAmount: 0.3
@@ -169,8 +169,9 @@ Material:
     - __dirty: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 1, g: 0.100000024, b: 0.15744694, a: 0}
-    - _Color2: {r: 1, g: 0.8874893, b: 0, a: 0}
+    - _Color1: {r: 0.9339623, g: 0.374466, b: 0.7054992, a: 0}
+    - _Color2: {r: 1, g: 0, b: 0.29533434, a: 0}
     - _CoverageColor: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _SnowColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BuildTextureStacks: []
