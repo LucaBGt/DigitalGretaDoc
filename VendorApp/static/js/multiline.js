@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 	$("#textarea").on('keyup',function(e) {
 		let text = $(this).val();
-		$("#wordcount").html(text.length + " / 600");
+		$("#wordcount").html(text.length + " / 200");
 		console.log(text.length);
 	    $("#hidden").val(text); //store content to input[type=hidden]
 	});
