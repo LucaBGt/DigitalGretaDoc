@@ -246,6 +246,7 @@ def login():
     return flask.render_template('login.html')    
 
 @app.route("/logout", methods=['GET'])
+@login_required
 def logout():
     logout_user()
     return "LOGOUT"
