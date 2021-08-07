@@ -296,11 +296,9 @@ def index():
 
     folder = None
 
-    print(request.args)
-
     if request.method == "POST":
 
-        print("forms: ", request.form)
+        #print("forms: ", request.form)
 
         if request.form:
 
