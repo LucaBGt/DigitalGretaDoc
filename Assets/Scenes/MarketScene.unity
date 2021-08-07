@@ -1559,6 +1559,50 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3028404202575222275, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3028404202575222275, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420330052588807908, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+      propertyPath: m_Value
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420330052588807908, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420330052588807908, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 863381574}
+    - target: {fileID: 3420330052588807908, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeVolume
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420330052588807908, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SoundPlayer, Core
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420330052588807908, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641495084278026971, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641495084278026971, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641495084278026971, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5748693676986718149, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -1566,6 +1610,14 @@ PrefabInstance:
     - target: {fileID: 6599723143749608439, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7574636340312790127, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 46.111084
+      objectReference: {fileID: 0}
+    - target: {fileID: 7574636340312790127, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -46.111084
       objectReference: {fileID: 0}
     - target: {fileID: 7789238414068041657, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
       propertyPath: m_Pivot.x
@@ -18538,6 +18590,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mixerGroup: {fileID: 24300002, guid: 49b8ca6c8276a9a4aa1b564f8e06b2b5, type: 2}
+  audioVolumeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -32
+      inSlope: 166.1488
+      outSlope: 166.1488
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.038284257
+    - serializedVersion: 3
+      time: 0.12697077
+      value: -17.17112
+      inSlope: 46.164635
+      outSlope: 46.164635
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.28756395
+      outWeight: 0.097719245
+    - serializedVersion: 3
+      time: 1
+      value: 10
+      inSlope: 26.876572
+      outSlope: 26.876572
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1443733
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &863381575
 Transform:
   m_ObjectHideFlags: 0

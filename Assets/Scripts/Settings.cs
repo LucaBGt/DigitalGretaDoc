@@ -15,7 +15,11 @@ public class Settings : SingletonBehaviour<Settings>
     public int UserSkinID => Mathf.Clamp(userSkin, 0, generalSettings.VisualsPrefab.Length - 1);
     public string Username => username;
 
-    public float MasterVolume => volume;
+    public float MasterVolume
+    {
+        get => volume;
+        set => volume = value;
+    }
 
     public int SkinsCount => generalSettings.Skins.Length;
     public Sprite[] Skins => generalSettings.Skins;
