@@ -116,7 +116,7 @@ Material:
     - _Color2OverlayType: 0
     - _Color2Power: 0.975
     - _Color2__________: 0
-    - _Cutoff: 0.02
+    - _Cutoff: 0.225
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnableColor2: 1
