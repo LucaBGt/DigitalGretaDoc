@@ -63,16 +63,16 @@ Material:
     - _Float2: 0.1
     - _Float3: 0
     - _FoamContrast: 1
-    - _FoamDensity: 0.409
-    - _FoamDistance: 0.645
+    - _FoamDensity: 0.198
+    - _FoamDistance: 0.02
     - _FoamOpacity: 1
     - _Normal: 0.15
-    - _Opacity: 0.599
+    - _Opacity: 0.821
     - _Power: 0.2
     - _RefractionIntensity: 0.15
     - _RefractionScale: 1
     - _Scale: 50
-    - _Smoothness: 0.6
+    - _Smoothness: 1
     - _TessEdgeLength: 16
     - _TessMax: 25
     - _TessMaxDisp: 25
@@ -92,11 +92,11 @@ Material:
     - _UDistancePower: 0.1
     - _WavesNormalIntensity: 1.46
     - _WavesSpeed: 0.24
-    - _WavesTile: 0.16
+    - _WavesTile: 0.53
     - __dirty: 0
     m_Colors:
     - _Color0: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 0}
-    - _Color1: {r: 0.049276415, g: 0.319, b: 0.30343902, a: 0}
+    - _Color1: {r: 0.12775902, g: 0.9339623, b: 0.8865385, a: 0}
     - _Color2: {r: 0.09011214, g: 0.6285934, b: 0.7075472, a: 0}
     - _DepthColor: {r: 0, g: 1, b: 0.9725489, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}

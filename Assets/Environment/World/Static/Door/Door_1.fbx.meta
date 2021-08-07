@@ -15,6 +15,30 @@ ModelImporter:
   - first:
       74: 6188143692413826237
     second: Cube.002|Cube.002Action.001
+  - first:
+      74: 3388794215528440662
+    second: Cube.002|Cube.002|Cube.001|Cube.001Action.001|Cube.001|Cube.001Action.00
+  - first:
+      74: 4741848000500438520
+    second: Cube.002|Cube.002|Cube.001|Cube.002Action.001|Cube.001|Cube.002Action.00
+  - first:
+      74: -5134968092032581694
+    second: Cube.002|Cube.003|Cube.002|Cube.001Action.001|Cube.002|Cube.001Action.00
+  - first:
+      74: 5243573029349322850
+    second: Cube.002|Cube.003|Cube.002|Cube.002Action.001|Cube.002|Cube.002Action.00
+  - first:
+      74: 158162910630046767
+    second: Cube.003|Cube.002|Cube.001|Cube.001Action.001|Cube.001|Cube.001Action.00
+  - first:
+      74: 7518111949004122370
+    second: Cube.003|Cube.002|Cube.001|Cube.002Action.001|Cube.001|Cube.002Action.00
+  - first:
+      74: 929520738278220975
+    second: Cube.003|Cube.003|Cube.002|Cube.001Action.001|Cube.002|Cube.001Action.00
+  - first:
+      74: -8673229471517592524
+    second: Cube.003|Cube.003|Cube.002|Cube.002Action.001|Cube.002|Cube.002Action.00
   externalObjects:
   - first:
       type: UnityEngine:Material

@@ -8,6 +8,7 @@ using UnityEngine.Audio;
 public class SoundPlayer : SingletonBehaviour<SoundPlayer>
 {
     [SerializeField] AudioMixerGroup mixerGroup;
+    [SerializeField] AnimationCurve audioVolumeCurve;
 
     List<PlayingAudio> currentlyPlaying = new List<PlayingAudio>();
 
@@ -18,7 +19,13 @@ public class SoundPlayer : SingletonBehaviour<SoundPlayer>
 
     public void UpdateVolume()
     {
-        mixerGroup.audioMixer.SetFloat("MasterVolume", Settings.Instance.MasterVolume);
+        mixerGroup.audioMixer.SetFloat("MasterVolume", audioVolumeCurve.Evaluate(Settings.Instance.MasterVolume));
+    }
+
+    public void ChangeVolume(Single volume)
+    {
+        Settings.Instance.MasterVolume = volume;
+        UpdateVolume();
     }
 
     public void Play(AudioClip clip, GameObject toPlayFrom = null, Transform source3D = null, float volume = 1, float randomPitchRange = 0, bool playOnlyIfFinished = false)
