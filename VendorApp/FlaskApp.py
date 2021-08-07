@@ -1,5 +1,4 @@
 
-from re import S
 from flask import Flask, send_from_directory, render_template, request, redirect, flash
 import flask
 from flask_login import login_user, logout_user, login_required
@@ -296,11 +295,9 @@ def index():
 
     folder = None
 
-    print(request.args)
-
     if request.method == "POST":
 
-        print("forms: ", request.form)
+        #print("forms: ", request.form)
 
         if request.form:
 
@@ -340,6 +337,6 @@ def get_file(subpath, filename):
         return abort(404)
 
 
-#Run app on port 8082 using ssl_certificate
+#If executed directly and not imported run app on port 8082 using ssl_certificate
 if __name__=='__main__':
     app.run(host="0.0.0.0", port=8082, threaded = True, debug=True, ssl_context =('/root/ssl/cert.crt', '/root/ssl/private.key'))
