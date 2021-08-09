@@ -32,6 +32,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
+s_show_zoom = False
+
 class GretaUser(flask_login.UserMixin):
     pass
 
@@ -105,6 +107,11 @@ def try_delete(folder, fileName):
     except FileNotFoundError:
         print ("FileNotFound: " + path)
 
+def get_show_zoom_from_data():
+    with open(JSON_PATH) as f:
+            data = json.load(f)
+            return data["ShowZoomLinks"]
+    return False
 
 ### REQUESTS HANDLING METHODS
 
@@ -128,7 +135,14 @@ def handle_list_edit_actions(_dict):
     elif 'Rebuild' in _dict.keys():
 
         print("rebuilding...")
-        DataCollector.generate_data_json(False)
+
+        showZoom = ("ShowZoom" in _dict.keys())
+
+        print("ShowZoom: " + str(showZoom))
+
+        global s_show_zoom 
+        s_show_zoom = showZoom
+        DataCollector.generate_data_json(showZoom)
 
         return True
 
@@ -286,7 +300,7 @@ def details():
     #print("")
     #print(info)
 
-    return render_template('details.html', list=make_list(SOURCE_PATH), detail=info)
+    return render_template('details.html', list=make_list(SOURCE_PATH), detail=info, ShowZoom=s_show_zoom)
         
 
 @app.route('/', methods=["GET", "POST"])
@@ -305,7 +319,7 @@ def index():
 
             handle_list_edit_actions(_dict);
             
-    return render_template('index.html', list=make_list(SOURCE_PATH))
+    return render_template('index.html', list=make_list(SOURCE_PATH), ShowZoom=s_show_zoom)
 
 
 ### BACKEND REQUESTS
@@ -339,4 +353,5 @@ def get_file(subpath, filename):
 
 #If executed directly and not imported run app on port 8082 using ssl_certificate
 if __name__=='__main__':
+    s_show_zoom = get_show_zoom_from_data()
     app.run(host="0.0.0.0", port=8082, threaded = True, debug=True, ssl_context =('/root/ssl/cert.crt', '/root/ssl/private.key'))
