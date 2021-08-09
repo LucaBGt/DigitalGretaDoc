@@ -13,7 +13,7 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        ReselectAnimator();
+        animator = GetComponentInChildren<Animator>();
         player = GetComponent<IPlayerBehaviour>();
         player.PlayerStateChanged += ChangePlayerState;
     }
@@ -22,11 +22,6 @@ public class PlayerAnimationHandler : MonoBehaviour
     {
         if (player != null)
             player.PlayerStateChanged -= ChangePlayerState;
-    }
-
-    public void ReselectAnimator()
-    {
-        animator = GetComponentInChildren<Animator>();
     }
 
     private void ChangePlayerState(PlayerState state)
@@ -44,5 +39,10 @@ public class PlayerAnimationHandler : MonoBehaviour
                 animator.SetBool(ANIM_Walk, false);
                 break;
         }
+    }
+
+    internal void SetAnimator(Animator animator)
+    {
+        this.animator = animator;
     }
 }

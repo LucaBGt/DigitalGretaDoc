@@ -73,8 +73,7 @@ public class NetworkedPlayerBehaviour : NetworkBehaviour, IPlayerBehaviour
         Debug.Log(name + " skin changed to " + _newID);
         if (!isLocalPlayer && !localPlayerStarted)
         {
-            LocalPlayerBehaviour.SetupLocalPlayerVisuals(ref currentVisuals, transform, sv_skinID);
-            animationHandler.ReselectAnimator();
+            LocalPlayerBehaviour.SetupLocalPlayerVisuals(ref currentVisuals, transform, sv_skinID, animationHandler);
         }
     }
 

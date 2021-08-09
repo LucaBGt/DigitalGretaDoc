@@ -24,11 +24,8 @@ public class KeyboardKey : MonoBehaviour
 
     private IEnumerator AnimateTowards(bool up = true)
     {
-        Debug.Log("Loop " + (up ? "up" : "down") + " alpha:" + alpha.ToString());
-
         while (up ? alpha < 1 : alpha > 0)
         {
-            Debug.Log("Animate " + (up?"up":"down"));
 
             alpha += Time.deltaTime * (up ? 1f : -1f) * 2;
 
