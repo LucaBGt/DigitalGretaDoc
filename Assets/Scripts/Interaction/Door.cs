@@ -55,7 +55,6 @@ public class Door : MonoBehaviour, ICancallableInteractable
                     {
                         matInstance = new Material(mat[i]);
                         matInstance.mainTexture = doorTextures[UnityEngine.Random.Range(0, doorTextures.Length)];
-                        matInstance.SetTexture("_mainTex", matInstance.mainTexture);
                         matInstance.SetFloat("_hueShift", UnityEngine.Random.Range(0, 360));
                     }
 

@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Skins:
   - {fileID: -8185052856979080653, guid: 9fbd44782743846a3a976dd5bcbd951b, type: 3}
+  - {fileID: -4819356967885565667, guid: bd084711ebc12413d8fff60f58d960cd, type: 3}
+  - {fileID: -8791710091769503851, guid: f1ff171b1623a4d09809ec4dc97aa70b, type: 3}
+  - {fileID: -1738155697463482921, guid: 6c0e3a567e0f042adb59c260ce40c5bb, type: 3}
+  - {fileID: 6714602383152688892, guid: 677a252f2a2eb4034994116f4ebf9612, type: 3}
   - {fileID: 8719988194526102781, guid: 0e56aa390b37d4b8dab130112af04475, type: 3}
   VisualsPrefab:
   - {fileID: 2686399510475415124, guid: f702d0e56170e4f179d60c0224364dbd, type: 3}
+  - {fileID: 4972374012463248224, guid: 428550e9be9a84963a8f85c820f7dc58, type: 3}
+  - {fileID: 5049881684338808625, guid: 537c8306312224afb9f6daf6ac633e78, type: 3}
+  - {fileID: 1928781251916179150, guid: d2748149c99da425ca329805f54b8bdb, type: 3}
+  - {fileID: 1085826001661996606, guid: 48cc463fe6dbe4a10a61e5296d5ffec9, type: 3}
   - {fileID: 16971152711142172, guid: 0da7c8f89c218462e873978436826101, type: 3}

@@ -36,10 +36,20 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 
     Door currentDoor = null;
     UIState uiState;
+    UIState previousUiState;
 
     public event System.Action ReturnedToGame;
 
-    public bool InLockedUIMode => uiState != UIState.InGame;
+    public bool InLockedUIMode => UiState != UIState.InGame;
+
+    public UIState UiState
+    {
+        get => uiState; set
+        {
+            previousUiState = uiState;
+            uiState = value;
+        }
+    }
 
     private bool startedGame;
 
@@ -69,7 +79,7 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
         switch (state)
         {
             case GretaConnectionState.Connected:
-                emojiUI.SetActive(uiState == UIState.InGame);
+                emojiUI.SetActive(UiState == UIState.InGame);
                 break;
 
             case GretaConnectionState.Disconnected:
@@ -86,31 +96,31 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 
     public void ReturnFromCharacterSelection()
     {
-        uiState = UIState.InMainMenu;
+        UiState = UIState.InMainMenu;
         UpdateVisuals();
         StartMenu.Instance.JumpToMenuStage(1);
     }
 
     public void EnterMinimap()
     {
-        uiState = UIState.InMinimap;
+        UiState = UIState.InMinimap;
         UpdateVisuals();
     }
 
     public void EnterCharacterSelection()
     {
-        uiState = UIState.InCharacterSelection;
+        UiState = UIState.InCharacterSelection;
         UpdateVisuals();
     }
 
     private void UpdateVisuals()
     {
         //mainMenu.SetActive(uiState == UIState.InMainMenu);
-        characterSelection.SetActiveTransition(uiState == UIState.InCharacterSelection);
-        minimapUI.SetActiveTransition(uiState == UIState.InMinimap);
-        ingameUI.SetActive(uiState == UIState.InGame);
-        doorUI.SetActiveTransition(uiState == UIState.VisitCard, currentDoor);
-        emojiUI.SetActive(uiState == UIState.InGame && GretaNetworkManager.Instance.IsConnected);
+        characterSelection.SetActiveTransition(UiState == UIState.InCharacterSelection);
+        minimapUI.SetActiveTransition(UiState == UIState.InMinimap);
+        ingameUI.SetActive(UiState == UIState.InGame);
+        doorUI.SetActiveTransition(UiState == UIState.VisitCard, currentDoor);
+        emojiUI.SetActive(UiState == UIState.InGame && GretaNetworkManager.Instance.IsConnected);
     }
 
     public void StartGame()
@@ -125,11 +135,11 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
     {
         if (startedGame)
         {
-            uiState = UIState.InGame;
+            UiState = UIState.InGame;
         }
         else
         {
-            uiState = UIState.InMainMenu;
+            UiState = UIState.InMainMenu;
             StartMenu.Instance.JumpToMenuStage(1);
         }
         ReturnedToGame?.Invoke();
@@ -140,14 +150,14 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 
     public void OpenDoor(Door d)
     {
-        uiState = UIState.VisitCard;
+        UiState = UIState.VisitCard;
         currentDoor = d;
         UpdateVisuals();
     }
 
     public void CloseDoor(Door d)
     {
-        uiState = UIState.InGame;
+        UiState = UIState.InGame;
         currentDoor = null;
         UpdateVisuals();
     }
@@ -162,7 +172,7 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
 
     public void CloseDoorFromMinimap()
     {
-        uiState = UIState.InMinimap;
+        UiState = previousUiState;
         UpdateVisuals();
 
         if (currentDoor != null)

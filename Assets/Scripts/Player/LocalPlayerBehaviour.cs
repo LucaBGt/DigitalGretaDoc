@@ -76,8 +76,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
     private void OnReturnedToGame()
     {
         playerNameText.text = Settings.Instance.Username;
-        SetupLocalPlayerVisuals(ref currentVisuals, transform, Settings.Instance.UserSkinID);
-        animationHandler.ReselectAnimator();
+        SetupLocalPlayerVisuals(ref currentVisuals, transform, Settings.Instance.UserSkinID, animationHandler);
     }
 
     private void OnDestroy()
@@ -303,7 +302,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
         return NormalizedAngleRange(offset);
     }
 
-    public static void SetupLocalPlayerVisuals( ref GameObject currentVisuals, Transform parent, int _playerPrefabId)
+    public static void SetupLocalPlayerVisuals( ref GameObject currentVisuals, Transform parent, int _playerPrefabId, PlayerAnimationHandler animationHandler)
     {
         if (currentVisuals != null)
             Destroy(currentVisuals);
@@ -322,6 +321,9 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
         currentVisuals = Instantiate(prefab , parent);
         currentVisuals.transform.localPosition = Vector3.zero;
         currentVisuals.transform.localRotation = Quaternion.identity;
+
+        animationHandler.SetAnimator(currentVisuals.GetComponent<Animator>());
+
         Debug.Log("setup visuals: " + currentVisuals.name);
 
     }
