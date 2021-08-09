@@ -1,5 +1,3 @@
-
-
 <div class="row">
 	<div class="col">
 		<h1>Gretaland Aussteller Editor</h1>
@@ -68,14 +66,18 @@
 
 	<form method="POST" class="my-1 row">
 		<div class="form-check col-auto align-self-center">
-		  <input name="Rebuild" class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+		  <input name="ShowZoom" class="form-check-input" type="checkbox" value="" id="flexCheckChecked" {{'checked' if ShowZoom else ''}}>
 		  <label class="form-check-label" for="flexCheckChecked">
 		    Zeige Zoom Links?
 		  </label>
 		</div>
-		<button type="submit" class="btn btn-primary col-auto">
-		<i class="icon-upload-alt" title="bearbeiten"></i>
-		Änderungen ins Spiel laden
-		</button>
+		<input name = "Rebuild" type = "hidden" checked>
+		<div>
+
+			<button type="submit" class="btn btn-primary col-auto">
+				<i class="icon-upload-alt" title="bearbeiten"></i>
+				Änderungen ins Spiel laden
+			</button>
+		</div>
 	</form>
 </div>
