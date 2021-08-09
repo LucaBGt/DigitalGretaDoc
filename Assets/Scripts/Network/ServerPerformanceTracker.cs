@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 public class ServerPerformanceTracker : MonoBehaviour
 {
-#if UNITY_SERVER || UNITY_EDITOR
+#if UNITY_SERVER
     const string check_file = "server_settings.json";
 
     private ServerSettings settings;
