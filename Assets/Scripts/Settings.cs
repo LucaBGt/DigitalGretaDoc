@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class Settings : SingletonBehaviour<Settings>
 
     private string username;
     private int userSkin;
-    private float volume;
+    private float volume = 0f;
 
     public int UserSkinID => Mathf.Clamp(userSkin, 0, generalSettings.VisualsPrefab.Length - 1);
     public string Username => username;
@@ -72,5 +73,11 @@ public class Settings : SingletonBehaviour<Settings>
         PlayerPrefs.SetInt(nameof(userSkin), userSkin);
         PlayerPrefs.SetFloat(nameof(volume), volume);
         PlayerPrefs.Save();
+    }
+
+    [Button]
+    private void ResetPlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }

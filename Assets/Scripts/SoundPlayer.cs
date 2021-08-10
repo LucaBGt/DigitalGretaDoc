@@ -4,17 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class SoundPlayer : SingletonBehaviour<SoundPlayer>
 {
     [SerializeField] AudioMixerGroup mixerGroup;
     [SerializeField] AnimationCurve audioVolumeCurve;
+    [SerializeField] Slider audioSlider;
 
     List<PlayingAudio> currentlyPlaying = new List<PlayingAudio>();
 
     private void Start()
     {
         UpdateVolume();
+        audioSlider.value = Settings.Instance.MasterVolume;
     }
 
     public void UpdateVolume()
