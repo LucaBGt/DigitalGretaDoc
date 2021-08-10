@@ -20801,6 +20801,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  audioSlider: {fileID: 1415476158}
 --- !u!4 &863381575
 Transform:
   m_ObjectHideFlags: 0
@@ -31666,6 +31667,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &1415476158 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3420330052588807908, guid: ed98232d57e4d254998824cbff97e1bd, type: 3}
+  m_PrefabInstance: {fileID: 101006104}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1417895493
 PrefabInstance:
   m_ObjectHideFlags: 0

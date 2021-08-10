@@ -31,6 +31,7 @@ public class JenkinsBuild
                 BuildTarget.StandaloneWindows, BuildOptions.EnableHeadlessMode | BuildOptions.ConnectWithProfiler | BuildOptions.Development);
     }
 
+    [MenuItem("Builder/Build Android")]
     public static void BuildAndroid()
     {
         var args = FindArgs();
@@ -38,12 +39,14 @@ public class JenkinsBuild
         PlayerSettings.keyaliasPass = "dyfhL9Zv2HACgX2r";
         PlayerSettings.keystorePass = "dyfhL9Zv2HACgX2r";
 
-        var delta = System.DateTime.Now - new System.DateTime(2020, 07, 20, 9, 0, 0);
-        int code = Mathf.Clamp(delta.Hours, 0, 100000);
+        var delta = System.DateTime.Now - new System.DateTime(2020, 07, 20, 8, 0, 0);
+        int code = Mathf.Clamp((int)delta.TotalHours, 0, 100000);
+
+        Debug.LogWarning(delta.TotalHours.ToString() + " / " + code.ToString()); ;
 
         PlayerSettings.Android.bundleVersionCode = code;
 
-        string fullPathAndName = args.targetDir;
+        string fullPathAndName = "C:/Users/Lucas/Desktop/DigitalGreta_Android/Gretaland.apk";
         BuildProject(EnabledScenes, fullPathAndName, BuildTargetGroup.Android, BuildTarget.Android, BuildOptions.None);
     }
     public static void BuildWebGL()

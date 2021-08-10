@@ -17,7 +17,7 @@ public class SoundPlayer : SingletonBehaviour<SoundPlayer>
     private void Start()
     {
         UpdateVolume();
-        audioSlider.value = Settings.Instance.MasterVolume;
+        audioSlider.value = Settings.Instance.MasterVolume ;
     }
 
     public void UpdateVolume()
