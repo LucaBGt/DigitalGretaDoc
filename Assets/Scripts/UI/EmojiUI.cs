@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EmojiUI : MonoBehaviour
 {
     [SerializeField] RectTransform emojis;
+    [SerializeField] CanvasGroup emojiGroup;
     [SerializeField] Vector2 emojisSizeTarget;
     [SerializeField] AnimationCurve scaleUpCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     [SerializeField] float animationSpeed = 4f;
@@ -29,20 +30,11 @@ public class EmojiUI : MonoBehaviour
 
     private IEnumerator DisableRoutine()
     {
-        SetEmojisInteractable(false);
+        emojiGroup.alpha = 0.5f;
+        emojiGroup.interactable = false;
         yield return new WaitForSeconds(useCooldown);
-        SetEmojisInteractable(true);
-    }
-
-
-    private void SetEmojisInteractable(bool interactable)
-    {
-        for (int i = 0; i < emojis.childCount; i++)
-        {
-            var e = emojis.GetChild(i).GetComponent<Button>();
-            if(e!= null)
-                e.interactable = interactable;
-        }
+        emojiGroup.alpha = 1f;
+        emojiGroup.interactable = true;
     }
 
     private void Update()
