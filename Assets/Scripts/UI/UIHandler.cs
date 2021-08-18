@@ -162,14 +162,6 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
         UpdateVisuals();
     }
 
-    public void OpenCurrentDoorLink()
-    {
-        if (currentDoor != null)
-        {
-            currentDoor.OpenURL();
-        }
-    }
-
     public void CloseDoorFromMinimap()
     {
         UiState = previousUiState;
