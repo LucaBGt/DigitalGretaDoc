@@ -20802,6 +20802,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   audioSlider: {fileID: 1415476158}
+  birbs: {fileID: 863381573}
 --- !u!4 &863381575
 Transform:
   m_ObjectHideFlags: 0
