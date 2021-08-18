@@ -25,12 +25,15 @@ public class MinimapUI : MonoBehaviour
 
     UIMapPinBehaviour[] indicators;
     float zoomFactor = 0.6f;
+    Vector2 offset;
     private Door currentDoorInspected = null;
     public System.Action<float> ChangeZoomEvent;
+    Coroutine moveMapCoroutine;
 
 
     private void Start()
     {
+        offset = mapRect.localPosition;
         UpdateDetailWindow(null);
         PopulateMinimap();
     }
@@ -164,6 +167,34 @@ public class MinimapUI : MonoBehaviour
     {
         StartCoroutine(ChangeZoom(-0.1f));
     }
+
+    public void MoveUp()
+    {
+        if (moveMapCoroutine != null)
+            StopCoroutine(moveMapCoroutine);
+        moveMapCoroutine = StartCoroutine(ChangePosition(new Vector2(0, -1)));
+    }
+
+    public void MoveDown()
+    {
+        if (moveMapCoroutine != null)
+            StopCoroutine(moveMapCoroutine);
+        moveMapCoroutine = StartCoroutine(ChangePosition(new Vector2(0, 1)));
+    }
+    public void MoveRight()
+    {
+        if (moveMapCoroutine != null)
+            StopCoroutine(moveMapCoroutine);
+        moveMapCoroutine = StartCoroutine(ChangePosition(new Vector2(-1, 0)));
+    }
+
+    public void MoveLeft()
+    {
+        if (moveMapCoroutine != null)
+            StopCoroutine(moveMapCoroutine);
+        moveMapCoroutine = StartCoroutine(ChangePosition(new Vector2(1, 0)));
+    }
+
     private IEnumerator ChangeZoom(float change)
     {
         float zoomFactorBefore = zoomFactor;
@@ -172,6 +203,21 @@ public class MinimapUI : MonoBehaviour
             zoomFactor += change * Time.deltaTime * 2;
             mapRect.localScale = Vector3.one * zoomFactor;
             ChangeZoomEvent?.Invoke(zoomFactor);
+            yield return null;
+        }
+    }
+    private IEnumerator ChangePosition(Vector2 change)
+    {
+        Vector2 offsetBefore = offset;
+        Vector2 offsetAfter = offsetBefore + change * 50;
+
+        float factor = 0;
+
+        while (factor < 0.5f)
+        {
+            factor += Time.deltaTime;
+            offset = Vector2.Lerp(offsetBefore, offsetAfter, factor * 2);
+            mapRect.localPosition = offset;
             yield return null;
         }
     }

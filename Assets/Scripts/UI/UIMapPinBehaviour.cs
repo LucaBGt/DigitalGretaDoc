@@ -110,6 +110,6 @@ public class UIMapPinBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerCl
 
     private void UpdateScale()
     {
-        transform.localScale = Vector3.one * ((1 / parentScale) * scaleMultiplier);
+        transform.localScale = Vector3.one * ((2 + (0.66f / parentScale)) * scaleMultiplier);
     }
 }
