@@ -38,16 +38,19 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
     UIState uiState;
     UIState previousUiState;
 
-    public event System.Action ReturnedToGame;
+    public event Action ReturnedToGame;
+    public event Action<UIState> ChangedUIStateEvent;
 
     public bool InLockedUIMode => UiState != UIState.InGame;
 
     public UIState UiState
     {
-        get => uiState; set
+        get => uiState;
+        set
         {
             previousUiState = uiState;
             uiState = value;
+            ChangedUIStateEvent?.Invoke(uiState);
         }
     }
 
