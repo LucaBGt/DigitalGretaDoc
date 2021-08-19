@@ -21,7 +21,7 @@ public class MinimapUI : MonoBehaviour
     [Foldout("DetailWindow")] [SerializeField] KeepAspectRatioRawImage logoImage;
     [Foldout("DetailWindow")] [SerializeField] TMP_Text describtionText;
     [Foldout("DetailWindow")] [SerializeField] Button infoButton;
-    [Foldout("DetailWindow")] [SerializeField] Button meetingButton;
+    //[Foldout("DetailWindow")] [SerializeField] Button meetingButton;
 
     UIMapPinBehaviour[] indicators;
     float zoomFactor = 0.6f;
@@ -33,6 +33,7 @@ public class MinimapUI : MonoBehaviour
     {
         UpdateDetailWindow(null);
         PopulateMinimap();
+        //meetingButton.gameObject.SetActive(false);
     }
 
     private void PopulateMinimap()
@@ -80,7 +81,7 @@ public class MinimapUI : MonoBehaviour
         bool show = (door != null && door.Data != null);
 
         infoButton.gameObject.SetActive(show);
-        meetingButton.gameObject.SetActive(show);
+        //meetingButton.gameObject.SetActive(show);
 
         if (show)
         {
@@ -108,6 +109,7 @@ public class MinimapUI : MonoBehaviour
             infoButton.onClick.RemoveAllListeners();
             infoButton.onClick.AddListener(door.EnterInteractionFromMap);
 
+            /*
             if (VendorsHander.Instance.ShowZoomLinks)
             {
                 meetingButton.gameObject.SetActive(true);
@@ -118,6 +120,7 @@ public class MinimapUI : MonoBehaviour
             {
                 meetingButton.gameObject.SetActive(false);
             }
+            */
         }
         else
         {
@@ -125,7 +128,7 @@ public class MinimapUI : MonoBehaviour
             describtionText.text = "Klicke auf einen Stand um dir seine Informationen anzusehen.";
             logoImage.texture = null;
             infoButton.onClick.RemoveAllListeners();
-            meetingButton.onClick.RemoveAllListeners();
+            //meetingButton.onClick.RemoveAllListeners();
         }
     }
 
