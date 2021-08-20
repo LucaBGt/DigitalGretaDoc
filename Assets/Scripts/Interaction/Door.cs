@@ -44,6 +44,8 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
     private void RandomiseDoor()
     {
+        UnityEngine.Random.InitState(ID); 
+
         Material matInstance = null;
         foreach (MeshRenderer meshRenderer in GetComponentsInChildren<MeshRenderer>())
         {
