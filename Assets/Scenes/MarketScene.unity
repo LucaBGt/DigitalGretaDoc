@@ -1456,7 +1456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &74306430
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25456,7 +25456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 89, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.021, y: -1.292}
+  m_AnchoredPosition: {x: -1.021, y: -1.365}
   m_SizeDelta: {x: 16, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1067609182
@@ -25479,7 +25479,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Verbunden werden auch die schwachen m\xE4chtig"
+  m_text: "einfach mal machen, k\xF6nnte ja gut werden "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4e569b0dda608104ea54285905e57758, type: 2}
   m_sharedMaterial: {fileID: 8774013920768968367, guid: 4e569b0dda608104ea54285905e57758, type: 2}
