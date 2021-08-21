@@ -274,6 +274,8 @@ MonoBehaviour:
   - {fileID: 2879870464658192013, guid: babcead5a36cd584698d5d73b6c6a0c2, type: 3}
   - {fileID: 8088064042154169400, guid: f97f47424f15d3b42a4ff84a90d15b7a, type: 3}
   - {fileID: 8088064042154169400, guid: debe9dedb34ead74fb934102ea9993c7, type: 3}
+  heartsPrefab: {fileID: 2879870464658192013, guid: 3d1aff289447060469dca7d0f637cdf0, type: 3}
+  confettiPrefab: {fileID: 2879870464658192013, guid: 11e9c8ad0a3a74b48acbad539147ab7a, type: 3}
   speechbubbleData: {fileID: 11400000, guid: 9373c557aea27244f8b463274196c90c, type: 2}
   parent: {fileID: 598492036548775559}
 --- !u!205 &8636340599230345687

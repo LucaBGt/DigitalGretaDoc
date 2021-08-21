@@ -14,7 +14,7 @@ public class EmojiUI : MonoBehaviour
     [SerializeField] float animationSpeed = 4f;
     [SerializeField] float useCooldown;
     [SerializeField] SpeechbubbleData speechbubbleTexts;
-    [SerializeField] CustomButtonBehaviour speechbubbleButtonPrefab;
+    [SerializeField] CustomButtonBehaviour speechbubbleButtonPrefab, particleHeartsButtonPrefab, particleConfettiButtonPrefab;
 
     List<CustomButtonBehaviour> emojiButtons;
     float emojisScaleFactorCurrent = 0;
@@ -32,10 +32,25 @@ public class EmojiUI : MonoBehaviour
 
         for (int i = 0; i < speechbubbleTexts.SpeechbubbleTexts.Length; i++)
         {
-            CustomButtonBehaviour button = Instantiate(speechbubbleButtonPrefab, emojiGroup.transform);
+            CustomButtonBehaviour button = null;
+            string str = speechbubbleTexts.SpeechbubbleTexts[i];
+
+            if (str[0] == '_')
+            {
+                if(str[1] == 'h')
+                    button = Instantiate(particleHeartsButtonPrefab, emojiGroup.transform);
+                else
+                    button = Instantiate(particleConfettiButtonPrefab, emojiGroup.transform);
+            }
+            else
+            {
+                button = Instantiate(speechbubbleButtonPrefab, emojiGroup.transform);
+                button.GetComponentInChildren<TMP_Text>().text = speechbubbleTexts.SpeechbubbleTexts[i];
+            }
+
             button.transform.localScale = new Vector3(UnityEngine.Random.Range(0.9f, 1.1f), 1, 1);
             button.transform.rotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-5f, 5f));
-            button.GetComponentInChildren<TMP_Text>().text = speechbubbleTexts.SpeechbubbleTexts[i];
+
             int index = i;
             button.onClick.AddListener(delegate { SendEmoji(index); });
             emojiButtons.Add(button);

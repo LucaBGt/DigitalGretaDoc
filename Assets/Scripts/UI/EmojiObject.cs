@@ -10,10 +10,13 @@ public class EmojiObject : MonoBehaviour
     [SerializeField] float duration = 3;
     [SerializeField] AnimationCurve localPositionOverTime, localScaleOverTime;
 
+    private void Start()
+    {
+        Destroy(gameObject, duration);
+    }
     public void Init(string text)
     {
         textDisplay.text = text;
-        Destroy(gameObject, duration);
         StartCoroutine(ChangeOverTimeRoutine());
     }
 
