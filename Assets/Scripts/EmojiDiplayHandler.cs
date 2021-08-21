@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class EmojiDiplayHandler : NetworkBehaviour
 {
-    [SerializeField] List<EmojiObject> emojis;
+    [SerializeField] List<EmojiObject> speechbubblePrefabs;
+    [SerializeField] SpeechbubbleData speechbubbleData;
     [SerializeField] Transform parent;
 
     private static EmojiDiplayHandler instance;
@@ -35,7 +36,8 @@ public class EmojiDiplayHandler : NetworkBehaviour
     [ClientRpc]
     private void RPC_SpawnEmoji(int index)
     {
-        EmojiObject prefab = emojis[index];
+        EmojiObject prefab = speechbubblePrefabs[UnityEngine.Random.Range(0, speechbubblePrefabs.Count)];
         EmojiObject emojiObject = Instantiate(prefab, parent);
+        emojiObject.Init(speechbubbleData.SpeechbubbleTexts[index]);
     }
 }
