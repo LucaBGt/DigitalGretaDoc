@@ -37,6 +37,8 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
     [SerializeField] LayerMask raycastLayer;
     [SerializeField] float raycastMaxDistance;
 
+    [SerializeField] LineRenderer pathRenderer;
+
     [Header("Inputs")]
     [SerializeField] float sensetivity;
 
@@ -46,7 +48,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
     PlayerState internal_State;
     PerspectiveMode perspective = PerspectiveMode.ThirdPerson;
     IInteractable currentInteractable = null;
-    GameObject targetPreview;
+    PlayerPathingTarget pathingTarget;
 
     new Camera camera;
     float turnInput;
@@ -67,8 +69,8 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
     private void Start()
     {
         camera = Camera.main;
-        targetPreview = Instantiate(targetPreviewPrefab);
-        targetPreview.SetActive(false);
+        pathingTarget = Instantiate(targetPreviewPrefab).GetComponent<PlayerPathingTarget>();
+        pathingTarget.Disable();
         UpdateCameras();
         UIHandler.Instance.ReturnedToGame += OnReturnedToGame;
     }
@@ -93,6 +95,11 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
         {
             OnClick();
         }
+        
+        if(State == PlayerState.Walking)
+            {
+                UpdatePathingPreview(); 
+            }
 
         if (ReachedDestination())
         {
@@ -141,6 +148,15 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
         }
     }
 
+    private void UpdatePathingPreview()
+    {
+        if(agent.hasPath){
+        var points = agent.path.corners;
+        pathRenderer.positionCount = points.Length;
+        pathRenderer.SetPositions(points);
+        }
+    }
+
     private void OnInteractableCancelInteraction()
     {
         QuitInteraction();
@@ -183,13 +199,13 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
 
         if (hit.transform.TryGetComponent(out ICancallableInteractable interactable))
         {
-            GoTo(interactable.GetInteractPosition());
             currentInteractable = interactable;
+            GoTo(interactable.GetInteractPosition());
         }
         else
         {
-            GoTo(hit.point);
             currentInteractable = null;
+            GoTo(hit.point);
         }
     }
 
@@ -199,17 +215,22 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
         agent.destination = point;
         State = PlayerState.Walking;
 
-        if (targetPreview)
+
+        if(currentInteractable != null)
         {
-            targetPreview.SetActive(true);
-            targetPreview.transform.position = point;
+            pathingTarget.SetTargetSpecial(point, currentInteractable.transform.position + new Vector3(0,0.2f,0));
+        }else
+        {
+            pathingTarget.SetTargetSimple(point);
         }
+ 
     }
 
     private void StopMoving()
     {
         agent.isStopped = true;
-        targetPreview?.SetActive(false);
+        pathingTarget.Disable();
+        pathRenderer.positionCount = 0;
     }
 
     public void TogglePerspective()
