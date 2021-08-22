@@ -39,16 +39,19 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
     UIState previousUiState = UIState.InMainMenu;
     private bool startedGame;
 
-    public event System.Action ReturnedToGame;
+    public event Action ReturnedToGame;
+    public event Action<UIState> ChangedUIStateEvent;
 
     public bool InLockedUIMode => UiState != UIState.InGame;
 
     public UIState UiState
     {
-        get => uiState; set
+        get => uiState;
+        set
         {
             previousUiState = uiState;
             uiState = value;
+            ChangedUIStateEvent?.Invoke(uiState);
         }
     }
 
@@ -167,14 +170,6 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
         UiState = UIState.InGame;
         currentDoor = null;
         UpdateVisuals();
-    }
-
-    public void OpenCurrentDoorLink()
-    {
-        if (currentDoor != null)
-        {
-            currentDoor.OpenURL();
-        }
     }
 
     public void CloseDoorFromMinimap()

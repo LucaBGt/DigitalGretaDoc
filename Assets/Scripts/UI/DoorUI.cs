@@ -64,7 +64,7 @@ public class DoorUI : ScalingUIElement
         {
             zoomMeetingButton.gameObject.SetActive(true);
             zoomMeetingButton.onClick.RemoveAllListeners();
-            zoomMeetingButton.onClick.AddListener(() => GretaUtil.OpenURL(data.InternalData.GetLink(SocialMediaType.Zoom)));
+            zoomMeetingButton.onClick.AddListener(() => ZoomWarningUI.Instance.ShowWarning(data.InternalData.GetLink(SocialMediaType.Zoom)));
         }
         else
         {

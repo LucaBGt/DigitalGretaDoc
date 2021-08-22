@@ -15,6 +15,8 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
     [SerializeField] CinemachineVirtualCamera vcam;
 
+    [SerializeField] Transform signTransform;
+
 
     [SerializeField] AudioClip openDoor, closeDoor;
     [SerializeField] Shader changeHueShader;
@@ -42,6 +44,8 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
     private void RandomiseDoor()
     {
+        UnityEngine.Random.InitState(ID); 
+
         Material matInstance = null;
         foreach (MeshRenderer meshRenderer in GetComponentsInChildren<MeshRenderer>())
         {
@@ -66,7 +70,9 @@ public class Door : MonoBehaviour, ICancallableInteractable
         }
 
         float deviation = UnityEngine.Random.Range(-0.2f, 0.2f);
-        transform.localScale = new Vector3(1, 1 - deviation, 1 - (deviation * -1));
+        Vector3 scale = new Vector3(1, 1 - deviation, 1 - (deviation * -1));
+        transform.localScale = scale;
+        signTransform.localScale = new Vector3(1f / scale.x, 1f / scale.y, 1f / scale.z);
     }
 
     public void Setup(RuntimeVendorData runtimeVendorData)
@@ -83,8 +89,9 @@ public class Door : MonoBehaviour, ICancallableInteractable
             newMaterial.mainTexture = logo.Texture;
             logoMeshRenderer.material = newMaterial;
 
-            float height = ((float)logo.Texture.height / (float)logo.Texture.width) * logoMeshRenderer.transform.localScale.x;
-            logoMeshRenderer.transform.localScale = new Vector3(logoMeshRenderer.transform.localScale.x, 1, height);
+            float width = ((float)logo.Texture.width / (float)logo.Texture.height) * logoMeshRenderer.transform.localScale.y;
+            float multiplier = (width > 0.135f) ? (0.135f / width) : 1f;
+            logoMeshRenderer.transform.localScale = new Vector3(width, 1, logoMeshRenderer.transform.localScale.y) * multiplier;
         }
         else
         {
@@ -122,7 +129,7 @@ public class Door : MonoBehaviour, ICancallableInteractable
 
     public void OpenURL()
     {
-        string url = IsSetup() ? data.InternalData.GetLink(SocialMediaType.Homepage) : null;
+        string url = IsSetup() ? data.InternalData.GetLink(SocialMediaType.Zoom) : null;
         GretaUtil.OpenURL(url);
     }
 

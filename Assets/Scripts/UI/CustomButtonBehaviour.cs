@@ -7,10 +7,11 @@ using UnityEngine.EventSystems;
 public class CustomButtonBehaviour : MonoBehaviour, IPointerDownHandler
 {
     public UnityEvent onClick;
+    internal bool interactable = true;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        onClick?.Invoke();
+        if (interactable) onClick?.Invoke();
     }
 
 }

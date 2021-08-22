@@ -55,6 +55,7 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
     GameObject currentVisuals;
 
     public event Action<PlayerState> PlayerStateChanged;
+    public UnityEvent onStartWalkingEvent;
 
     public PlayerState State
     {
@@ -196,6 +197,8 @@ public class LocalPlayerBehaviour : SingletonBehaviour<LocalPlayerBehaviour>, IP
     private void ApplyClickOn(RaycastHit hit)
     {
         QuitInteraction();
+
+        onStartWalkingEvent?.Invoke();
 
         if (hit.transform.TryGetComponent(out ICancallableInteractable interactable))
         {
