@@ -35,8 +35,9 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
     [SerializeField] bool skipMainMenuInEditor;
 
     Door currentDoor = null;
-    UIState uiState;
-    UIState previousUiState;
+    UIState uiState = UIState.InMainMenu;
+    UIState previousUiState = UIState.InMainMenu;
+    private bool startedGame;
 
     public event System.Action ReturnedToGame;
 
@@ -51,7 +52,13 @@ public class UIHandler : SingletonBehaviour<UIHandler>, IPlayerUI, IPerspectiveT
         }
     }
 
-    private bool startedGame;
+
+#if UNITY_EDITOR
+    private void OnGUI()
+    {
+        GUILayout.Label(UiState.ToString());
+    }
+#endif
 
     private void Start()
     {
