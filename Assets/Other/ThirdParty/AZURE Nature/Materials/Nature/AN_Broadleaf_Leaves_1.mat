@@ -109,14 +109,14 @@ Material:
     - _COLOR2: 1
     - _Color2: 0
     - _Color2Enable: 1
-    - _Color2Fade: -0.21
+    - _Color2Fade: -0.129
     - _Color2Int: 0.15
     - _Color2Intensity: 0.1
-    - _Color2Level: -8.07
+    - _Color2Level: -10.22
     - _Color2OverlayType: 0
     - _Color2Power: 0.975
     - _Color2__________: 0
-    - _Cutoff: 0.225
+    - _Cutoff: 0.262
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnableColor2: 1
@@ -131,10 +131,10 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SNOW: 0
-    - _Smoothness: 0.411
+    - _Smoothness: 0.509
     - _SmoothnessTextureChannel: 0
     - _Snow: 0
-    - _SnowAmount: 0.3
+    - _SnowAmount: 0.361
     - _SnowFade: 0.1
     - _SnowLevel: 0.5
     - _SnowOverlayType: 0
