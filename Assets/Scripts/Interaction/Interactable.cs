@@ -12,6 +12,8 @@ public interface IInteractable
     Vector3 GetInteractPosition();
 
     float GetInteractYRotation();
+
+    Transform transform {get;}
 }
 
 public interface ICancallableInteractable : IInteractable

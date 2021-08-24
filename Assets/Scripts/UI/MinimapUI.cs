@@ -21,18 +21,22 @@ public class MinimapUI : MonoBehaviour
     [Foldout("DetailWindow")] [SerializeField] KeepAspectRatioRawImage logoImage;
     [Foldout("DetailWindow")] [SerializeField] TMP_Text describtionText;
     [Foldout("DetailWindow")] [SerializeField] Button infoButton;
-    [Foldout("DetailWindow")] [SerializeField] Button meetingButton;
+    //[Foldout("DetailWindow")] [SerializeField] Button meetingButton;
 
     UIMapPinBehaviour[] indicators;
     float zoomFactor = 0.6f;
+    Vector2 offset;
     private Door currentDoorInspected = null;
     public System.Action<float> ChangeZoomEvent;
+    Coroutine moveMapCoroutine;
 
 
     private void Start()
     {
+        offset = mapRect.localPosition;
         UpdateDetailWindow(null);
         PopulateMinimap();
+        //meetingButton.gameObject.SetActive(false);
     }
 
     private void PopulateMinimap()
@@ -80,7 +84,7 @@ public class MinimapUI : MonoBehaviour
         bool show = (door != null && door.Data != null);
 
         infoButton.gameObject.SetActive(show);
-        meetingButton.gameObject.SetActive(show);
+        //meetingButton.gameObject.SetActive(show);
 
         if (show)
         {
@@ -108,6 +112,7 @@ public class MinimapUI : MonoBehaviour
             infoButton.onClick.RemoveAllListeners();
             infoButton.onClick.AddListener(door.EnterInteractionFromMap);
 
+            /*
             if (VendorsHander.Instance.ShowZoomLinks)
             {
                 meetingButton.gameObject.SetActive(true);
@@ -118,6 +123,7 @@ public class MinimapUI : MonoBehaviour
             {
                 meetingButton.gameObject.SetActive(false);
             }
+            */
         }
         else
         {
@@ -125,7 +131,7 @@ public class MinimapUI : MonoBehaviour
             describtionText.text = "Klicke auf einen Stand um dir seine Informationen anzusehen.";
             logoImage.texture = null;
             infoButton.onClick.RemoveAllListeners();
-            meetingButton.onClick.RemoveAllListeners();
+            //meetingButton.onClick.RemoveAllListeners();
         }
     }
 
@@ -164,6 +170,34 @@ public class MinimapUI : MonoBehaviour
     {
         StartCoroutine(ChangeZoom(-0.1f));
     }
+
+    public void MoveUp()
+    {
+        if (moveMapCoroutine != null)
+            StopCoroutine(moveMapCoroutine);
+        moveMapCoroutine = StartCoroutine(ChangePosition(new Vector2(0, -1)));
+    }
+
+    public void MoveDown()
+    {
+        if (moveMapCoroutine != null)
+            StopCoroutine(moveMapCoroutine);
+        moveMapCoroutine = StartCoroutine(ChangePosition(new Vector2(0, 1)));
+    }
+    public void MoveRight()
+    {
+        if (moveMapCoroutine != null)
+            StopCoroutine(moveMapCoroutine);
+        moveMapCoroutine = StartCoroutine(ChangePosition(new Vector2(-1, 0)));
+    }
+
+    public void MoveLeft()
+    {
+        if (moveMapCoroutine != null)
+            StopCoroutine(moveMapCoroutine);
+        moveMapCoroutine = StartCoroutine(ChangePosition(new Vector2(1, 0)));
+    }
+
     private IEnumerator ChangeZoom(float change)
     {
         float zoomFactorBefore = zoomFactor;
@@ -172,6 +206,21 @@ public class MinimapUI : MonoBehaviour
             zoomFactor += change * Time.deltaTime * 2;
             mapRect.localScale = Vector3.one * zoomFactor;
             ChangeZoomEvent?.Invoke(zoomFactor);
+            yield return null;
+        }
+    }
+    private IEnumerator ChangePosition(Vector2 change)
+    {
+        Vector2 offsetBefore = offset;
+        Vector2 offsetAfter = offsetBefore + change * 50;
+
+        float factor = 0;
+
+        while (factor < 0.5f)
+        {
+            factor += Time.deltaTime;
+            offset = Vector2.Lerp(offsetBefore, offsetAfter, factor * 2);
+            mapRect.localPosition = offset;
             yield return null;
         }
     }

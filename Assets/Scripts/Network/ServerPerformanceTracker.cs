@@ -69,7 +69,7 @@ public class ServerPerformanceTracker : MonoBehaviour
     {
         int users = GretaNetworkManager.Instance.numPlayers;
 
-        string message  = DateTime.Now.ToString("hh.mm.ss") + ", " + users + ", " + additional;
+        string message  = DateTime.Now.ToString("HH.mm.ss") + ", " + users + ", " + additional;
         var writer = File.AppendText(Application.dataPath + "/Log/" + DateTime.Now.ToString("yyyy_MM_dd") + ".log");
         writer.WriteLine(message);
         writer.Close();

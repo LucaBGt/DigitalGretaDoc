@@ -11,13 +11,34 @@ public class SoundPlayer : SingletonBehaviour<SoundPlayer>
     [SerializeField] AudioMixerGroup mixerGroup;
     [SerializeField] AnimationCurve audioVolumeCurve;
     [SerializeField] Slider audioSlider;
+    [SerializeField] AudioSource birbs;
 
     List<PlayingAudio> currentlyPlaying = new List<PlayingAudio>();
 
     private void Start()
     {
         UpdateVolume();
-        audioSlider.value = Settings.Instance.MasterVolume ;
+        audioSlider.value = Settings.Instance.MasterVolume;
+        UIHandler.Instance.ChangedUIStateEvent += OnChangedUIState;
+    }
+
+    private void OnDestroy()
+    {
+        UIHandler.Instance.ChangedUIStateEvent -= OnChangedUIState;
+    }
+
+    private void OnChangedUIState(UIState uIState)
+    {
+        if (uIState == UIState.VisitCard)
+        {
+            if (birbs.isPlaying)
+                birbs.Pause();
+        }
+        else
+        {
+            if (!birbs.isPlaying)
+                birbs.Play();
+        }
     }
 
     public void UpdateVolume()
