@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Rocket
+  m_Name: Rocket 1
   m_Shader: {fileID: -6465566751694194690, guid: 8ac00ca9302aa4a839d7cdd90e2e7db4, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -126,9 +126,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_550311b7dbf74173aa921828b4460bf0: {r: 0.5660378, g: 0, b: 0.097759, a: 0}
-    - Color_714e392f5f2647b0b379c954b45191c8: {r: 0.2735849, g: 0, b: 0, a: 0}
-    - Color_e0948014761049c3ba4703a02313fb16: {r: 1, g: 0, b: 0, a: 0}
+    - Color_550311b7dbf74173aa921828b4460bf0: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 0}
+    - Color_714e392f5f2647b0b379c954b45191c8: {r: 0, g: 0, b: 0, a: 0}
+    - Color_e0948014761049c3ba4703a02313fb16: {r: 1, g: 1, b: 1, a: 0}
     - Vector2_e0e19263e13242cd85cbab8372fc7aba: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
