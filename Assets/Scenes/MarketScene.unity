@@ -13617,7 +13617,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 521688979}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -16955,7 +16955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &688157772
 Transform:
   m_ObjectHideFlags: 0
@@ -21031,7 +21031,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890502727}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -21243,7 +21243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &907688321
 Transform:
   m_ObjectHideFlags: 0
@@ -30085,7 +30085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1395649739
 Transform:
   m_ObjectHideFlags: 0
@@ -37726,6 +37726,10 @@ PrefabInstance:
       value: Collider_Sit (1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9b65d4febc6544193abc858cf1a89468, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9b65d4febc6544193abc858cf1a89468, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -40520,7 +40524,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1926555181}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -41066,6 +41070,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9b65d4febc6544193abc858cf1a89468, type: 3}
       propertyPath: m_Name
       value: Collider_Sit
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9b65d4febc6544193abc858cf1a89468, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9b65d4febc6544193abc858cf1a89468, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -43211,6 +43219,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 077f5fdc4056f4185a767ca44bd2bc63, type: 3}
       propertyPath: m_Name
       value: Collider_Sit2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 077f5fdc4056f4185a767ca44bd2bc63, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 077f5fdc4056f4185a767ca44bd2bc63, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -45568,7 +45580,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5192960327392361808, guid: 573bff3a0a15b47b6ad7514a5728550d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 573bff3a0a15b47b6ad7514a5728550d, type: 3}
